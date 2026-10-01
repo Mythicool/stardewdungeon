@@ -344,7 +344,7 @@ function updateMongo(dt) {
     const P = G.player;
     if (dist(P.x, P.y, m.x, m.y) < 90 && chance(0.4)) m.target = [P.x + rand(-20, 20), P.y + rand(-10, 20)];
     else m.target = [m.home[0] * TILE + rand(-80, 120), m.home[1] * TILE + rand(-30, 90)];
-    if (chance(0.15)) { say(m, choice(['*screech!*', '*chirp*', '*sniff sniff*', '*RAWR*']), 1.5); }
+    if (chance(0.15) && !m.bubble) { say(m, choice(['*screech!*', '*chirp*', '*sniff sniff*', '*RAWR*']), 1.5); }
   }
   animate(m, dt);
   if (m.bubble) { m.bubble.t -= dt; if (m.bubble.t <= 0) m.bubble = null; }
