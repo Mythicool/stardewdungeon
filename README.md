@@ -62,7 +62,8 @@ bomb-lobbing hobgoblins, shades). Break rocks to find the hidden stairs, or clea
 - **Level 20:** The Krakaren Clone, Borough Boss (telegraphed tentacle slams, spawns minions)
 - Four cave themes, going deeper indefinitely
 
-**Combat.** Carl kicks. Upgrade the kick with toe rings (he refuses to wear shoes). Craft
+**Combat.** Donut narrates the Stairwell live: new depths, bosses, low health, big hits,
+loot, multi-kills and self-inflicted explosions (she gets sweeter about it at 6+ hearts). Carl kicks. Upgrade the kick with toe rings (he refuses to wear shoes). Craft
 Hob-Lobbers and Carl's Doomsday Scenario to blow up rocks, monsters, and occasionally yourself.
 
 **Friends.** Talk to and gift Donut, Mongo, Katia, Mordecai, Zev and Pook. Each has loves,
@@ -109,6 +110,7 @@ js/
   menus.js          game menu tabs, shops, day-end report, fishing
   actions.js        tools, farming, interaction, gifting, rewards
   banter.js         friends' gossip about recent events, speech-bubble banter
+  commentary.js     Donut's live commentary in the Stairwell
   render.js         world rendering, lighting, weather, title screen
   game.js           main loop, time, days, transitions, save/load
 ```

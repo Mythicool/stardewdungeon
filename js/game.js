@@ -116,6 +116,7 @@ function update(dt) {
   updateDonut(dt);
   updateMongo(dt);
   updateBanter(dt);
+  updateCommentary(dt);
   updateMonsters(dt);
   updateProjectiles(dt);
   updateBombs(dt);
@@ -298,6 +299,7 @@ function enterDungeon(level) {
     const m = generateLevel(level);
     setMap(m, m.spawn.x, m.spawn.y, DOWN);
     G.locT = 4;
+    commentOnFloor(m, level > G.stats.deepest);
     if (level > G.stats.deepest) {
       G.stats.deepest = level;
       if (level % 5 === 0) recordNews('deep', { n: level });

@@ -313,7 +313,7 @@ function updateDonut(dt) {
         const dmg = 5 + Math.floor(P.skills.combat.lv * 1.2) + Math.floor(hearts / 2);
         G.projectiles.push({ kind: 'missile', x: d.x, y: d.y - 8, vx: 0, vy: -60, target: best, dmg, friendly: true, life: 3 });
         Audio2.play('magic');
-        if (chance(0.18)) say(d, choice(DONUT_BATTLE_QUIPS), 1.6);
+        if (chance(0.18) && !d.bubble) say(d, choice(DONUT_BATTLE_QUIPS), 1.6);
         d.cd = Math.max(1.1, 2.3 - hearts * 0.08);
       } else d.cd = 0.3;
     }
