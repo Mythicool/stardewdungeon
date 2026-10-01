@@ -75,6 +75,11 @@ const ITEMS = {
   skewer:   { name: 'Rat-on-a-Stick', cat: 'food', price: 40, energy: 35, hp: 15, icon: { s: 'skewer', c: '#8a6a5a', c2: '#b09080' }, desc: 'Crawler cuisine. Tastes like chicken. Chicken that lived in a sewer.' },
   salad:    { name: 'Crawler Salad', cat: 'food', price: 160, energy: 90, hp: 40, icon: { s: 'bowl', c: '#6ac05a', c2: '#e0405a' }, desc: 'Fresh from the Homestead.' },
   stew:     { name: 'Hobgoblin Stew', cat: 'food', price: 380, energy: 170, hp: 90, icon: { s: 'bowl', c: '#a0501a', c2: '#e0a040' }, desc: 'No hobgoblins were harmed. Several were involved.' },
+  katia_soup:    { name: "Katia's Mom's Soup", cat: 'food', price: 260, energy: 150, hp: 80, icon: { s: 'bowl', c: '#d8a040', c2: '#6ac05a' }, desc: 'Fixes everything except dungeons. Recipe by mail from Katia.' },
+  guild_grog:    { name: 'Guild Grog', cat: 'food', price: 200, energy: 120, hp: 70, icon: { s: 'mug' }, desc: 'Kept Mordecai alive for six floors. Do not drink before a boss. Or do.' },
+  pook_wrap:     { name: 'Bopca Wrap', cat: 'food', price: 180, energy: 110, hp: 50, icon: { s: 'sandwich' }, desc: "Pook's secret recipe. Normally nine hundred gold. Do not tell Pook's cousin." },
+  zev_sushi:     { name: 'Sponsored Roll', cat: 'food', price: 240, energy: 100, hp: 70, icon: { s: 'skewer', c: '#f4f0e6', c2: '#ff8a70' }, desc: 'Legally not sushi. Zev has asked you never to call it sushi.' },
+  royal_tartare: { name: 'Royal Tartare', cat: 'food', price: 320, energy: 130, hp: 90, icon: { s: 'bowl', c: '#ff9a8a', c2: '#6acf7a' }, desc: "Served at the Grand Champion banquet. No substitutions. NO garlic." },
   pie:      { name: "Hoarder's Gourd Pie", cat: 'food', price: 700, energy: 200, hp: 120, icon: { s: 'cake', c: '#e07a2a', c2: '#f4e0c0' }, desc: 'Sweet. Spiced. Serves one very hungry crawler.' },
   // potions
   hp_potion: { name: 'Healing Potion', cat: 'potion', price: 75, energy: 0, hp: 90, icon: { s: 'potion', c: '#e0284a', c2: '#ff8098' }, desc: 'Tastes like cherries and regret.' },
@@ -119,6 +124,12 @@ const RECIPES = [
   { id: 'hp_potion',  out: 'hp_potion',  n: 1, ing: { glowshroom: 1, grub_goo: 1 }, unlock: ['buy'] },
   { id: 'hangover',   out: 'hangover',   n: 1, ing: { beer: 1, glowshroom: 1, catnip: 1 }, unlock: ['buy'] },
   { id: 'stew',       out: 'stew',       n: 1, ing: { potato: 1, pepper: 1, yam: 1 }, unlock: ['buy'] },
+  // taught by friends' letters (see data_mail.js)
+  { id: 'katia_soup',    out: 'katia_soup',    n: 1, ing: { potato: 1, wild_garlic: 1, carp: 1 }, unlock: ['mail', 'katia'] },
+  { id: 'guild_grog',    out: 'guild_grog',    n: 1, ing: { beer: 1, glowshroom: 1, spice_berry: 1 }, unlock: ['mail', 'mordecai'] },
+  { id: 'pook_wrap',     out: 'pook_wrap',     n: 1, ing: { rat_tail: 2, wild_garlic: 1, blackberry: 1 }, unlock: ['mail', 'pook'] },
+  { id: 'zev_sushi',     out: 'zev_sushi',     n: 1, ing: { minnow: 2, radish: 1 }, unlock: ['mail', 'zev'] },
+  { id: 'royal_tartare', out: 'royal_tartare', n: 1, ing: { trout: 1, catnip: 1, kibble: 1 }, unlock: ['mail', 'donut'] },
 ];
 
 const TOOL_UPGRADES = [

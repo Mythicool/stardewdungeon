@@ -430,6 +430,7 @@ function processNight(passedOut) {
     seasonChanged = true;
   }
   G.weather = seasonChanged ? 'sun' : G.tomorrowWeather;
+  deliverMail();
   G.tomorrowWeather = rollWeather();
 
   // crops
@@ -508,6 +509,7 @@ function startNewDay() {
     giveItem('box_fan', 1, true);
     UI.toast('A sponsor left a Fan Box on your doorstep!', 'box_fan', '#ff8fd0');
   }
+  mailMorning();
   for (const id of Object.keys(BIRTHDAYS)) {
     if (isBirthday(id)) UI.toast(`It's ${NPC_DEFS[id].name}'s birthday today! Bring a gift.`, null, '#ff8fd0');
   }
@@ -587,6 +589,7 @@ function continueGame() {
   while (G.player.inv.length < 40) G.player.inv.push(null);
   buildWorld(false);
   applyMapState(G.maps.farm, data.farm);
+  ensureMailbox(G.maps.farm);
   initNPCs();
   beginPlay();
   setMap(G.maps.cabin, 3, 4, DOWN);

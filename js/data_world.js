@@ -6,7 +6,7 @@
 const NPC_DEFS = {
   donut: {
     name: 'Princess Donut', spr: 'donut', companion: true, voice: 'meow',
-    love: ['kibble', 'catnip', 'sunglasses', 'tiara', 'ruby', 'diamond', 'tunamelt', 'trout'],
+    love: ['royal_tartare', 'kibble', 'catnip', 'sunglasses', 'tiara', 'ruby', 'diamond', 'tunamelt', 'trout'],
     like: ['minnow', 'carp', 'melon', 'mana', 'sandwich', 'icefish', 'sponsorfish'],
     hate: ['rat_tail', 'grub_goo', 'catfish', 'fiber', 'stone', 'ectoplasm', 'cat_collar', 'feralcat'],
     lines: [
@@ -54,7 +54,7 @@ const NPC_DEFS = {
   },
   mordecai: {
     name: 'Mordecai', spr: 'mordecai', voice: 'low',
-    love: ['beer', 'hangover', 'glowshroom', 'mana', 'mandrake', 'ectoplasm', 'tentacle'],
+    love: ['guild_grog', 'beer', 'hangover', 'glowshroom', 'mana', 'mandrake', 'ectoplasm', 'tentacle'],
     like: ['hp_potion', 'grub_goo', 'quartz', 'stew', 'yam', 'coal'],
     hate: ['kibble', 'catnip', 'fiber', 'tiara', 'stone'],
     schedule: [{ t: 0, map: 'guild', x: 5, y: 4 }],
@@ -80,7 +80,7 @@ const NPC_DEFS = {
   },
   katia: {
     name: 'Katia', spr: 'katia', voice: 'mid',
-    love: ['melon', 'gourd', 'sandwich', 'tunamelt', 'stew', 'pie', 'ruby'],
+    love: ['katia_soup', 'melon', 'gourd', 'sandwich', 'tunamelt', 'stew', 'pie', 'ruby'],
     like: ['potato', 'corn', 'salad', 'wild_garlic', 'crystal_fruit', 'yam', 'blackberry'],
     hate: ['rat_tail', 'grub_goo', 'hob_ear', 'bomberry', 'ectoplasm'],
     schedule: [
@@ -111,7 +111,7 @@ const NPC_DEFS = {
   },
   zev: {
     name: 'Zev', spr: 'zev', voice: 'high',
-    love: ['mandrake', 'diamond', 'bloodberry', 'sunglasses', 'pie', 'crystal_fruit'],
+    love: ['zev_sushi', 'mandrake', 'diamond', 'bloodberry', 'sunglasses', 'pie', 'crystal_fruit'],
     like: ['mana', 'ruby', 'gold_ore', 'melon', 'tiara', 'quartz'],
     hate: ['minnow', 'carp', 'catfish', 'trout', 'eel', 'icefish', 'sponsorfish', 'grub_goo'],
     schedule: [
@@ -140,7 +140,7 @@ const NPC_DEFS = {
   },
   pook: {
     name: 'Pook', spr: 'pook', voice: 'high',
-    love: ['gold_ore', 'diamond', 'quartz', 'tunamelt', 'corn', 'crystal_fruit'],
+    love: ['pook_wrap', 'gold_ore', 'diamond', 'quartz', 'tunamelt', 'corn', 'crystal_fruit'],
     like: ['potato', 'radish', 'wild_garlic', 'wood', 'copper', 'sandwich'],
     hate: ['grub_goo', 'ectoplasm', 'beer', 'rat_tail'],
     schedule: [{ t: 0, map: 'shop', x: 6, y: 3 }],
@@ -915,6 +915,8 @@ const ACHIEVEMENTS = {
   rival_race:   { name: 'Photo Finish', desc: 'You beat Brock Vantage down the stairs. His sponsor has issued a statement blaming the stairs.', box: 'box_bronze', followers: 1500 },
   rival_beaten: { name: 'Unsubscribed', desc: "You beat up a rival crawler until he handed over his loot. The Syndicate calls it 'competitive streaming.'", box: 'box_silver', followers: 3000 },
   rival_nemesis:{ name: 'Nemesis', desc: 'You have beaten Brock Vantage five times. He has started a podcast about it.', box: 'box_gold', followers: 15000 },
+  mail_first:   { name: "You've Got Mail", desc: 'A friend wrote you a letter. On paper. In a dungeon. The Syndicate finds this unbearably quaint.', box: 'box_bronze', followers: 500 },
+  pen_pals:     { name: 'Pen Pals', desc: "Letters from all six friends, including one from a dinosaur. Borant's mailroom has asked you to make fewer friends.", box: 'box_gold', followers: 8000 },
   good_nose:    { name: 'Good Nose', desc: 'Mongo sniffed out the stairs for you. He would like a treat. He would like ALL the treats.', box: 'box_bronze', followers: 1000 },
 };
 

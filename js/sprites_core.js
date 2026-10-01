@@ -636,6 +636,20 @@ function signSprite() {
   });
 }
 
+// Red flag up when there's mail waiting.
+function mailboxSprite(flag) {
+  return cached('mailbox' + (flag ? 1 : 0), () => {
+    const p = Pix(16, 16);
+    p.rect(7, 9, 2, 7, '#6e4420');
+    p.rect(3, 3, 10, 7, '#4a6a9a').rect(3, 3, 10, 2, '#6a8aba').rect(3, 9, 10, 1, '#3a5a8a');
+    p.rect(3, 4, 1, 5, '#2a3a5a');
+    if (flag) p.rect(12, 0, 1, 5, '#555').rect(13, 0, 3, 2, '#e03a3a');
+    else p.rect(12, 6, 3, 1, '#555').rect(14, 5, 2, 2, '#a02a2a');
+    p.outline();
+    return { c: p.c, ox: 0, oy: -1 };
+  });
+}
+
 function rugSprite() {
   return cached('rug', () => {
     const p = Pix(48, 32);

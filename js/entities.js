@@ -102,7 +102,7 @@ function onSkillLevel(skill, lv) {
 }
 function checkRecipeUnlocks() {
   for (const r of RECIPES) {
-    if (G.recipes.includes(r.id) || !r.unlock || r.unlock[0] === 'buy') continue;
+    if (G.recipes.includes(r.id) || !r.unlock || !G.player.skills[r.unlock[0]]) continue;
     const [sk, lv] = r.unlock;
     if (G.player.skills[sk].lv >= lv) {
       G.recipes.push(r.id);
