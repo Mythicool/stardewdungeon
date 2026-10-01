@@ -325,6 +325,7 @@ function updateDonut(dt) {
 
 function updateMongo(dt) {
   const m = G.mongo;
+  if (mongoAlong()) return updateMongoCrawl(m, dt);
   if (G.map.id !== 'farm') return;
   const fm = G.maps.farm;
   m.wanderT -= dt;
