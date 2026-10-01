@@ -169,7 +169,7 @@ class GameMenu {
       }
       const h = Math.floor(f.pts / 250);
       for (let k = 0; k < 10; k++) drawText(ctx, '♥', r.x + 26 * s + k * 8 * s, y + 11 * s, { size: 7, color: k < h ? '#e0305a' : '#c8b090' });
-      const evs = HEART_EVENTS[id] ? `  ✦ ${heartEventCount(id)}/${HEART_EVENTS[id].length}` : '';
+      const evs = (HEART_EVENTS[id] ? `  ✦ ${heartEventCount(id)}/${HEART_EVENTS[id].length}` : '') + (FAVORS[id] ? `  ✿ ${favorsDone(id)}/${FAVORS[id].steps.length}` : '');
       drawText(ctx, (f.talked ? '✔ talked  ' : '· talk  ') + (f.gifted ? '✔ gift' : '· gift') + evs, r.x + r.w - 4 * s, y + 5 * s, { size: 5.5, align: 'right', color: '#6a4a2a' });
       const perk = FRIEND_PERKS[id];
       if (met && perk) {

@@ -30,6 +30,7 @@ const ITEMS = {
   foot:      { name: "Carl's Bare Foot", cat: 'weapon', dmg: 6, icon: { s: 'foot' }, desc: 'It has kicked more monsters than most swords have stabbed.' },
   toering:   { name: 'Enchanted Toe Ring', cat: 'weapon', dmg: 12, price: 400, icon: { s: 'foot', c: '#f4d03f' }, desc: '+Kick. Worn on the big toe. Fashion.' },
   steeltoe:  { name: 'Steel Toe Cap (Just The Cap)', cat: 'weapon', dmg: 20, price: 1200, icon: { s: 'foot', c: '#d8dde6' }, desc: 'Technically still barefoot.' },
+  guild_ring: { name: "Guildmaster's Toe Ring", cat: 'weapon', dmg: 26, price: 3000, icon: { s: 'foot', c: '#e07a30' }, desc: 'Forged by Mordecai in a forge that had been cold for years. Keep coming back.' },
   celestial: { name: 'Celestial Toe Ring', cat: 'weapon', dmg: 34, price: 5000, icon: { s: 'foot', c: '#c050ff' }, desc: 'The gods are watching. Specifically, your toes.' },
   // resources
   wood:     { name: 'Wood', cat: 'resource', price: 2, icon: { s: 'wood' }, desc: 'Timber! Used in crafting.' },
@@ -189,6 +190,7 @@ const MONSTERS = {
   hobgoblin: { name: 'Hobgoblin', spr: 'hobgoblin', hp: 52, dmg: 12, speed: 34, ranged: true, xp: 14, aggro: 170, drops: [['goblin_powder', 0.7], ['hob_ear', 0.25]] },
   shade:     { name: 'Dungeon Shade', spr: 'shade', hp: 40, dmg: 14, speed: 30, ghost: true, xp: 16, aggro: 200, drops: [['ectoplasm', 0.4]] },
   feralcat:  { name: 'Feral Cat', spr: 'feralcat', hp: 12, dmg: 6, speed: 68, xp: 2, aggro: 400, drops: [] },
+  rival:     { name: 'Brock Vantage', spr: 'rival', hp: 110, dmg: 8, speed: 60, rival: true, xp: 25, aggro: 0, drops: [] },
   hoarder:   { name: 'The Hoarder', spr: 'hoarder', hp: 480, dmg: 15, speed: 26, boss: true, scale: 2, xp: 200, aggro: 999, drops: [['cat_collar', 1]] },
   krakaren:  { name: 'Krakaren Clone', spr: null, hp: 1200, dmg: 20, speed: 0, boss: true, xp: 500, aggro: 999, drops: [['tentacle', 1]] },
 };

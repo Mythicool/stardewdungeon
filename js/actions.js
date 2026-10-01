@@ -214,6 +214,7 @@ function breakObject(m, o, byBomb) {
       if (chance(0.006)) { spawnDrop('box_bronze', 1, cx, cy); UI.toast('Something shiny was in that rock!', null, '#ffe070'); }
       if (!byBomb) Audio2.play('break');
       G.stats.rocks++;
+      pollOnRock(cx, cy);
       if (o.stairs) { revealStairs(o.x, o.y); UI.toast('You found the stairwell down!', null, '#ffe070'); Audio2.play('stairs'); donutComment('stairs'); }
       break;
     }
@@ -412,6 +413,7 @@ function interact(useMouse) {
         burst(o.x * TILE + 8, o.y * TILE + 6, 20, ['#ffd23a', '#ffffff'], 90);
         giveItem('box_' + o.tier, 1);
         donutComment('chest');
+        if (m.level) sponsorEvent('chest');
         UI.toast('Use the box from your hotbar to open it!', null, '#ffe070');
         return;
       }
@@ -468,12 +470,12 @@ function counterInteract(o) {
     return;
   }
   const shop = () => !f.talked || pendingHeartEvent(keeperId) ? talkTo(npc, () => openShop(o.shop)) : openShop(o.shop);
-  if (canInviteToDinner(keeperId)) {
-    UI.ask(keeperId, `(What do you need from ${def.name}?)`, [
-      { label: 'Shop', fn: shop },
-      { label: 'Invite to dinner tonight', fn: () => inviteToDinner(npc) },
-      { label: 'Never mind', cancel: true },
-    ]);
+  const extra = [];
+  if (canInviteToDinner(keeperId)) extra.push({ label: 'Invite to dinner tonight', fn: () => inviteToDinner(npc) });
+  const favor = favorOption(npc);
+  if (favor) extra.push(favor);
+  if (extra.length) {
+    UI.ask(keeperId, `(What do you need from ${def.name}?)`, [{ label: 'Shop', fn: shop }, ...extra, { label: 'Never mind', cancel: true }]);
     return;
   }
   shop();
@@ -498,6 +500,9 @@ function interactNPC(npc) {
   if (npc.id === 'mongo' && canBringMongo()) opts.push({ label: 'Bring to the Stairwell', fn: () => bringMongo() });
   if (npc.id === 'mongo' && mongoAlong()) opts.push({ label: 'Send home for today', fn: () => dismissMongo() });
   if (canInviteToDinner(npc.id)) opts.push({ label: 'Invite to dinner tonight', fn: () => inviteToDinner(npc) });
+  if (npc.id === 'zev' && sponsorAvailable()) opts.push({ label: "Hear today's sponsor deal", fn: () => offerSponsorDeal() });
+  const favor = favorOption(npc);
+  if (favor) opts.push(favor);
   if (!opts.length) return talkTo(npc);
   opts.splice(gift ? 1 : 0, 0, { label: npc.id === 'donut' || npc.id === 'mongo' ? 'Just pet' : 'Just talk', fn: () => talkTo(npc) });
   opts.push({ label: 'Never mind', cancel: true });

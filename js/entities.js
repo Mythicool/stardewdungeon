@@ -300,7 +300,7 @@ function updateDonut(dt) {
   animate(d, dt);
   if (d.bubble) { d.bubble.t -= dt; if (d.bubble.t <= 0) d.bubble = null; }
 
-  if (G.map.monsters && G.map.monsters.length) {
+  if (G.map.monsters && G.map.monsters.length && !pollTwist('donut_strike')) {
     d.cd -= dt;
     if (d.cd <= 0) {
       let best = null, bd = 120;

@@ -374,6 +374,8 @@ const NEWS_REACTIONS = {
     selfown: "Carl. You blew YOURSELF up. The chat called it 'peak content.' I called it 'embarrassing for our brand.'",
     sponsor: "You caught The Sponsor?! Carl, do you know how many ad reads that fish owes us?",
     badgift: "I heard you gave {who} a {item}. Carl, I'm begging you. Let ME pick the gifts.",
+    rival: "Did you see Brock's FACE when he yielded? I'm making it my profile picture. Forever.",
+    rival_won: "Brock beat us down the stairs, Carl. He made a whole video about it. I watched it four times. Out of spite.",
   },
   mongo: {
     died: '*Mongo sniffs you all over, very carefully, as if checking that every part of you came back.*',
@@ -395,6 +397,8 @@ const NEWS_REACTIONS = {
     selfown: "I saw the replay of you blowing yourself up. I'm not laughing. I'm... okay, I laughed a little.",
     sponsor: "You caught The Sponsor! I didn't think it was real. Zev says it has a better contract than he does.",
     badgift: "So, um. {who} told me about the {item}. Maybe next time ask me first?",
+    rival: "You beat up that Brock guy? Good. He tried to sell me energy slurry in the Plaza. Twice.",
+    rival_won: "I heard that Brock guy beat you to the stairs. Next time take me. I'll hold the door. On his face.",
   },
   mordecai: {
     died: "Heard you died. Welcome to the club. The dues are terrible. Don't make a habit of it.",
@@ -406,6 +410,8 @@ const NEWS_REACTIONS = {
     selfown: "You blew yourself up with your own Hob-Lobber. I told you. Rocks and monsters. Not your feet.",
     sponsor: "You caught The Sponsor. In all my years I've seen two crawlers do that. One of them was drunk.",
     badgift: "{who} is still muttering about some {item}. Even I know better than that, and I live in a cave.",
+    rival: "Heard you put the Vantage kid on the ground. Sponsored crawlers are all flash. Don't get cocky. Flash kills people too.",
+    rival_won: "The sponsor kid beat you down? He had a map, Carl. Borant sells those. Break more rocks.",
   },
   zev: {
     died: "Carl! Your death clip is our second most-watched moment EVER! Please don't do it again. ...Unless?",
@@ -418,6 +424,8 @@ const NEWS_REACTIONS = {
     selfown: "The self-explosion! Nine billion views! I'm not saying do it again, but I'm not NOT saying it.",
     sponsor: "You caught The Sponsor. Please, PLEASE don't eat it on camera. We have contracts.",
     badgift: "Carl, I heard about the {item} for {who}. As your PR rep: yikes. As your friend: also yikes.",
+    rival: "Carl! The Brock beatdown is a RIVALRY ARC. The Syndicate LOVES a rivalry arc. Please never become friends.",
+    rival_won: "Brock's 'GG no re' clip is everywhere. As your PR rep, I'm calling it a 'strategic loss.' Win the next one.",
   },
   pook: {
     died: "Pook heard crawler died! Pook was very sad. Pook also checked if crawler had store credit. Crawler did not.",
@@ -658,6 +666,20 @@ const DONUT_COMMENTARY = {
     'That rock, Carl. Mongo says that rock. Kick it.',
     'My baby is a GENIUS. I trained him, obviously.',
   ],
+  rival: [
+    "Carl, it's HIM. The orange jacket. Don't let him get to the stairs first.",
+    "Ugh, Brock. His sponsor is an energy drink, Carl. An ENERGY DRINK.",
+    "Brock is here. Kick him or beat him downstairs. Ideally both.",
+  ],
+  rival_chest: ["He took OUR chest, Carl! That was going to be my tiara!", 'Carl! Brock is stealing our loot! On camera!'],
+  rival_chest_carl: ["Ha! Too slow, Brock! That chest is OURS.", 'Did you see his face, Carl? Screenshot it. Frame it.'],
+  rival_win: ["He beat us down the stairs. Carl, I am going to be insufferable about this for DAYS.", "Lost to BROCK. The chat is merciless, Carl. Merciless."],
+  rival_beaten: ["We beat Brock! Somebody clip that! Put it on a loop!", "Look at him run. Tell your sponsor we said hi, Brock!"],
+  sponsor: [
+    'Did we just get SPONSORED? I want a cut. A big cut.',
+    'Brand deal complete! Tell Zev my rate just doubled.',
+    "Smile for the sponsors, Carl. No, a real smile. That's worse. Stop.",
+  ],
 };
 
 // Katia as a party member (see party.js). Invite her at PARTY_HEARTS hearts.
@@ -723,10 +745,114 @@ const FRIEND_PERKS = {
   pook: { hearts: 5, text: "15% off everything at Pook's Provisions", discount: 0.15 },
 };
 
+// Zev's daily sponsor deals (see sponsors.js). {n} in a line is the deal's goal;
+// goal(deepest) sets it and ok() says whether the deal can be offered today.
+const SPONSOR_DEALS = [
+  {
+    id: 'kicks', sponsor: 'Sole Survivor Foot Cream', tier: 1, task: 'Kick {n} monsters to death',
+    goal: deep => 8 + Math.min(8, Math.floor(deep / 3)),
+    pitch: 'Sole Survivor Foot Cream wants those famous bare feet in action. Kick {n} monsters into oblivion. Moisturize after.',
+    thanks: "Sole Survivor's sales are up 400%. Nobody knows who's buying it. Probably your fans. Your fans are weird, Carl.",
+  },
+  {
+    id: 'donut', sponsor: 'Princess Kibble', tier: 1, task: 'Let Donut finish off {n} monsters',
+    goal: deep => 5 + Math.min(5, Math.floor(deep / 4)),
+    pitch: "Princess Kibble wants their brand ambassador on screen. That's Donut. Let her land {n} killing blows. Don't steal her kills, Carl.",
+    thanks: "Princess Kibble sent Donut a lifetime supply. Donut sent it back. 'Too common.' They're thrilled anyway.",
+  },
+  {
+    id: 'chests', sponsor: 'Loot Crate Weekly', tier: 1, task: 'Open {n} chests in the Stairwell',
+    goal: deep => deep >= 10 ? 3 : 2,
+    pitch: 'Loot Crate Weekly wants unboxing content. Find and open {n} chests down in the Stairwell. React big. Bigger. Good.',
+    thanks: 'Loot Crate Weekly says the unboxing numbers broke their chart. They want to know if you would unbox a crate of their crates.',
+  },
+  {
+    id: 'gems', sponsor: 'Sparkle Cola', tier: 2, task: 'Dig up {n} gems (quartz counts)',
+    goal: deep => deep >= 14 ? 3 : 2, ok: () => G.stats.deepest >= 5,
+    pitch: 'Sparkle Cola wants SPARKLE. Dig up {n} gems. Quartz counts. Sparkle Cola is not picky. Sparkle Cola is mostly sugar.',
+    thanks: "Sparkle Cola is naming a flavor after you. It's called 'Carl.' It tastes like rocks. They say that's a compliment.",
+  },
+  {
+    id: 'bombs', sponsor: 'Boom Juice Energy Drink', tier: 2, task: 'Kill {n} monsters with bombs',
+    goal: deep => 3 + Math.min(2, Math.floor(deep / 10)),
+    ok: () => G.stats.bombs > 0 || countItem('bomb') + countItem('megabomb') > 0,
+    pitch: 'Boom Juice Energy Drink wants explosions. Specifically, monsters inside explosions. {n} of them. Can you do that? Of course you can.',
+    thanks: "Boom Juice says, and I quote, 'KABOOM.' That's the whole note. They loved it.",
+  },
+  {
+    id: 'team', sponsor: 'Friendship Is Magic Cereal', tier: 2, task: 'Kill {n} monsters with a friend in your party',
+    goal: () => 8,
+    ok: () => !!G.party || mongoAlong() || canInvite('katia') || canBringMongo(),
+    pitch: "Friendship Is Magic Cereal wants teamwork! Bring a friend into the Stairwell and win {n} fights together. Katia, Mongo, whoever. The cereal doesn't care.",
+    thanks: "Friendship Is Magic Cereal is putting you and your buddy on the box! Not Donut. Donut has her own box deal.",
+  },
+  {
+    id: 'rush', sponsor: 'Early Bird Coffee', tier: 2, task: 'Reach level {n} of the Stairwell before noon',
+    goal: deep => Math.max(3, deep + 1), ok: () => G.time < 660,
+    pitch: "Early Bird Coffee wants a morning crawl! Get down to level {n} before noon. Coffee not included. Coffee is never included.",
+    thanks: "Early Bird says that was the most caffeinated thing they've ever seen, and they've seen inside their own factory.",
+  },
+  {
+    id: 'flawless', sponsor: 'Untouchable Insurance', tier: 3, task: 'Clear a Stairwell floor without getting hit',
+    goal: () => 1,
+    pitch: "Untouchable Insurance wants a flawless floor. Kill everything on one level without taking a single hit. They're very confident in you. Legally, they are not liable.",
+    thanks: "Untouchable Insurance is running the footage in their ads. You're the face of not getting hurt. Given everything, that's hilarious.",
+  },
+];
+
+const SPONSOR_TIERS = {
+  1: { box: 'box_bronze', followers: 1000 },
+  2: { box: 'box_silver', followers: 2500 },
+  3: { box: 'box_gold', followers: 6000 },
+};
+
+const ZEV_SPONSOR = {
+  intro: "Carl! Carl. I have a sponsor on the line. Here's the pitch:",
+  yes: ["YES. I'll tell them you said yes. I already told them you said yes.", 'Love it. Love YOU. Go make content.'],
+  no: ["Okay! No pressure! A little pressure. They'll call back tomorrow.", "Fine. I'll tell them you're 'creatively booked.'"],
+};
+
 const DONUT_BATTLE_QUIPS = [
   'Magic Missile!', 'Take THAT!', 'Carl! Did you see that?!', 'Nobody touches my Carl!',
   'Another one for the highlight reel!', 'Mongo would have liked that one.', 'Pew pew!', 'For the fans!',
 ];
+// Brock Vantage, the rival crawler (see rival.js). {w}/{l} are Carl's race
+// wins/losses against him, {n} how many times Carl has beaten him up.
+const RIVAL_LINES = {
+  arrive: [
+    "Oh, cool, the no-pants guy. Hey chat, watch me beat a farmer to the stairs!",
+    "Brock Vantage, Gnu-Wave Energy Slurry. Your chests are mine, barefoot. Nothing personal. It's content.",
+  ],
+  arrive_again: [
+    "You again? Chat, it's the farmer. Somebody start a timer.",
+    "Same floor, same no pants. Race you, Carl. Loser reads the sponsor ad.",
+    "Record's {w} to {l}, Carl. I'm about to fix that.",
+  ],
+  arrive_beaten: [
+    "Okay, so last time was a fluke. I've been doing leg day. Race me.",
+    "Round two, Carl. Or three. Whatever. I don't count my losses on stream.",
+    "My sponsor says I'm not allowed to lose to a farmer again. Don't make this weird.",
+  ],
+  taunt: [
+    "Smash that follow button, chat!", 'Nice boxers. Did Borant lose your pants?', 'This floor is sponsored by me, winning.',
+    "Is that cat narrating? I have a drone for that.", 'Drink Gnu-Wave! It tastes like lightning and regret!',
+  ],
+  shove: ['Out of the way, farmer!', 'Excuse me. Crawler coming through.', 'Move it, barefoot!'],
+  dig: ["Sponsor map says it's this rock. Thanks, sponsor!", 'Stairs are right under here. Bye, Carl!'],
+  found: ['Stairs! Chat, I am SO good at this.', 'And that, chat, is how a professional does it.'],
+  chest: ['Mine! Chat, unboxing after the break!', 'Ooh, free loot. Thanks for holding it, Carl.'],
+  carl_chest: ["Hey! I called that chest! In my head!", 'That was MY chest! Chat, are you seeing this?'],
+  hurt: ['Ow! Not the face, I stream with this face!', "Hey! Chat, he's attacking me! Report him!", 'Rude!', 'Okay, okay, I get it!'],
+  hurt_low: ["Fine! FINE! Truce?", "I'm calling my sponsor!", "Stop, my health bar is on camera!"],
+  win: ['Smell ya later, farmer!', 'GG, no re!', 'First! Chat, clip that!'],
+  lose: ["Whatever, my drone lagged.", 'This is so rigged.', "I let you win. For the algorithm."],
+  yield: [
+    "Okay! Okay! You win! Take the stuff and stop kicking!",
+    "I yield! Chat, that never happened. Take it, Carl, just stop!",
+    "That's {n} times now. My sponsor is going to drop me. Here, take it all!",
+  ],
+};
+
 const DONUT_IDLE_QUIPS = [
   'Carl, you missed a spot.', "I'm supervising.", 'This dirt is beneath me. Literally.', 'Is it lunch yet?',
   '*purrs*', 'Wave to the camera, Carl!', 'Mongo! Stop eating that!', 'My paws are getting dirty.',
@@ -768,6 +894,7 @@ const ACHIEVEMENTS = {
   fountain:     { name: 'Wishful Thinking', desc: 'You threw money into a fountain. Borant thanks you for your donation.', followers: 50 },
   harvest_100:  { name: 'Big Ag', desc: 'One hundred crops harvested. You are now a Faction. Please register.', box: 'box_silver', followers: 5000 },
   eat_bomberry: { name: 'Do NOT Eat', desc: 'The label said do not eat. You ate. The audience respects the commitment.', followers: 2000 },
+  crowd_pleaser:{ name: 'Crowd Pleaser', desc: 'The viewers voted to make your floor deadlier, and you survived it anyway. They are already voting on the next one.', box: 'box_silver', followers: 2000 },
   first_craft:  { name: 'Arts and Crafts', desc: 'You made something! Put it on the fridge. You do not have a fridge.', followers: 200 },
   box_open:     { name: 'Unboxing Video', desc: 'You opened a loot box. The dopamine is sponsored.', followers: 200 },
   upgrade:      { name: 'Enchanted Equipment', desc: "You upgraded a tool. Mordecai pretended not to be proud.", followers: 800 },
@@ -779,7 +906,15 @@ const ACHIEVEMENTS = {
   dinner:       { name: 'Dinner Is Served', desc: "You had a friend over for dinner. The Syndicate rated it 'surprisingly wholesome' and asked where the explosions were.", box: 'box_silver', followers: 1500 },
   dinner_all:   { name: 'Dinner Party Circuit', desc: 'Katia, Zev, Mordecai and Pook have all eaten at your table. Borant is pitching a cooking show. You will not be paid.', box: 'box_gold', followers: 10000 },
   dinner_ghost: { name: 'Left on Read', desc: 'You invited a friend to dinner and never showed up. The audience gasped. Then they rewatched it four times.', followers: 300 },
+  sponsored:    { name: 'Brought To You By', desc: 'You completed a sponsor deal. Somewhere, a brand manager wept with joy. Then billed Borant.', box: 'box_silver', followers: 2000 },
+  sponsor_10:   { name: 'Brand Ambassador', desc: 'Ten sponsor deals done. Your face is on a cereal box, an energy drink and, inexplicably, a foot cream.', box: 'box_gold', followers: 10000 },
   mongo_crawl:  { name: 'Release the Dinosaur', desc: 'You took Mongo into the Stairwell. The monsters were not consulted.', box: 'box_silver', followers: 2000 },
+  favor:        { name: 'Happy to Help', desc: 'You did a friend a personal favor. Borant has billed them for your time.', box: 'box_bronze', followers: 1000 },
+  favor_story:  { name: 'Story Arc', desc: "You saw a friend's favor all the way through. The Syndicate is calling it 'character development.'", box: 'box_gold', followers: 10000 },
+  favor_all:    { name: "Everybody's Hero", desc: 'You finished every friend favor. Five storylines, one pair of boxer shorts.', box: 'box_legendary', followers: 100000 },
+  rival_race:   { name: 'Photo Finish', desc: 'You beat Brock Vantage down the stairs. His sponsor has issued a statement blaming the stairs.', box: 'box_bronze', followers: 1500 },
+  rival_beaten: { name: 'Unsubscribed', desc: "You beat up a rival crawler until he handed over his loot. The Syndicate calls it 'competitive streaming.'", box: 'box_silver', followers: 3000 },
+  rival_nemesis:{ name: 'Nemesis', desc: 'You have beaten Brock Vantage five times. He has started a podcast about it.', box: 'box_gold', followers: 15000 },
   mail_first:   { name: "You've Got Mail", desc: 'A friend wrote you a letter. On paper. In a dungeon. The Syndicate finds this unbearably quaint.', box: 'box_bronze', followers: 500 },
   pen_pals:     { name: 'Pen Pals', desc: "Letters from all six friends, including one from a dinosaur. Borant's mailroom has asked you to make fewer friends.", box: 'box_gold', followers: 8000 },
   good_nose:    { name: 'Good Nose', desc: 'Mongo sniffed out the stairs for you. He would like a treat. He would like ALL the treats.', box: 'box_bronze', followers: 1000 },

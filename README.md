@@ -61,10 +61,19 @@ bomb-lobbing hobgoblins, shades). Break rocks to find the hidden stairs, or clea
 - **Level 10:** The Hoarder, Neighborhood Boss (summons "cats", throws trash)
 - **Level 20:** The Krakaren Clone, Borough Boss (telegraphed tentacle slams, spawns minions)
 - Four cave themes, going deeper indefinitely
+- **Audience polls:** every regular cave floor opens with a live viewer vote on a twist (Gold Rain,
+  Lights Out, Donut on Strike, Caffeinated Monsters, Double Monsters, Glass Cannon). The crowd
+  loves chaos, so risky twists win more often, and they pay more followers when Carl reaches the stairs.
 
 **Combat.** Donut narrates the Stairwell live: new depths, bosses, low health, big hits,
 loot, multi-kills and self-inflicted explosions (she gets sweeter about it at 6+ hearts). Carl kicks. Upgrade the kick with toe rings (he refuses to wear shoes). Craft
 Hob-Lobbers and Carl's Doomsday Scenario to blow up rocks, monsters, and occasionally yourself.
+
+**Rival crawler.** From level 3, Brock Vantage (sponsored by Gnu-Wave Energy Slurry) sometimes
+follows Carl down the ladder. He talks trash, grabs any chest he can reach, and heads straight
+for the rock hiding the stairs, because his sponsor sold him a map. Beat him down the stairs for
+a follower bonus, or kick him (Donut, Katia and Mongo help) until he yields and hands over
+everything he grabbed plus a loot box. Friends hear about it either way.
 
 **Friends.** Talk to and gift Donut, Mongo, Katia, Mordecai, Zev and Pook. Each has loves,
 likes and hates, heart levels, and dialogue that unlocks as the hearts go up.
@@ -94,8 +103,20 @@ Friends also write. Letters land overnight in the **mailbox** by your cabin door
 is up when there's mail). They thank you for loved gifts, birthday presents and good dinners,
 react to your Stairwell exploits, and send the odd care package. Get close enough and Katia,
 Mordecai, Zev, Pook and Donut each mail you a recipe of their own.
+Each friend except Mongo also has a three-part **favor**: Katia's window box, Mordecai's cold
+forge, Zev's ratings emergency, Pook's special shelf and Donut's royal portrait. A part unlocks
+at 2, 4 and 6 hearts (a gold ! appears over their head), asks for something to fetch, slay or
+reach in the Stairwell, and ends in a short scene with a reward. The last part of each story
+pays out something special, like the Guildmaster's Toe Ring or a recipe. Active favors show in
+the tracker, and the Social tab counts them (✿ 1/3).
 
-**The System AI.** Snarky morning announcements, 49 achievements that pay out in loot boxes
+**Sponsor deals.** Once you've been into the Stairwell, Zev has a sponsor challenge for you every
+day: kick monsters to death, let Donut land the killing blows, blow things up, open chests, dig
+up gems, fight alongside a friend, race to a depth before noon, or clear a whole floor without
+getting hit. Hear the pitch from Zev in town and take it or pass. A deal you take shows up in the
+objectives panel and pays a loot box and followers the moment it's done.
+
+**The System AI.** Snarky morning announcements, 58 achievements that pay out in loot boxes
 (Bronze, Silver, Gold, Fan, Legendary), follower milestones, a TV with Borant programming, and
 a main objective track from "Welcome to the Homestead" through "Syndicate Darling"
 (1,000,000 followers).
@@ -130,7 +151,11 @@ js/
   banter.js         friends' gossip about recent events, speech-bubble banter
   commentary.js     Donut's live commentary in the Stairwell
   party.js          Katia and Mongo as party members: follow, fight, shield, sniff
+  rival.js          Brock Vantage, the rival crawler who races Carl to chests and stairs
   dinner.js         dinner nights: invites, the guest at the cabin table, the meal scene
+  favors.js         friend favors: each friend's three-part story, tracking and rewards
+  sponsors.js       Zev's daily sponsor deals: the pitch, progress hooks, payouts
+  polls.js          audience polls: the viewer vote on each floor's twist, payouts
   data_mail.js      friends' letters: thank-yous, recipes, news reactions, care packages
   mail.js           friend mail: overnight delivery, the cabin mailbox, reading letters
   render.js         world rendering, lighting, weather, title screen

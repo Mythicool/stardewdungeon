@@ -338,8 +338,8 @@ function renderLighting(ctx, W, H) {
   };
   const P = G.player;
   const flick = 1 + Math.sin(performance.now() / 90) * 0.02;
-  light(P.x, P.y - 8, (m.dark ? 88 : 46) * flick);
-  if (G.donut && m.dark) light(G.donut.x, G.donut.y - 6, 26, 0.6);
+  light(P.x, P.y - 8, (m.dark ? 88 : 46) * flick * pollLight());
+  if (G.donut && m.dark && pollLight() === 1) light(G.donut.x, G.donut.y - 6, 26, 0.6);
   const pm = partyMember();
   if (pm && m.dark) light(pm.x, pm.y - 8, 30, 0.6);
   if (mongoAlong() && m.dark) light(G.mongo.x, G.mongo.y - 6, 24, 0.6);
@@ -410,6 +410,12 @@ function renderBubbles(ctx) {
     ctx.strokeStyle = '#3a2210'; ctx.lineWidth = Math.max(1, s / 2); ctx.strokeRect(bx, by, bw, bh);
     lines.forEach((l, i) => drawText(ctx, l, sx, by + 2 * s + i * 7 * s, { size: 5.5, bold: true, align: 'center', color: '#3a2210' }));
     ctx.globalAlpha = 1;
+  }
+  for (const e of list) {
+    const mark = !e.bubble && e.id && favorMarker(e.id);
+    if (!mark || (e === G.mongo && e.map !== G.map.id)) continue;
+    const bob = Math.sin(performance.now() / 250) * s;
+    drawText(ctx, mark, (e.x - cam.x) * z, (e.y - 30 - cam.y) * z + bob, { size: 8, bold: true, align: 'center', color: mark === '!' ? '#ffd23a' : '#ff8fd0', shadow: 'rgba(0,0,0,0.8)' });
   }
   for (const f of G.floaters) {
     const sx = (f.x - cam.x) * z, sy = (f.y - cam.y) * z;
