@@ -61,6 +61,9 @@ bomb-lobbing hobgoblins, shades). Break rocks to find the hidden stairs, or clea
 - **Level 10:** The Hoarder, Neighborhood Boss (summons "cats", throws trash)
 - **Level 20:** The Krakaren Clone, Borough Boss (telegraphed tentacle slams, spawns minions)
 - Four cave themes, going deeper indefinitely
+- **Audience polls:** every regular cave floor opens with a live viewer vote on a twist (Gold Rain,
+  Lights Out, Donut on Strike, Caffeinated Monsters, Double Monsters, Glass Cannon). The crowd
+  loves chaos, so risky twists win more often, and they pay more followers when Carl reaches the stairs.
 
 **Combat.** Donut narrates the Stairwell live: new depths, bosses, low health, big hits,
 loot, multi-kills and self-inflicted explosions (she gets sweeter about it at 6+ hearts). Carl kicks. Upgrade the kick with toe rings (he refuses to wear shoes). Craft
@@ -97,7 +100,7 @@ up gems, fight alongside a friend, race to a depth before noon, or clear a whole
 getting hit. Hear the pitch from Zev in town and take it or pass. A deal you take shows up in the
 objectives panel and pays a loot box and followers the moment it's done.
 
-**The System AI.** Snarky morning announcements, 49 achievements that pay out in loot boxes
+**The System AI.** Snarky morning announcements, 50 achievements that pay out in loot boxes
 (Bronze, Silver, Gold, Fan, Legendary), follower milestones, a TV with Borant programming, and
 a main objective track from "Welcome to the Homestead" through "Syndicate Darling"
 (1,000,000 followers).
@@ -134,6 +137,7 @@ js/
   party.js          Katia and Mongo as party members: follow, fight, shield, sniff
   dinner.js         dinner nights: invites, the guest at the cabin table, the meal scene
   sponsors.js       Zev's daily sponsor deals: the pitch, progress hooks, payouts
+  polls.js          audience polls: the viewer vote on each floor's twist, payouts
   render.js         world rendering, lighting, weather, title screen
   game.js           main loop, time, days, transitions, save/load
 ```

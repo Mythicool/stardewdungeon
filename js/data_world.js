@@ -840,6 +840,7 @@ const ACHIEVEMENTS = {
   fountain:     { name: 'Wishful Thinking', desc: 'You threw money into a fountain. Borant thanks you for your donation.', followers: 50 },
   harvest_100:  { name: 'Big Ag', desc: 'One hundred crops harvested. You are now a Faction. Please register.', box: 'box_silver', followers: 5000 },
   eat_bomberry: { name: 'Do NOT Eat', desc: 'The label said do not eat. You ate. The audience respects the commitment.', followers: 2000 },
+  crowd_pleaser:{ name: 'Crowd Pleaser', desc: 'The viewers voted to make your floor deadlier, and you survived it anyway. They are already voting on the next one.', box: 'box_silver', followers: 2000 },
   first_craft:  { name: 'Arts and Crafts', desc: 'You made something! Put it on the fridge. You do not have a fridge.', followers: 200 },
   box_open:     { name: 'Unboxing Video', desc: 'You opened a loot box. The dopamine is sponsored.', followers: 200 },
   upgrade:      { name: 'Enchanted Equipment', desc: "You upgraded a tool. Mordecai pretended not to be proud.", followers: 800 },

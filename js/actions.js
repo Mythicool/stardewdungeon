@@ -214,6 +214,7 @@ function breakObject(m, o, byBomb) {
       if (chance(0.006)) { spawnDrop('box_bronze', 1, cx, cy); UI.toast('Something shiny was in that rock!', null, '#ffe070'); }
       if (!byBomb) Audio2.play('break');
       G.stats.rocks++;
+      pollOnRock(cx, cy);
       if (o.stairs) { revealStairs(o.x, o.y); UI.toast('You found the stairwell down!', null, '#ffe070'); Audio2.play('stairs'); donutComment('stairs'); }
       break;
     }
