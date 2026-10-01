@@ -73,8 +73,10 @@ gift; bad ones cost hearts. The Social tab tracks how many each friend has left 
 Friends keep up with the news: for a few days after you beat a boss, die, pass out, reach a
 new depth, blow yourself up or hand someone a gift they hate, they'll bring it up when you
 talk to them. When two friends are near each other (and you), they banter in speech bubbles.
+Every friend has a birthday (shown in the Social tab, with a reminder that morning). Gifts on
+a birthday count four times as much, and hated ones twice as badly.
 
-**The System AI.** Snarky morning announcements, 40 achievements that pay out in loot boxes
+**The System AI.** Snarky morning announcements, 41 achievements that pay out in loot boxes
 (Bronze, Silver, Gold, Fan, Legendary), follower milestones, a TV with Borant programming, and
 a main objective track from "Welcome to the Homestead" through "Syndicate Darling"
 (1,000,000 followers).

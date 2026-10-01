@@ -163,6 +163,10 @@ class GameMenu {
       ctx.drawImage(img, r.x + 2 * s, y + s, ps * img.width / img.height, ps);
       ctx.globalAlpha = 1;
       drawText(ctx, met ? NPC_DEFS[id].name : '???', r.x + 26 * s, y + 3 * s, { size: 6.5, bold: true });
+      if (met && BIRTHDAYS[id]) {
+        const today = isBirthday(id);
+        drawText(ctx, today ? 'Birthday today!' : 'Birthday: ' + birthdayText(id), r.x + 112 * s, y + 4 * s, { size: 5.5, bold: today, color: today ? '#d03080' : '#8a6a4a' });
+      }
       const h = Math.floor(f.pts / 250);
       for (let k = 0; k < 10; k++) drawText(ctx, '♥', r.x + 26 * s + k * 8 * s, y + 11 * s, { size: 7, color: k < h ? '#e0305a' : '#c8b090' });
       const evs = HEART_EVENTS[id] ? `  ✦ ${heartEventCount(id)}/${HEART_EVENTS[id].length}` : '';

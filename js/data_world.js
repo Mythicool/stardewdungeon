@@ -455,6 +455,54 @@ const BANTER_SCENES = [
   { id: 'kz_died', news: 'died', lines: [['zev', 'Katia, how do we spin Carl dying?'], ['katia', "We don't spin it, Zev. We bring him soup."]] },
 ];
 
+// Birthdays. On a friend's birthday their first chat is `talk`, and gifts count
+// for much more (see giveGift): `love` for a loved gift, `gift` for a liked or
+// neutral one, `hate` for a hated one.
+const BIRTHDAYS = {
+  donut: {
+    season: 0, day: 9,
+    talk: "Carl. Do you know what day it is? It's MY day. The whole Syndicate knows. I made sure.",
+    love: "A birthday gift worthy of a princess! Carl, I'm crying. Cats don't cry. This is allergies.",
+    gift: "For my birthday? Oh, Carl. It's not a tiara, but it's the thought that counts. The thought should have been a tiara.",
+    hate: "On my BIRTHDAY, Carl?! I'm telling the fans. All of them. Tonight.",
+  },
+  pook: {
+    season: 0, day: 22,
+    talk: "Today is Pook's birthday! Pook is giving everyone a birthday discount! ...Of zero percent. But with feeling!",
+    love: "Pook's birthday is the best birthday! Pook will put this on the VERY special shelf!",
+    gift: "Crawler remembered Pook's birthday! Pook is so happy Pook might give a real discount. Pook will not. But Pook might.",
+    hate: "Pook... Pook will put this in the back. Even on Pook's birthday. Especially on Pook's birthday.",
+  },
+  mongo: {
+    season: 1, day: 3,
+    talk: '*Mongo is wearing a tiny party hat. Donut put it there. He is VERY proud of it.*',
+    love: '*Mongo SCREECHES the birthday screech and runs a full birthday lap of the farm!*',
+    gift: '*Mongo accepts his birthday present with a dignified chomp. His party hat wobbles.*',
+    hate: "*Mongo eats it anyway, because it's his birthday and he refuses to be sad. His eyes are watering.*",
+  },
+  katia: {
+    season: 1, day: 18,
+    talk: "It's my birthday! Is it weird that I've never had one as a crawler before? Donut says it's a 'content opportunity.'",
+    love: "Carl! For my birthday? This is perfect. You actually remembered. I'm going to be weird about this for days.",
+    gift: "You remembered my birthday! That's honestly the best part. Thank you.",
+    hate: "...Thanks? On my birthday? I'm choosing to believe this is a prank.",
+  },
+  mordecai: {
+    season: 2, day: 12,
+    talk: "Birthday? Who told you. Was it the cat? It was the cat.",
+    love: "...Hm. Nobody's given me a birthday present in a very, very long time. Thank you, kid.",
+    gift: "A gift. For my birthday. You're soft, crawler. ...Thanks.",
+    hate: "Of all the days. Get out. Come back tomorrow and we'll pretend this didn't happen.",
+  },
+  zev: {
+    season: 3, day: 7,
+    talk: "It's my birthday, Carl! I've scheduled a surprise party for myself at four. Act surprised.",
+    love: "Carl!!! Best birthday gift EVER! I'm posting it! I'm posting it with a birthday filter!",
+    gift: 'A birthday gift! Analog, sincere, a little awkward. Very on-brand for you. Thank you!',
+    hate: "Carl. On my BIRTHDAY. Is that a fish? Is it fish-adjacent? I'm not even going to look.",
+  },
+};
+
 const DONUT_BATTLE_QUIPS = [
   'Magic Missile!', 'Take THAT!', 'Carl! Did you see that?!', 'Nobody touches my Carl!',
   'Another one for the highlight reel!', 'Mongo would have liked that one.', 'Pew pew!', 'For the fans!',
@@ -506,6 +554,7 @@ const ACHIEVEMENTS = {
   season:       { name: 'Collapse Survivor', desc: 'You survived a seasonal collapse. The Homestead rebooted. You did not. Good job.', box: 'box_gold', followers: 10000 },
   heart_event:  { name: 'Very Special Episode', desc: 'You shared a heartfelt moment with a friend. The Syndicate wept. Then it asked for a sequel.', box: 'box_bronze', followers: 1500 },
   heart_all:    { name: 'Series Finale', desc: 'You saw every heart event. The writers room is out of ideas. Borant has ordered six more seasons anyway.', box: 'box_legendary', followers: 100000 },
+  birthday:     { name: 'Many Happy Returns', desc: "You gave a friend a gift on their birthday. Borant does not celebrate birthdays. Borant celebrates quarterly earnings.", box: 'box_silver', followers: 2500 },
 };
 
 const MAIN_QUESTS = [
