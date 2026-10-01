@@ -503,6 +503,114 @@ const BIRTHDAYS = {
   },
 };
 
+// Dinner nights (see dinner.js). A guest's reaction to the dish is `dishes[item]`
+// if there is one, else the line for how they feel about it (`love`, `like`,
+// `neutral`, `hate`), plus `cooked` when Carl made it himself. `talk` scenes
+// play after the meal, in order, gated by hearts.
+const DINNER_LINES = {
+  katia: {
+    invite: ["Dinner? At your place? I'd love to! I'll be there at six.", "You're cooking? For me? ...Okay, yes. Six o'clock. I'm bringing my appetite."],
+    tooSoon: "We just had dinner, Carl! Let's do it again next week. I'm still full.",
+    tooLate: "It's too late for dinner tonight. Ask me earlier tomorrow?",
+    arrive: 'Hi! Something smells... well, something smells. What are we having?',
+    love: "Carl, this is amazing. I haven't had a meal like this since before. Thank you.",
+    like: 'Mm! This is really good. You can cook! Who knew?',
+    neutral: "It's... food! It's food, Carl. And honestly, the company is the good part.",
+    hate: "I... okay. I'm going to be brave about this. For you. *chews heroically*",
+    cooked: 'You made this yourself? That makes it taste twice as good.',
+    dishes: {
+      stew: "Hobgoblin Stew! My grandma made a stew like this. Minus the hobgoblins. I think.",
+      pie: "Pie?! Carl, you made pie? I'm going to cry into it. Is that allowed?",
+      bomberry: "Carl, did that plate just tick? CARL!",
+    },
+    talk: [
+      [0, [['katia', "Before all this, I used to have people over every Sunday. I forgot how much I missed it."], ['donut', "Carl doesn't have people over. He has Mongo over. It's not the same."]]],
+      [3, [['katia', 'Sometimes my body changes shape when I sleep. Last night I woke up as a door. Mongo tried to walk through me.'], ['donut', 'We have ALL been there, Katia.']]],
+      [6, [['katia', "Can I say something cheesy? Whatever happens down there, this is what I'm fighting for. Dinners like this."], ['donut', "That's not cheesy. That's ratings."]]],
+    ],
+    bye: "Thanks for dinner, Carl. Same time next week? I'll bring dessert. Okay, Pook's dessert.",
+    stoodUp: "I sat at your table until ten, Carl. Donut kept me company. She was very kind about you. Mostly.",
+  },
+  zev: {
+    invite: ["A dinner episode? Carl, the sponsors are going to LOVE this. Six o'clock! I'll bring a ring light.", "Dinner! At the Homestead! Intimate, authentic, very relatable. See you at six!"],
+    tooSoon: "We just did a dinner episode, Carl. Overexposure is a real thing. Next week!",
+    tooLate: "Too late tonight, Carl. Prime time is over. Ask me tomorrow!",
+    arrive: 'Okay, the lighting in here is terrible, but we can call it rustic. What are we eating?',
+    love: "Carl! This is SO good. And it photographs beautifully. Hold still, I'm posting this.",
+    like: "Ooh, cute plating! Very farm-to-table. Very 'crawler next door.'",
+    neutral: "It's fine! It's fine. The audience doesn't watch for the food, they watch for your face.",
+    hate: "Carl. CARL. Is this a fish? We have TALKED about fish. I'm going to eat the garnish.",
+    cooked: "Homemade? Oh, the authenticity numbers on this are going to be off the charts.",
+    dishes: {
+      pie: "Hoarder's Gourd Pie! Carl, the comments are already calling you 'Chef Pantsless.' It's trending!",
+      sponsorfish: "Is that... The Sponsor? On a plate? Carl, that is a LEGAL issue. Several sponsors are watching this.",
+      bomberry: "Oh, a bomb dish? Very edgy. Very ... Carl, why is it smoking?",
+    },
+    talk: [
+      [0, [['zev', "Fun fact: dinner episodes have a ninety percent completion rate. Breakfast episodes? Twelve. Nobody likes breakfast."], ['donut', 'I like breakfast. I have it six times a day.']]],
+      [3, [['zev', "Off the record, Borant wanted me to slip you a sponsored hot sauce. I didn't. You're welcome."], ['donut', 'Was it a good hot sauce, Zev?'], ['zev', '...It was SUCH a good hot sauce.']]],
+      [6, [['zev', "You know, nobody at Borant has ever invited me over for dinner. Not once. Thanks, Carl. I'm not filming this part."], ['donut', "He's filming this part."]]],
+    ],
+    bye: "That's a wrap! Great episode, Carl. Thank you for having me. Seriously.",
+    stoodUp: "You invited me to dinner and then GHOSTED me, Carl. On camera. Do you know what that did to our engagement?",
+  },
+  mordecai: {
+    invite: ["Dinner? I don't do dinners. ...Fine. Six o'clock. I'm closing the shop early, so it had better be worth it.", "You're feeding me? Hm. Six. Don't make a fuss."],
+    tooSoon: 'We just had dinner, kid. Once a week is plenty of feelings for me.',
+    tooLate: "It's late, crawler. Ask me tomorrow, and earlier.",
+    arrive: "Nice place. Smaller than my last guild. Cleaner, too. Where's the food?",
+    love: "...Now THAT is a meal. I'd forgotten food could taste like this.",
+    like: "Not bad, kid. Not bad at all.",
+    neutral: "Food's food. I've eaten worse. I've eaten a lot worse.",
+    hate: "You fed me THIS? I've trained a hundred crawlers and not one of them tried to poison me at the table.",
+    cooked: 'You cooked it yourself. Hm. Good. A crawler who can feed himself lasts longer.',
+    dishes: {
+      stew: 'Hobgoblin Stew. Real stew, with real hobgoblin. Takes me back. Way back.',
+      beer: "Beer for dinner. Kid, I'm proud of you and worried about you in equal measure.",
+      bomberry: 'Bomb Berries. On the table. Get down!',
+    },
+    talk: [
+      [0, [['mordecai', "Rule one of crawling: eat when you can. Rule two: sit with your back to the wall. You've got me facing the door."], ['donut', "That's because you're the guest, Mordecai. The guest gets the view."]]],
+      [3, [['mordecai', "I've had a lot of crawlers. Most of them never thought to feed their guide. You're an odd one, Carl."], ['donut', 'He gets it from me.']]],
+      [6, [['mordecai', "A long time ago, I used to cook for my whole guild. Big pots. Loud tables. I'd forgotten that. Thanks for reminding me."], ['donut', "...Mordecai, that's lovely. I'm not crying. Cats don't cry."]]],
+    ],
+    bye: "Thanks for the meal, kid. Now go to sleep. You've got a Stairwell in the morning.",
+    stoodUp: "I closed the guild early for you, crawler. Sat in your cabin like an idiot. Don't do that again.",
+  },
+  pook: {
+    invite: ['Dinner?! Pook is invited to DINNER? Pook will close the shop at six! Pook will wear the good apron!', "Pook accepts! Pook has never been invited anywhere that wasn't a delivery!"],
+    tooSoon: 'Pook already had dinner with Crawler this week! Pook does not want to be greedy. Next week!',
+    tooLate: "It is too late for dinner! Pook is already in pajamas. Tomorrow, maybe!",
+    arrive: "Pook is here! Pook brought nothing! Pook's apron is very clean! What does Crawler serve?",
+    love: 'OH! Pook has never tasted something so good! Pook would sell it for a fortune, but Pook ate it!',
+    like: "Very good! Pook gives this four Pooks out of five!",
+    neutral: "Pook eats it all! Pook is a polite guest! ...Pook would add salt.",
+    hate: "Pook... Pook will eat this to be polite. Pook will be very quiet for a while.",
+    cooked: "Crawler made this himself?! Pook will tell every customer! Pook might charge them to hear it!",
+    dishes: {
+      tunamelt: "A Tuna Melt! From Pook's own shelf! Pook is eating Pook's own merchandise! It is wonderful!",
+      corn: "Corn! Pook's favorite! Pook will eat it in a circle! Watch!",
+      bomberry: "Pook does not know this dish. Pook thinks it is ticking.",
+    },
+    talk: [
+      [0, [['pook', 'Pook sells food all day, but nobody ever cooks for Pook! This is a very new feeling.'], ['donut', 'Pook, sweetie, you have sauce on your ears.']]],
+      [3, [['pook', 'Pook has a secret. Pook keeps one sandwich under the counter for crawlers who come in sad. Crawler has never come in sad. Pook is glad.'], ['donut', 'He comes in pantsless. That is a kind of sad.']]],
+      [6, [['pook', "Pook was a shopkeeper for a very long time before Crawler came. Pook had customers. Now Pook has a friend."], ['donut', "Oh, Pook. Carl, give him the rest of the food. ALL of it."]]],
+    ],
+    bye: "Thank you for dinner, Crawler! Pook will remember it forever! Pook will remember it at work tomorrow!",
+    stoodUp: "Pook closed the shop and waited at Crawler's table. Pook ate a napkin. Pook was very hungry.",
+  },
+};
+
+// Donut's aside after the guest reacts, by how the dish went.
+const DINNER_DONUT = {
+  love: ['Carl! You fed a guest properly! I am so proud I could post about it.', "Look at that face. That's a five-star review, Carl. Frame it."],
+  like: ["Not bad, Carl. I'd give it three paws. Four if you'd let me have some.", 'See? You CAN entertain. You just need a cat to supervise.'],
+  neutral: ["The food's fine, Carl. It's the presentation. Next time, add a tiara.", 'I would have gone with kibble. Just saying. Premium kibble.'],
+  hate: ["Carl, that's the worst thing you've ever served. And you once served me a rat.", "Oh no. Oh no no no. Carl, the viewers saw that."],
+  cooked: ['Homemade, Carl! The Syndicate LOVES a homemade episode.'],
+};
+
 // Donut's live commentary in the Stairwell (see commentary.js). {n} is a level,
 // {item} an item name. `lowhp_close` replaces `lowhp` once Donut has 6+ hearts.
 const DONUT_COMMENTARY = {
@@ -626,6 +734,9 @@ const ACHIEVEMENTS = {
   heart_all:    { name: 'Series Finale', desc: 'You saw every heart event. The writers room is out of ideas. Borant has ordered six more seasons anyway.', box: 'box_legendary', followers: 100000 },
   birthday:     { name: 'Many Happy Returns', desc: "You gave a friend a gift on their birthday. Borant does not celebrate birthdays. Borant celebrates quarterly earnings.", box: 'box_silver', followers: 2500 },
   party_up:     { name: 'Party of Three', desc: 'You invited Katia into the Stairwell. The audience finally has someone to root for who wears pants.', box: 'box_silver', followers: 2000 },
+  dinner:       { name: 'Dinner Is Served', desc: "You had a friend over for dinner. The Syndicate rated it 'surprisingly wholesome' and asked where the explosions were.", box: 'box_silver', followers: 1500 },
+  dinner_all:   { name: 'Dinner Party Circuit', desc: 'Katia, Zev, Mordecai and Pook have all eaten at your table. Borant is pitching a cooking show. You will not be paid.', box: 'box_gold', followers: 10000 },
+  dinner_ghost: { name: 'Left on Read', desc: 'You invited a friend to dinner and never showed up. The audience gasped. Then they rewatched it four times.', followers: 300 },
 };
 
 const MAIN_QUESTS = [

@@ -221,10 +221,10 @@ function updateNPC(npc, dt) {
   if (npc.id === G.party) return updatePartyMember(npc, dt);
   const def = NPC_DEFS[npc.id];
   if (def && def.schedule) {
-    const idx = currentSchedule(npc);
+    const idx = atDinner(npc.id) ? -2 : currentSchedule(npc);
     if (idx !== npc.schedIdx) {
       npc.schedIdx = idx;
-      const s = def.schedule[idx];
+      const s = idx === -2 ? DINNER_SEAT : def.schedule[idx];
       const m = G.maps[s.map];
       const [fx, fy] = nearestFree(m, s.x, s.y);
       if (npc.map !== s.map || !m) {
