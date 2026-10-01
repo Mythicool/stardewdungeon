@@ -218,6 +218,7 @@ function currentSchedule(npc) {
 }
 
 function updateNPC(npc, dt) {
+  if (npc.id === G.party) return updatePartyMember(npc, dt);
   const def = NPC_DEFS[npc.id];
   if (def && def.schedule) {
     const idx = currentSchedule(npc);

@@ -67,8 +67,11 @@ Hob-Lobbers and Carl's Doomsday Scenario to blow up rocks, monsters, and occasio
 
 **Friends.** Talk to and gift Donut, Mongo, Katia, Mordecai, Zev and Pook. Each has loves,
 likes and hates, heart levels, and dialogue that unlocks as the hearts go up.
+At 4 hearts you can invite Katia into your party for the day. She follows you everywhere,
+punches whatever gets close in the Stairwell, and sometimes throws up her shield arm to block
+half of a hit meant for you. She heads home at 10 PM.
 
-**The System AI.** Snarky morning announcements, 38 achievements that pay out in loot boxes
+**The System AI.** Snarky morning announcements, 39 achievements that pay out in loot boxes
 (Bronze, Silver, Gold, Fan, Legendary), follower milestones, a TV with Borant programming, and
 a main objective track from "Welcome to the Homestead" through "Syndicate Darling"
 (1,000,000 followers).
@@ -100,6 +103,7 @@ js/
   ui.js             panels, toasts, announcements, dialogue, HUD
   menus.js          game menu tabs, shops, day-end report, fishing
   actions.js        tools, farming, interaction, gifting, rewards
+  party.js          Katia as a party member: follow, fight, shield
   render.js         world rendering, lighting, weather, title screen
   game.js           main loop, time, days, transitions, save/load
 ```

@@ -229,6 +229,7 @@ function revealStairs(tx, ty) {
 function hurtPlayer(dmg, fx, fy) {
   const P = G.player;
   if (P.hurtT > 0 || G.modals.length || G.transition) return;
+  dmg = partyShield(dmg, fx, fy);
   P.hp -= dmg;
   P.hurtT = 1.0;
   const a = Math.atan2(P.y - fy, P.x - fx);

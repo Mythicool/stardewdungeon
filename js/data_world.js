@@ -163,6 +163,32 @@ const NPC_DEFS = {
   },
 };
 
+// Katia as a party member (see party.js). Invite her at PARTY_HEARTS hearts.
+const PARTY_LINES = {
+  katia: {
+    join: [
+      "Really? Yes! Let me grab my... I don't have anything. Let's go!",
+      "Finally! I've been practicing my shield. Stand behind me.",
+      'A crawl with you and Donut? I thought you would never ask.',
+    ],
+    tooLate: "It's late, Carl. Ask me again in the morning?",
+    leave: [
+      "Okay! Thanks for today, Carl. That was fun. Terrifying, but fun.",
+      'Heading home. Wake me if you need someone to stand in front of things.',
+    ],
+    late: "It's getting late. I'm heading home, Carl. Same time tomorrow?",
+    chat: [
+      'You kick, I block, Donut takes the credit. Teamwork!',
+      'My arm keeps wanting to turn into a shield. I think it likes you.',
+      'Is it weird that this is the most fun I have had since the world ended?',
+      "If anything bites you, it has to get through me first. That's the deal.",
+    ],
+    fight: ['Shield up!', 'Get behind me!', 'Hah! Take that!', 'Not today!', 'Carl, on your left!'],
+    block: ['Got it!', "I've got you!", 'Blocked!', 'Nope!'],
+    idle: ['Which way, Carl?', 'I could get used to this.', 'Mongo would love it down here.', 'Stay close. I mean it.'],
+  },
+};
+
 const DONUT_BATTLE_QUIPS = [
   'Magic Missile!', 'Take THAT!', 'Carl! Did you see that?!', 'Nobody touches my Carl!',
   'Another one for the highlight reel!', 'Mongo would have liked that one.', 'Pew pew!', 'For the fans!',
@@ -212,6 +238,7 @@ const ACHIEVEMENTS = {
   box_open:     { name: 'Unboxing Video', desc: 'You opened a loot box. The dopamine is sponsored.', followers: 200 },
   upgrade:      { name: 'Enchanted Equipment', desc: "You upgraded a tool. Mordecai pretended not to be proud.", followers: 800 },
   season:       { name: 'Collapse Survivor', desc: 'You survived a seasonal collapse. The Homestead rebooted. You did not. Good job.', box: 'box_gold', followers: 10000 },
+  party_up:     { name: 'Party of Three', desc: 'You invited Katia into the Stairwell. The audience finally has someone to root for who wears pants.', box: 'box_silver', followers: 2000 },
 };
 
 const MAIN_QUESTS = [
