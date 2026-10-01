@@ -359,6 +359,7 @@ function getInteractHint() {
     const n = t.npc;
     const def = NPC_DEFS[n.id];
     if (def && it && itemGiftable(it.id) && !friendOf(n.id).gifted) return `F: Give ${ITEMS[it.id].name} to ${def.name}`;
+    if (dinnerWaiting(n)) return `F: Serve dinner to ${n.name}`;
     if (n.id === 'donut' || n.id === 'mongo') return `F: Pet ${n.name}`;
     return `F: Talk to ${n.name}`;
   }
@@ -464,11 +465,16 @@ function counterInteract(o) {
     ]);
     return;
   }
-  if (!f.talked || pendingHeartEvent(keeperId)) {
-    talkTo(npc, () => openShop(o.shop));
+  const shop = () => !f.talked || pendingHeartEvent(keeperId) ? talkTo(npc, () => openShop(o.shop)) : openShop(o.shop);
+  if (canInviteToDinner(keeperId)) {
+    UI.ask(keeperId, `(What do you need from ${def.name}?)`, [
+      { label: 'Shop', fn: shop },
+      { label: 'Invite to dinner tonight', fn: () => inviteToDinner(npc) },
+      { label: 'Never mind', cancel: true },
+    ]);
     return;
   }
-  openShop(o.shop);
+  shop();
 }
 
 function interactNPC(npc) {
@@ -478,6 +484,7 @@ function interactNPC(npc) {
     UI.say(npc.spr, choice(npc.lines));
     return;
   }
+  if (dinnerWaiting(npc)) return serveDinnerMenu(npc);
   const it = selectedItem();
   const f = friendOf(npc.id);
   const gift = it && itemGiftable(it.id) && !f.gifted;
@@ -488,6 +495,7 @@ function interactNPC(npc) {
   if (G.party === npc.id) opts.push({ label: 'Send home for today', fn: () => dismissParty(npc) });
   if (npc.id === 'mongo' && canBringMongo()) opts.push({ label: 'Bring to the Stairwell', fn: () => bringMongo() });
   if (npc.id === 'mongo' && mongoAlong()) opts.push({ label: 'Send home for today', fn: () => dismissMongo() });
+  if (canInviteToDinner(npc.id)) opts.push({ label: 'Invite to dinner tonight', fn: () => inviteToDinner(npc) });
   if (!opts.length) return talkTo(npc);
   opts.splice(gift ? 1 : 0, 0, { label: npc.id === 'donut' || npc.id === 'mongo' ? 'Just pet' : 'Just talk', fn: () => talkTo(npc) });
   opts.push({ label: 'Never mind', cancel: true });
@@ -510,7 +518,8 @@ function talkTo(npc, onDone) {
   const special = def.lines.filter(l => l[0] > 0 && l[0] <= hearts && !G.seenLines[npc.id + ':' + l[1].slice(0, 20)]);
   const gossip = !bday && newsReaction(npc.id);
   const partyChat = (G.party === npc.id || G.pet === npc.id) && f.talked && PARTY_LINES[npc.id];
-  const line = bday || gossip || (partyChat ? choice(partyChat.chat) : special.length ? special[special.length - 1][1] : pool[(G.day * 7 + G.lineIdx[npc.id] + npc.id.length) % pool.length]);
+  const grudge = dinnerGrudge(npc.id);
+  const line = grudge || bday || gossip || (partyChat ? choice(partyChat.chat) : special.length ? special[special.length - 1][1] : pool[(G.day * 7 + G.lineIdx[npc.id] + npc.id.length) % pool.length]);
   G.seenLines[npc.id + ':' + line.slice(0, 20)] = true;
   if (!f.talked) {
     f.talked = true;
@@ -671,6 +680,10 @@ function watchTV() {
 
 function openShop(id) {
   const sh = SHOPS[id];
+  if (sh.keeper && atDinner(sh.keeper)) {
+    UI.say(null, `A note on the counter: "Gone to dinner at Carl's. Back after dessert!"`);
+    return;
+  }
   if (G.time < sh.hours[0] || G.time > sh.hours[1]) {
     UI.say(null, id === 'pook' ? `A sign on the counter: "CLOSED. Pook is napping. Open ${fmtTime(sh.hours[0])} - ${fmtTime(sh.hours[1])}."` : `Mordecai waves you off. "Guild supply is closed. Come back after ${fmtTime(sh.hours[0])}."`);
     return;

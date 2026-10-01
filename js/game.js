@@ -118,6 +118,7 @@ function update(dt) {
   updateMongo(dt);
   updateBanter(dt);
   updateCommentary(dt);
+  updateDinner();
   updateMonsters(dt);
   updateProjectiles(dt);
   updateBombs(dt);
@@ -208,6 +209,7 @@ function onTimeTick() {
   if (t === 1200 && G.map.outdoor) Music.play(musicFor(G.map));
   if (t === 1440) UI.toast("It's midnight. Carl should really get to bed.", null, '#c0b0ff');
   if (t === 1500) UI.toast('1 AM. The System AI is judging you.', null, '#c0b0ff');
+  dinnerTick(t);
   if (t >= DAY_END) passOut();
 }
 
@@ -394,6 +396,7 @@ function endDay(passedOut) {
 
 function processNight(passedOut) {
   const P = G.player;
+  dinnerOver();
   const agg = {};
   let total = 0;
   for (const s of G.shipping) { agg[s.id] = (agg[s.id] || 0) + s.n; total += s.n * ITEMS[s.id].price; }

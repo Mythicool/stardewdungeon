@@ -85,8 +85,13 @@ quiet floor he sniffs out the rock hiding the stairs and marks it with a gold pa
 Friendship pays off: at 5 hearts Pook and Mordecai give you 15% off, Mongo starts digging up
 presents for you in the mornings, and Zev's promotion adds 20% to every follower gain. The
 Social tab lists each friend's perk.
+At 2 hearts you can invite Katia, Zev, Mordecai or Pook to **dinner**. They wait at your cabin
+table from 6 PM; talk to them to serve a dish from your bag. They react to what you serve
+(loved, liked, hated, or a line written for that dish), Donut weighs in, and you get a little
+table talk that deepens with hearts. Dishes you cooked yourself earn double friendship. Each
+friend comes once a week, and anyone you stand up remembers it.
 
-**The System AI.** Snarky morning announcements, 44 achievements that pay out in loot boxes
+**The System AI.** Snarky morning announcements, 47 achievements that pay out in loot boxes
 (Bronze, Silver, Gold, Fan, Legendary), follower milestones, a TV with Borant programming, and
 a main objective track from "Welcome to the Homestead" through "Syndicate Darling"
 (1,000,000 followers).
@@ -121,6 +126,7 @@ js/
   banter.js         friends' gossip about recent events, speech-bubble banter
   commentary.js     Donut's live commentary in the Stairwell
   party.js          Katia and Mongo as party members: follow, fight, shield, sniff
+  dinner.js         dinner nights: invites, the guest at the cabin table, the meal scene
   render.js         world rendering, lighting, weather, title screen
   game.js           main loop, time, days, transitions, save/load
 ```
