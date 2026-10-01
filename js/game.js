@@ -485,6 +485,11 @@ function startNewDay() {
   const daysLeft = DAYS_PER_SEASON - G.day;
   const collapse = daysLeft === 0 ? 'The season collapses TONIGHT. Harvest what you can!' : `The season collapses in ${daysLeft} day${daysLeft > 1 ? 's' : ''}.`;
   UI.announce(`${DAY_NAMES[(G.day - 1) % 7].toUpperCase()}, ${SEASON_NAMES[G.season].toUpperCase()} ${G.day}`, `${WEATHER_TEXT[G.weather]} ${collapse} ${choice(SYSTEM_MORNING)}`, 'level', 'system');
+  const present = mongoPresent();
+  if (present) {
+    giveItem(present, 1, true);
+    UI.toast(`Mongo dug up a present for you: ${ITEMS[present].name}!`, present, '#a0ffa0');
+  }
   if (G.followers >= 10000 && chance(0.12)) {
     giveItem('box_fan', 1, true);
     UI.toast('A sponsor left a Fan Box on your doorstep!', 'box_fan', '#ff8fd0');

@@ -79,6 +79,9 @@ a birthday count four times as much, and hated ones twice as badly.
 At 4 hearts you can invite Katia into your party for the day. She follows you everywhere,
 punches whatever gets close in the Stairwell, and sometimes throws up her shield arm to block
 half of a hit meant for you. She heads home at 10 PM.
+Friendship pays off: at 5 hearts Pook and Mordecai give you 15% off, Mongo starts digging up
+presents for you in the mornings, and Zev's promotion adds 20% to every follower gain. The
+Social tab lists each friend's perk.
 
 **The System AI.** Snarky morning announcements, 42 achievements that pay out in loot boxes
 (Bronze, Silver, Gold, Fan, Legendary), follower milestones, a TV with Borant programming, and
