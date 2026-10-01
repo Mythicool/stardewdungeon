@@ -494,6 +494,7 @@ function startNewDay() {
     unlock('season');
   }
   if (G.flags.questExpired) { G.flags.questExpired = false; UI.toast('Your board request expired.', null, '#ffd0a0'); }
+  favorMorning();
   const daysLeft = DAYS_PER_SEASON - G.day;
   const collapse = daysLeft === 0 ? 'The season collapses TONIGHT. Harvest what you can!' : `The season collapses in ${daysLeft} day${daysLeft > 1 ? 's' : ''}.`;
   UI.announce(`${DAY_NAMES[(G.day - 1) % 7].toUpperCase()}, ${SEASON_NAMES[G.season].toUpperCase()} ${G.day}`, `${WEATHER_TEXT[G.weather]} ${collapse} ${choice(SYSTEM_MORNING)}`, 'level', 'system');

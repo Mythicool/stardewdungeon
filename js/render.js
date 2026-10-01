@@ -411,6 +411,12 @@ function renderBubbles(ctx) {
     lines.forEach((l, i) => drawText(ctx, l, sx, by + 2 * s + i * 7 * s, { size: 5.5, bold: true, align: 'center', color: '#3a2210' }));
     ctx.globalAlpha = 1;
   }
+  for (const e of list) {
+    const mark = !e.bubble && e.id && favorMarker(e.id);
+    if (!mark || (e === G.mongo && e.map !== G.map.id)) continue;
+    const bob = Math.sin(performance.now() / 250) * s;
+    drawText(ctx, mark, (e.x - cam.x) * z, (e.y - 30 - cam.y) * z + bob, { size: 8, bold: true, align: 'center', color: mark === '!' ? '#ffd23a' : '#ff8fd0', shadow: 'rgba(0,0,0,0.8)' });
+  }
   for (const f of G.floaters) {
     const sx = (f.x - cam.x) * z, sy = (f.y - cam.y) * z;
     ctx.globalAlpha = clamp(1.4 - f.t * 1.4, 0, 1);

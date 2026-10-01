@@ -99,6 +99,12 @@ table from 6 PM; talk to them to serve a dish from your bag. They react to what 
 (loved, liked, hated, or a line written for that dish), Donut weighs in, and you get a little
 table talk that deepens with hearts. Dishes you cooked yourself earn double friendship. Each
 friend comes once a week, and anyone you stand up remembers it.
+Each friend except Mongo also has a three-part **favor**: Katia's window box, Mordecai's cold
+forge, Zev's ratings emergency, Pook's special shelf and Donut's royal portrait. A part unlocks
+at 2, 4 and 6 hearts (a gold ! appears over their head), asks for something to fetch, slay or
+reach in the Stairwell, and ends in a short scene with a reward. The last part of each story
+pays out something special, like the Guildmaster's Toe Ring or a recipe. Active favors show in
+the tracker, and the Social tab counts them (✿ 1/3).
 
 **Sponsor deals.** Once you've been into the Stairwell, Zev has a sponsor challenge for you every
 day: kick monsters to death, let Donut land the killing blows, blow things up, open chests, dig
@@ -106,7 +112,7 @@ up gems, fight alongside a friend, race to a depth before noon, or clear a whole
 getting hit. Hear the pitch from Zev in town and take it or pass. A deal you take shows up in the
 objectives panel and pays a loot box and followers the moment it's done.
 
-**The System AI.** Snarky morning announcements, 53 achievements that pay out in loot boxes
+**The System AI.** Snarky morning announcements, 56 achievements that pay out in loot boxes
 (Bronze, Silver, Gold, Fan, Legendary), follower milestones, a TV with Borant programming, and
 a main objective track from "Welcome to the Homestead" through "Syndicate Darling"
 (1,000,000 followers).
@@ -143,6 +149,7 @@ js/
   party.js          Katia and Mongo as party members: follow, fight, shield, sniff
   rival.js          Brock Vantage, the rival crawler who races Carl to chests and stairs
   dinner.js         dinner nights: invites, the guest at the cabin table, the meal scene
+  favors.js         friend favors: each friend's three-part story, tracking and rewards
   sponsors.js       Zev's daily sponsor deals: the pitch, progress hooks, payouts
   polls.js          audience polls: the viewer vote on each floor's twist, payouts
   render.js         world rendering, lighting, weather, title screen

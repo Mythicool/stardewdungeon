@@ -30,6 +30,7 @@ const ITEMS = {
   foot:      { name: "Carl's Bare Foot", cat: 'weapon', dmg: 6, icon: { s: 'foot' }, desc: 'It has kicked more monsters than most swords have stabbed.' },
   toering:   { name: 'Enchanted Toe Ring', cat: 'weapon', dmg: 12, price: 400, icon: { s: 'foot', c: '#f4d03f' }, desc: '+Kick. Worn on the big toe. Fashion.' },
   steeltoe:  { name: 'Steel Toe Cap (Just The Cap)', cat: 'weapon', dmg: 20, price: 1200, icon: { s: 'foot', c: '#d8dde6' }, desc: 'Technically still barefoot.' },
+  guild_ring: { name: "Guildmaster's Toe Ring", cat: 'weapon', dmg: 26, price: 3000, icon: { s: 'foot', c: '#e07a30' }, desc: 'Forged by Mordecai in a forge that had been cold for years. Keep coming back.' },
   celestial: { name: 'Celestial Toe Ring', cat: 'weapon', dmg: 34, price: 5000, icon: { s: 'foot', c: '#c050ff' }, desc: 'The gods are watching. Specifically, your toes.' },
   // resources
   wood:     { name: 'Wood', cat: 'resource', price: 2, icon: { s: 'wood' }, desc: 'Timber! Used in crafting.' },

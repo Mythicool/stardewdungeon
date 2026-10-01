@@ -468,12 +468,12 @@ function counterInteract(o) {
     return;
   }
   const shop = () => !f.talked || pendingHeartEvent(keeperId) ? talkTo(npc, () => openShop(o.shop)) : openShop(o.shop);
-  if (canInviteToDinner(keeperId)) {
-    UI.ask(keeperId, `(What do you need from ${def.name}?)`, [
-      { label: 'Shop', fn: shop },
-      { label: 'Invite to dinner tonight', fn: () => inviteToDinner(npc) },
-      { label: 'Never mind', cancel: true },
-    ]);
+  const extra = [];
+  if (canInviteToDinner(keeperId)) extra.push({ label: 'Invite to dinner tonight', fn: () => inviteToDinner(npc) });
+  const favor = favorOption(npc);
+  if (favor) extra.push(favor);
+  if (extra.length) {
+    UI.ask(keeperId, `(What do you need from ${def.name}?)`, [{ label: 'Shop', fn: shop }, ...extra, { label: 'Never mind', cancel: true }]);
     return;
   }
   shop();
@@ -499,6 +499,8 @@ function interactNPC(npc) {
   if (npc.id === 'mongo' && mongoAlong()) opts.push({ label: 'Send home for today', fn: () => dismissMongo() });
   if (canInviteToDinner(npc.id)) opts.push({ label: 'Invite to dinner tonight', fn: () => inviteToDinner(npc) });
   if (npc.id === 'zev' && sponsorAvailable()) opts.push({ label: "Hear today's sponsor deal", fn: () => offerSponsorDeal() });
+  const favor = favorOption(npc);
+  if (favor) opts.push(favor);
   if (!opts.length) return talkTo(npc);
   opts.splice(gift ? 1 : 0, 0, { label: npc.id === 'donut' || npc.id === 'mongo' ? 'Just pet' : 'Just talk', fn: () => talkTo(npc) });
   opts.push({ label: 'Never mind', cancel: true });
