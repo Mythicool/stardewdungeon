@@ -67,6 +67,9 @@ Hob-Lobbers and Carl's Doomsday Scenario to blow up rocks, monsters, and occasio
 
 **Friends.** Talk to and gift Donut, Mongo, Katia, Mordecai, Zev and Pook. Each has loves,
 likes and hates, heart levels, and dialogue that unlocks as the hearts go up.
+Friends keep up with the news: for a few days after you beat a boss, die, pass out, reach a
+new depth, blow yourself up or hand someone a gift they hate, they'll bring it up when you
+talk to them. When two friends are near each other (and you), they banter in speech bubbles.
 
 **The System AI.** Snarky morning announcements, 38 achievements that pay out in loot boxes
 (Bronze, Silver, Gold, Fan, Legendary), follower milestones, a TV with Borant programming, and
@@ -100,6 +103,7 @@ js/
   ui.js             panels, toasts, announcements, dialogue, HUD
   menus.js          game menu tabs, shops, day-end report, fishing
   actions.js        tools, farming, interaction, gifting, rewards
+  banter.js         friends' gossip about recent events, speech-bubble banter
   render.js         world rendering, lighting, weather, title screen
   game.js           main loop, time, days, transitions, save/load
 ```

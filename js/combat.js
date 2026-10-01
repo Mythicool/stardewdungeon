@@ -187,6 +187,7 @@ function killMonster(mo) {
 function onBossKilled(mo) {
   const m = G.map;
   G.stats.bosses[mo.type] = true;
+  recordNews(mo.type);
   for (const x of m.monsters) if (!x.d.boss && !x.dead) { x.dead = true; burst(x.x, x.y - 6, 8, ['#ffffff'], 60); }
   G.shake = 1.2;
   Audio2.play('boom');
@@ -343,6 +344,7 @@ function explode(b) {
     P.hurtT = 0;
     hurtPlayer(Math.round(def.dmg * 0.35), b.x, b.y);
     unlock('self_own');
+    recordNews('selfown');
   }
 }
 

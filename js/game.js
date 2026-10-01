@@ -114,6 +114,7 @@ function update(dt) {
   if (G.map.localNpcs) for (const n of G.map.localNpcs) updateNPC(n, dt);
   updateDonut(dt);
   updateMongo(dt);
+  updateBanter(dt);
   updateMonsters(dt);
   updateProjectiles(dt);
   updateBombs(dt);
@@ -296,7 +297,10 @@ function enterDungeon(level) {
     const m = generateLevel(level);
     setMap(m, m.spawn.x, m.spawn.y, DOWN);
     G.locT = 4;
-    if (level > G.stats.deepest) G.stats.deepest = level;
+    if (level > G.stats.deepest) {
+      G.stats.deepest = level;
+      if (level % 5 === 0) recordNews('deep', { n: level });
+    }
     if (level % 5 === 0 && !G.expressFloors.includes(level)) {
       G.expressFloors.push(level);
       G.expressFloors.sort((a, b) => a - b);
@@ -336,6 +340,7 @@ function playerDie() {
   G.dying = true;
   Audio2.play('die');
   G.stats.died++;
+  recordNews('died');
   const fee = Math.min(2000, Math.floor(G.gold * 0.1));
   G.gold -= fee;
   transitionTo(() => {
@@ -354,6 +359,7 @@ function playerDie() {
 function passOut() {
   if (G.ending) return;
   unlock('pass_out');
+  recordNews('passout');
   endDay(true);
 }
 
@@ -390,6 +396,7 @@ function processNight(passedOut) {
   G.stats.earned += total;
   G.shipping = [];
   checkGoldAchievements();
+  if (total >= 1000) recordNews('bigship', { g: total });
   let quip = choice(DAY_QUIPS);
   if (passedOut) {
     const fee = Math.min(1000, Math.floor(G.gold * 0.1));
