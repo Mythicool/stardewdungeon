@@ -82,6 +82,9 @@ half of a hit meant for you. She heads home at 10 PM.
 At 3 hearts you can pet Mongo on the farm and bring him along too. He has his own slot, so he
 can crawl alongside Katia. He charges monsters that get close to Carl, and after a while on a
 quiet floor he sniffs out the rock hiding the stairs and marks it with a gold paw print.
+Friendship pays off: at 5 hearts Pook and Mordecai give you 15% off, Mongo starts digging up
+presents for you in the mornings, and Zev's promotion adds 20% to every follower gain. The
+Social tab lists each friend's perk.
 
 **The System AI.** Snarky morning announcements, 44 achievements that pay out in loot boxes
 (Bronze, Silver, Gold, Fan, Legendary), follower milestones, a TV with Borant programming, and

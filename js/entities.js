@@ -366,5 +366,26 @@ function addFriend(id, pts) {
   if (after > before) {
     UI.toast(`${NPC_DEFS[id].name}: ${after} heart${after > 1 ? 's' : ''}!`, null, '#ff8fb0');
     if (after >= 5) unlock('hearts_5');
+    const perk = FRIEND_PERKS[id];
+    if (perk && perk.hearts > before && perk.hearts <= after) {
+      UI.announce('FRIENDSHIP PERK UNLOCKED', `${NPC_DEFS[id].name}: ${perk.text}.`, 'level', 'levelup');
+    }
   }
+}
+
+function hasPerk(id) {
+  const perk = FRIEND_PERKS[id];
+  return !!perk && heartsOf(id) >= perk.hearts;
+}
+
+// Fraction off at a shop whose keeper is a close enough friend (0 if none).
+function shopDiscount(shopId) {
+  const keeper = SHOPS[shopId] && SHOPS[shopId].keeper;
+  return keeper && hasPerk(keeper) ? FRIEND_PERKS[keeper].discount || 0 : 0;
+}
+
+// Mongo's morning present, if he has one for Carl today.
+function mongoPresent() {
+  if (!hasPerk('mongo') || !chance(0.6)) return null;
+  return chance(0.05) ? 'ruby' : choice(FRIEND_PERKS.mongo.presents);
 }

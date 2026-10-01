@@ -601,6 +601,20 @@ const PARTY_LINES = {
   },
 };
 
+// Friendship perks: what each friend does for Carl once he reaches `hearts`.
+// The effect lives where it applies (shop prices, addFollowers, the morning).
+const FRIEND_PERKS = {
+  donut: { hearts: 0, text: 'Magic Missile hits harder and fires faster as her hearts grow' },
+  mongo: {
+    hearts: 5, text: 'Digs up a present for you most mornings',
+    presents: ['wild_garlic', 'blackberry', 'spice_berry', 'crystal_fruit', 'copper', 'iron', 'quartz', 'rat_tail', 'tusk'],
+  },
+  katia: { hearts: 4, text: 'Will join your party for a day in the Stairwell' },
+  mordecai: { hearts: 5, text: '15% off everything at the Guild Supply', discount: 0.15 },
+  zev: { hearts: 5, text: '+20% followers from everything', followers: 0.2 },
+  pook: { hearts: 5, text: "15% off everything at Pook's Provisions", discount: 0.15 },
+};
+
 const DONUT_BATTLE_QUIPS = [
   'Magic Missile!', 'Take THAT!', 'Carl! Did you see that?!', 'Nobody touches my Carl!',
   'Another one for the highlight reel!', 'Mongo would have liked that one.', 'Pew pew!', 'For the fans!',

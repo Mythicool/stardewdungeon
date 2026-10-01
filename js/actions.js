@@ -744,6 +744,7 @@ function unlock(id) {
 
 const FOLLOWER_MILESTONES = [1000, 10000, 100000, 1000000, 10000000];
 function addFollowers(n, silent) {
+  if (n > 0 && hasPerk('zev')) n = Math.round(n * (1 + FRIEND_PERKS.zev.followers));
   const before = G.followers;
   G.followers += n;
   if (!silent && n > 0) floater(G.player.x, G.player.y - 26, `+${fmtNum(n)} fans`, '#ff8fd0');
