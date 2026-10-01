@@ -339,7 +339,8 @@ function drawHUD(ctx) {
   }
   const mq = MAIN_QUESTS[G.mainQuest];
   const qw = 120 * s;
-  if (mq || G.quest) {
+  const sponsor = sponsorHudLines();
+  if (mq || G.quest || sponsor.length) {
     let lines = [];
     ctx.font = UI.font(5.5);
     if (mq) { lines.push({ t: '★ ' + mq.title, c: '#ffe070', b: true }); wrapText(ctx, mq.desc, qw - 10 * s).forEach(l => lines.push({ t: l, c: '#f0e8f8' })); }
@@ -348,6 +349,10 @@ function drawHUD(ctx) {
       lines.push({ t: '✉ Request (' + q.expires + 'd left)', c: '#8fe0ff', b: true });
       const prog = q.type === 'deliver' ? `${Math.min(countItem(q.item), q.n)}/${q.n} ${ITEMS[q.item].name}` : `${q.progress}/${q.n} ${MONSTERS[q.mon].name}s`;
       lines.push({ t: prog + ((q.type === 'deliver' ? countItem(q.item) >= q.n : q.progress >= q.n) ? ' ✔ Turn in at board' : ''), c: '#f0e8f8' });
+    }
+    for (const l of sponsor) {
+      if (l.b) lines.push(l);
+      else wrapText(ctx, l.t, qw - 10 * s).forEach(t => lines.push({ t, c: l.c }));
     }
     const qh = lines.length * 7 * s + 6 * s;
     drawPanel(ctx, 4 * s, ly, qw, qh, 'dark');

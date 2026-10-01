@@ -412,6 +412,7 @@ function interact(useMouse) {
         burst(o.x * TILE + 8, o.y * TILE + 6, 20, ['#ffd23a', '#ffffff'], 90);
         giveItem('box_' + o.tier, 1);
         donutComment('chest');
+        if (m.level) sponsorEvent('chest');
         UI.toast('Use the box from your hotbar to open it!', null, '#ffe070');
         return;
       }
@@ -497,6 +498,7 @@ function interactNPC(npc) {
   if (npc.id === 'mongo' && canBringMongo()) opts.push({ label: 'Bring to the Stairwell', fn: () => bringMongo() });
   if (npc.id === 'mongo' && mongoAlong()) opts.push({ label: 'Send home for today', fn: () => dismissMongo() });
   if (canInviteToDinner(npc.id)) opts.push({ label: 'Invite to dinner tonight', fn: () => inviteToDinner(npc) });
+  if (npc.id === 'zev' && sponsorAvailable()) opts.push({ label: "Hear today's sponsor deal", fn: () => offerSponsorDeal() });
   if (!opts.length) return talkTo(npc);
   opts.splice(gift ? 1 : 0, 0, { label: npc.id === 'donut' || npc.id === 'mongo' ? 'Just pet' : 'Just talk', fn: () => talkTo(npc) });
   opts.push({ label: 'Never mind', cancel: true });
