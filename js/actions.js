@@ -214,7 +214,7 @@ function breakObject(m, o, byBomb) {
       if (chance(0.006)) { spawnDrop('box_bronze', 1, cx, cy); UI.toast('Something shiny was in that rock!', null, '#ffe070'); }
       if (!byBomb) Audio2.play('break');
       G.stats.rocks++;
-      if (o.stairs) { revealStairs(o.x, o.y); UI.toast('You found the stairwell down!', null, '#ffe070'); Audio2.play('stairs'); }
+      if (o.stairs) { revealStairs(o.x, o.y); UI.toast('You found the stairwell down!', null, '#ffe070'); Audio2.play('stairs'); donutComment('stairs'); }
       break;
     }
     case 'crate': {
@@ -409,6 +409,7 @@ function interact(useMouse) {
         Audio2.play('lootbox');
         burst(o.x * TILE + 8, o.y * TILE + 6, 20, ['#ffd23a', '#ffffff'], 90);
         giveItem('box_' + o.tier, 1);
+        donutComment('chest');
         UI.toast('Use the box from your hotbar to open it!', null, '#ffe070');
         return;
       }
@@ -463,9 +464,8 @@ function counterInteract(o) {
     ]);
     return;
   }
-  if (!f.talked) {
-    const md = talkTo(npc);
-    md.opts.onDone = () => openShop(o.shop);
+  if (!f.talked || pendingHeartEvent(keeperId)) {
+    talkTo(npc, () => openShop(o.shop));
     return;
   }
   openShop(o.shop);
@@ -495,16 +495,20 @@ function interactNPC(npc) {
   UI.ask(npc.id, prompt, opts);
 }
 
-function talkTo(npc) {
+function talkTo(npc, onDone) {
   const def = NPC_DEFS[npc.id];
   const f = friendOf(npc.id);
+  const ev = pendingHeartEvent(npc.id);
+  if (ev) return playHeartEvent(npc, ev, onDone);
   const hearts = heartsOf(npc.id);
+  const bday = !f.talked && isBirthday(npc.id) && BIRTHDAYS[npc.id].talk;
   const pool = def.lines.filter(l => l[0] <= hearts).map(l => l[1]);
   G.lineIdx[npc.id] = (G.lineIdx[npc.id] || 0) + 1;
   // prefer heart-gated lines the first time they unlock
   const special = def.lines.filter(l => l[0] > 0 && l[0] <= hearts && !G.seenLines[npc.id + ':' + l[1].slice(0, 20)]);
+  const gossip = !bday && newsReaction(npc.id);
   const partyChat = G.party === npc.id && f.talked && PARTY_LINES[npc.id];
-  const line = partyChat ? choice(partyChat.chat) : special.length ? special[special.length - 1][1] : pool[(G.day * 7 + G.lineIdx[npc.id] + npc.id.length) % pool.length];
+  const line = bday || gossip || (partyChat ? choice(partyChat.chat) : special.length ? special[special.length - 1][1] : pool[(G.day * 7 + G.lineIdx[npc.id] + npc.id.length) % pool.length]);
   G.seenLines[npc.id + ':' + line.slice(0, 20)] = true;
   if (!f.talked) {
     f.talked = true;
@@ -514,7 +518,54 @@ function talkTo(npc) {
   if (npc.id === 'donut') { Audio2.play('meow'); unlock('pet_donut'); burst(npc.x, npc.y - 14, 6, ['#ff8fb0', '#ffffff'], 30); }
   else if (npc.id === 'mongo') { Audio2.play('roar'); unlock('pet_mongo'); burst(npc.x, npc.y - 14, 6, ['#ff8fb0', '#ffffff'], 30); }
   else if (!G.met[npc.id]) G.met[npc.id] = true;
-  return UI.say(npc.id, line);
+  return UI.say(npc.id, line, onDone);
+}
+
+// Heart events ------------------------------------------------------------------
+// At most one per day, so a friend who jumps several hearts at once still gets
+// each scene on its own day.
+function pendingHeartEvent(id) {
+  const evs = HEART_EVENTS[id];
+  if (!evs || G.heartEventDay === G.totalDays) return null;
+  const hearts = heartsOf(id);
+  return evs.find(ev => ev.hearts <= hearts && !(ev.id in G.heartEvents)) || null;
+}
+
+function heartEventCount(id) {
+  return (HEART_EVENTS[id] || []).filter(ev => ev.id in G.heartEvents).length;
+}
+
+function playHeartEvent(npc, ev, onDone) {
+  const f = friendOf(npc.id);
+  G.heartEventDay = G.totalDays;
+  G.met[npc.id] = true;
+  if (!f.talked) f.talked = true; // the scene counts as today's chat; its friendship comes from the choice
+  Audio2.play(npc.id === 'donut' ? 'meow' : npc.id === 'mongo' ? 'roar' : 'system');
+  const lines = ev.scene.map(([who, text]) => ({ who, text }));
+  lines.push({
+    who: ev.ask[0], text: ev.ask[1],
+    choices: ev.choices.map((c, i) => ({ label: c.label, fn: () => resolveHeartEvent(npc, ev, i, onDone) })),
+  });
+  return UI.dialog(lines, { noCancel: true });
+}
+
+function resolveHeartEvent(npc, ev, i, onDone) {
+  const c = ev.choices[i];
+  G.heartEvents[ev.id] = i;
+  addFriend(npc.id, c.pts);
+  if (c.pts > 0) burst(npc.x, npc.y - 16, c.pts >= 120 ? 16 : 8, ['#ff4f8a', '#ffffff', '#ffd23a'], 60);
+  Audio2.play(c.pts > 0 ? 'coin' : 'error');
+  UI.dialog(c.reply.map(([who, text]) => ({ who, text })), {
+    onDone: () => {
+      if (c.gift) giveItem(c.gift[0], c.gift[1]);
+      const fans = 200 + Math.max(0, c.pts) * 10 + (c.followers || 0);
+      addFollowers(fans, true);
+      UI.announce('EPISODE AIRED: ' + ev.title, `The Syndicate watched you and ${NPC_DEFS[npc.id].name} share a moment. +${fmtNum(fans)} followers.`, 'level');
+      unlock('heart_event');
+      if (Object.keys(HEART_EVENTS).every(id => heartEventCount(id) === HEART_EVENTS[id].length)) unlock('heart_all');
+      if (onDone) onDone();
+    },
+  });
 }
 
 function giveGift(npc, slot) {
@@ -527,7 +578,9 @@ function giveGift(npc, slot) {
   if (def.love.includes(id)) kind = 'love';
   else if (def.like.includes(id)) kind = 'like';
   else if (def.hate.includes(id)) kind = 'hate';
-  const pts = { love: 80, like: 45, neutral: 20, hate: -40 }[kind];
+  const bday = isBirthday(npc.id);
+  let pts = { love: 80, like: 45, neutral: 20, hate: -40 }[kind];
+  if (bday) pts *= kind === 'hate' ? 2 : 4;
   removeFromSlot(slot, 1);
   f.gifted = true;
   if (!f.talked) f.talked = true;
@@ -539,9 +592,28 @@ function giveGift(npc, slot) {
     addFollowers(80, true);
     burst(npc.x, npc.y - 16, 16, ['#ff4f8a', '#ffffff', '#ffd23a'], 70);
     Audio2.play('coin');
-  } else if (kind === 'hate') Audio2.play('error');
+  } else if (kind === 'hate') {
+    Audio2.play('error');
+    recordNews('badgift', { who: npc.id, item: ITEMS[id].name });
+  }
   else Audio2.play('pickup');
-  UI.say(npc.id, def.react[kind]);
+  if (bday && kind !== 'hate') {
+    unlock('birthday');
+    addFollowers(kind === 'love' ? 1000 : 300, true);
+    burst(npc.x, npc.y - 16, 20, ['#ff8fd0', '#8fd0ff', '#ffd23a', '#a0ffa0'], 80);
+  }
+  UI.say(npc.id, bday ? BIRTHDAYS[npc.id][kind === 'love' ? 'love' : kind === 'hate' ? 'hate' : 'gift'] : def.react[kind]);
+}
+
+// Birthdays --------------------------------------------------------------------
+function isBirthday(id) {
+  const b = BIRTHDAYS[id];
+  return !!b && b.season === G.season && b.day === G.day;
+}
+
+function birthdayText(id) {
+  const b = BIRTHDAYS[id];
+  return b ? `${SEASON_NAMES[b.season]} ${b.day}` : '';
 }
 
 function harvestCrop(o) {
@@ -561,6 +633,7 @@ function harvestCrop(o) {
     Audio2.play('scream');
     G.shake = 0.6;
     unlock('mandrake');
+    recordNews('mandrake');
     addFollowers(300);
     say(G.donut, choice(['My EARS, Carl!', 'Do NOT do that again. Actually, do. The fans loved it.', 'AAAAAH! Oh. It was the plant.']), 2.5);
   }

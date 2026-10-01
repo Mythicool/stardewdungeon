@@ -157,6 +157,7 @@ function hurtMonster(mo, dmg, fx, fy, crit) {
   Audio2.play('hit');
   burst(mo.x, mo.y - 6, 5, ['#ffffff', '#ff6060'], 60);
   if (mo.hp <= 0) killMonster(mo);
+  else if (mo.d.boss) commentOnBossHit(mo);
 }
 
 function killMonster(mo) {
@@ -181,12 +182,14 @@ function killMonster(mo) {
   else if (!m.boss && !m.safe && m.monsters.every(x => x.dead) && !m.stairsFound) {
     revealStairs(Math.floor(mo.x / TILE), Math.floor((mo.y - 3) / TILE));
     UI.toast('The level is clear! A stairwell appears.', null, '#ffe070');
-  }
+    donutComment('cleared');
+  } else commentOnKill();
 }
 
 function onBossKilled(mo) {
   const m = G.map;
   G.stats.bosses[mo.type] = true;
+  recordNews(mo.type);
   for (const x of m.monsters) if (!x.d.boss && !x.dead) { x.dead = true; burst(x.x, x.y - 6, 8, ['#ffffff'], 60); }
   G.shake = 1.2;
   Audio2.play('boom');
@@ -198,6 +201,7 @@ function onBossKilled(mo) {
   addObj(m, { type: 'chest', x: chx, y: chy, tier: 'gold' });
   m.boss = null;
   unlock(mo.type);
+  donutComment('bosskill_' + mo.type);
   addFollowers(mo.type === 'hoarder' ? 25000 : 100000);
   Music.play('dungeon');
   setTimeout(() => {
@@ -238,6 +242,7 @@ function hurtPlayer(dmg, fx, fy) {
   Audio2.play('hurt');
   G.shake = Math.max(G.shake, 0.25);
   if (P.hp <= 0) playerDie();
+  else if (dmg >= P.maxHp * 0.2) donutComment('bighit');
 }
 
 // --- player kick ---------------------------------------------------------------
@@ -344,6 +349,8 @@ function explode(b) {
     P.hurtT = 0;
     hurtPlayer(Math.round(def.dmg * 0.35), b.x, b.y);
     unlock('self_own');
+    recordNews('selfown');
+    donutComment('selfown');
   }
 }
 
@@ -372,6 +379,7 @@ function updateDrops(dt) {
         if (left < d.n) {
           UI.toast(`+${d.n - left} ${ITEMS[d.id].name}`, d.id);
           Audio2.play('pickup');
+          if (['ruby', 'diamond', 'mana'].includes(d.id)) donutComment('gem', { item: ITEMS[d.id].name });
         }
         if (left > 0) { d.n = left; d.full = true; d.t = -2; if (!G.flags.fullWarn) { UI.toast('Inventory full!', null, '#ff8080'); } }
         else d.gone = true;

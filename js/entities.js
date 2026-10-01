@@ -314,7 +314,7 @@ function updateDonut(dt) {
         const dmg = 5 + Math.floor(P.skills.combat.lv * 1.2) + Math.floor(hearts / 2);
         G.projectiles.push({ kind: 'missile', x: d.x, y: d.y - 8, vx: 0, vy: -60, target: best, dmg, friendly: true, life: 3 });
         Audio2.play('magic');
-        if (chance(0.18)) say(d, choice(DONUT_BATTLE_QUIPS), 1.6);
+        if (chance(0.18) && !d.bubble) say(d, choice(DONUT_BATTLE_QUIPS), 1.6);
         d.cd = Math.max(1.1, 2.3 - hearts * 0.08);
       } else d.cd = 0.3;
     }
@@ -345,7 +345,7 @@ function updateMongo(dt) {
     const P = G.player;
     if (dist(P.x, P.y, m.x, m.y) < 90 && chance(0.4)) m.target = [P.x + rand(-20, 20), P.y + rand(-10, 20)];
     else m.target = [m.home[0] * TILE + rand(-80, 120), m.home[1] * TILE + rand(-30, 90)];
-    if (chance(0.15)) { say(m, choice(['*screech!*', '*chirp*', '*sniff sniff*', '*RAWR*']), 1.5); }
+    if (chance(0.15) && !m.bubble) { say(m, choice(['*screech!*', '*chirp*', '*sniff sniff*', '*RAWR*']), 1.5); }
   }
   animate(m, dt);
   if (m.bubble) { m.bubble.t -= dt; if (m.bubble.t <= 0) m.bubble = null; }
