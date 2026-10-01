@@ -354,6 +354,7 @@ function drawHUD(ctx) {
     lines.forEach((l, i) => drawText(ctx, l.t, 8 * s, ly + 3 * s + i * 7 * s, { size: 5.5, bold: l.b, color: l.c }));
     ly += qh + 3 * s;
   }
+  ly = drawPollHUD(ctx, ly);
 
   // --- boss bar
   const boss = G.map.monsters && G.map.monsters.find(m => m.d.boss && !m.dead);

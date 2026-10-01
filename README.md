@@ -61,6 +61,9 @@ bomb-lobbing hobgoblins, shades). Break rocks to find the hidden stairs, or clea
 - **Level 10:** The Hoarder, Neighborhood Boss (summons "cats", throws trash)
 - **Level 20:** The Krakaren Clone, Borough Boss (telegraphed tentacle slams, spawns minions)
 - Four cave themes, going deeper indefinitely
+- **Audience polls:** every regular cave floor opens with a live viewer vote on a twist (Gold Rain,
+  Lights Out, Donut on Strike, Caffeinated Monsters, Double Monsters, Glass Cannon). The crowd
+  loves chaos, so risky twists win more often, and they pay more followers when Carl reaches the stairs.
 
 **Combat.** Donut narrates the Stairwell live: new depths, bosses, low health, big hits,
 loot, multi-kills and self-inflicted explosions (she gets sweeter about it at 6+ hearts). Carl kicks. Upgrade the kick with toe rings (he refuses to wear shoes). Craft

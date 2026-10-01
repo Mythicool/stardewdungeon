@@ -171,6 +171,7 @@ function killMonster(mo) {
   G.stats.kills[mo.type] = (G.stats.kills[mo.type] || 0) + 1;
   G.stats.totalKills++;
   addFollowers(mo.d.boss ? 0 : 5 + mo.level * 2, true);
+  if (!mo.d.boss) pollOnKill(mo);
   unlock('first_kill');
   if ((G.stats.kills.rat || 0) >= 10) unlock('rat_10');
   if (G.stats.totalKills >= 100) unlock('kills_100');
@@ -233,7 +234,7 @@ function revealStairs(tx, ty) {
 function hurtPlayer(dmg, fx, fy) {
   const P = G.player;
   if (P.hurtT > 0 || G.modals.length || G.transition) return;
-  dmg = partyShield(dmg, fx, fy);
+  dmg = pollDamageTaken(partyShield(dmg, fx, fy));
   P.hp -= dmg;
   P.hurtT = 1.0;
   const a = Math.atan2(P.y - fy, P.x - fx);
@@ -258,7 +259,7 @@ function playerKick() {
       if (mo.dead) continue;
       if (boxesOverlap(hb, monsterBox(mo))) {
         const crit = chance(0.08);
-        const dmg = (base + P.skills.combat.lv + randi(0, 3)) * (crit ? 2 : 1);
+        const dmg = pollDamageDealt((base + P.skills.combat.lv + randi(0, 3)) * (crit ? 2 : 1));
         hurtMonster(mo, dmg, P.x, P.y, crit);
         hit = true;
       }

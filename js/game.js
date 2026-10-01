@@ -118,6 +118,7 @@ function update(dt) {
   updateMongo(dt);
   updateBanter(dt);
   updateCommentary(dt);
+  updatePoll(dt);
   updateDinner();
   updateMonsters(dt);
   updateProjectiles(dt);
@@ -305,6 +306,7 @@ function enterDungeon(level) {
     setMap(m, m.spawn.x, m.spawn.y, DOWN);
     G.locT = 4;
     commentOnFloor(m, level > G.stats.deepest);
+    startPoll(m);
     if (level > G.stats.deepest) {
       G.stats.deepest = level;
       if (level % 5 === 0) recordNews('deep', { n: level });
@@ -332,6 +334,7 @@ function enterDungeon(level) {
 function descend() {
   Audio2.play('stairs');
   addFollowers(10 + G.map.level * 5, true);
+  payPoll();
   enterDungeon(G.map.level + 1);
 }
 
