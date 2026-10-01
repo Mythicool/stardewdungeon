@@ -780,6 +780,9 @@ const ACHIEVEMENTS = {
   dinner_all:   { name: 'Dinner Party Circuit', desc: 'Katia, Zev, Mordecai and Pook have all eaten at your table. Borant is pitching a cooking show. You will not be paid.', box: 'box_gold', followers: 10000 },
   dinner_ghost: { name: 'Left on Read', desc: 'You invited a friend to dinner and never showed up. The audience gasped. Then they rewatched it four times.', followers: 300 },
   mongo_crawl:  { name: 'Release the Dinosaur', desc: 'You took Mongo into the Stairwell. The monsters were not consulted.', box: 'box_silver', followers: 2000 },
+  favor:        { name: 'Happy to Help', desc: 'You did a friend a personal favor. Borant has billed them for your time.', box: 'box_bronze', followers: 1000 },
+  favor_story:  { name: 'Story Arc', desc: "You saw a friend's favor all the way through. The Syndicate is calling it 'character development.'", box: 'box_gold', followers: 10000 },
+  favor_all:    { name: "Everybody's Hero", desc: 'You finished every friend favor. Five storylines, one pair of boxer shorts.', box: 'box_legendary', followers: 100000 },
   good_nose:    { name: 'Good Nose', desc: 'Mongo sniffed out the stairs for you. He would like a treat. He would like ALL the treats.', box: 'box_bronze', followers: 1000 },
 };
 

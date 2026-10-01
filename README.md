@@ -90,8 +90,14 @@ table from 6 PM; talk to them to serve a dish from your bag. They react to what 
 (loved, liked, hated, or a line written for that dish), Donut weighs in, and you get a little
 table talk that deepens with hearts. Dishes you cooked yourself earn double friendship. Each
 friend comes once a week, and anyone you stand up remembers it.
+Each friend except Mongo also has a three-part **favor**: Katia's window box, Mordecai's cold
+forge, Zev's ratings emergency, Pook's special shelf and Donut's royal portrait. A part unlocks
+at 2, 4 and 6 hearts (a gold ! appears over their head), asks for something to fetch, slay or
+reach in the Stairwell, and ends in a short scene with a reward. The last part of each story
+pays out something special, like the Guildmaster's Toe Ring or a recipe. Active favors show in
+the tracker, and the Social tab counts them (✿ 1/3).
 
-**The System AI.** Snarky morning announcements, 47 achievements that pay out in loot boxes
+**The System AI.** Snarky morning announcements, 50 achievements that pay out in loot boxes
 (Bronze, Silver, Gold, Fan, Legendary), follower milestones, a TV with Borant programming, and
 a main objective track from "Welcome to the Homestead" through "Syndicate Darling"
 (1,000,000 followers).
@@ -127,6 +133,7 @@ js/
   commentary.js     Donut's live commentary in the Stairwell
   party.js          Katia and Mongo as party members: follow, fight, shield, sniff
   dinner.js         dinner nights: invites, the guest at the cabin table, the meal scene
+  favors.js         friend favors: each friend's three-part story, tracking and rewards
   render.js         world rendering, lighting, weather, title screen
   game.js           main loop, time, days, transitions, save/load
 ```

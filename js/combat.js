@@ -178,6 +178,7 @@ function killMonster(mo) {
     G.quest.progress++;
     if (G.quest.progress >= G.quest.n) UI.toast('Request complete! Report to the board.', null, '#ffe070');
   }
+  favorKill(mo.type);
   if (mo.d.boss) onBossKilled(mo);
   else if (!m.boss && !m.safe && m.monsters.every(x => x.dead) && !m.stairsFound) {
     revealStairs(Math.floor(mo.x / TILE), Math.floor((mo.y - 3) / TILE));
