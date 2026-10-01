@@ -501,7 +501,8 @@ function talkTo(npc, onDone) {
   G.lineIdx[npc.id] = (G.lineIdx[npc.id] || 0) + 1;
   // prefer heart-gated lines the first time they unlock
   const special = def.lines.filter(l => l[0] > 0 && l[0] <= hearts && !G.seenLines[npc.id + ':' + l[1].slice(0, 20)]);
-  const line = special.length ? special[special.length - 1][1] : pool[(G.day * 7 + G.lineIdx[npc.id] + npc.id.length) % pool.length];
+  const gossip = newsReaction(npc.id);
+  const line = gossip || (special.length ? special[special.length - 1][1] : pool[(G.day * 7 + G.lineIdx[npc.id] + npc.id.length) % pool.length]);
   G.seenLines[npc.id + ':' + line.slice(0, 20)] = true;
   if (!f.talked) {
     f.talked = true;
@@ -583,7 +584,10 @@ function giveGift(npc, slot) {
     addFollowers(80, true);
     burst(npc.x, npc.y - 16, 16, ['#ff4f8a', '#ffffff', '#ffd23a'], 70);
     Audio2.play('coin');
-  } else if (kind === 'hate') Audio2.play('error');
+  } else if (kind === 'hate') {
+    Audio2.play('error');
+    recordNews('badgift', { who: npc.id, item: ITEMS[id].name });
+  }
   else Audio2.play('pickup');
   UI.say(npc.id, def.react[kind]);
 }
@@ -605,6 +609,7 @@ function harvestCrop(o) {
     Audio2.play('scream');
     G.shake = 0.6;
     unlock('mandrake');
+    recordNews('mandrake');
     addFollowers(300);
     say(G.donut, choice(['My EARS, Carl!', 'Do NOT do that again. Actually, do. The fans loved it.', 'AAAAAH! Oh. It was the plant.']), 2.5);
   }

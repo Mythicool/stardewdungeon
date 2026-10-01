@@ -70,6 +70,9 @@ likes and hates, heart levels, and dialogue that unlocks as the hearts go up.
 At 3 and 6 hearts, the next chat with each friend plays a **heart event**: a short scene that
 ends with Carl picking how to respond. Good answers earn friendship, followers and sometimes a
 gift; bad ones cost hearts. The Social tab tracks how many each friend has left (✦ 1/2).
+Friends keep up with the news: for a few days after you beat a boss, die, pass out, reach a
+new depth, blow yourself up or hand someone a gift they hate, they'll bring it up when you
+talk to them. When two friends are near each other (and you), they banter in speech bubbles.
 
 **The System AI.** Snarky morning announcements, 40 achievements that pay out in loot boxes
 (Bronze, Silver, Gold, Fan, Legendary), follower milestones, a TV with Borant programming, and
@@ -103,6 +106,7 @@ js/
   ui.js             panels, toasts, announcements, dialogue, HUD
   menus.js          game menu tabs, shops, day-end report, fishing
   actions.js        tools, farming, interaction, gifting, rewards
+  banter.js         friends' gossip about recent events, speech-bubble banter
   render.js         world rendering, lighting, weather, title screen
   game.js           main loop, time, days, transitions, save/load
 ```
