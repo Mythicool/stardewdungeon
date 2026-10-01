@@ -545,9 +545,15 @@ const DONUT_COMMENTARY = {
   gem: ['Ooh, sparkly! That {item} would look divine on me.', 'Is that a {item}? Give it to me. For safekeeping.'],
   multikill: ["Triple kill! That's going in the trailer!", "Look at you go! I'm almost impressed!", 'Combo! The viewers are SCREAMING!'],
   selfown: ['Carl! My FUR! You singed my FUR!', 'Did you just blow yourself up? On PURPOSE?'],
+  sniff: [
+    "Mongo found the stairs! Who's a good boy? Not you, Carl. Mongo.",
+    'That rock, Carl. Mongo says that rock. Kick it.',
+    'My baby is a GENIUS. I trained him, obviously.',
+  ],
 };
 
 // Katia as a party member (see party.js). Invite her at PARTY_HEARTS hearts.
+// Mongo has his own pet slot and comes along at MONGO_CRAWL_HEARTS hearts.
 const PARTY_LINES = {
   katia: {
     join: [
@@ -570,6 +576,28 @@ const PARTY_LINES = {
     fight: ['Shield up!', 'Get behind me!', 'Hah! Take that!', 'Not today!', 'Carl, on your left!'],
     block: ['Got it!', "I've got you!", 'Blocked!', 'Nope!'],
     idle: ['Which way, Carl?', 'I could get used to this.', 'Mongo would love it down here.', 'Stay close. I mean it.'],
+  },
+  mongo: {
+    join: [
+      '*Mongo does a full-body wiggle and sprints for the gate. Then back to you. Then for the gate again.*',
+      '*Mongo SCREECHES. You are fairly sure that was a yes.*',
+      '*Mongo drops the stick he was chewing. This is more important than the stick.*',
+    ],
+    tooLate: '*Mongo yawns enormously and flops over. The Stairwell can wait until morning.*',
+    leave: [
+      '*Mongo gives you one long, wounded look, then trots back to the farm.*',
+      '*Mongo headbutts your knee goodbye and lopes off home.*',
+    ],
+    late: 'Mongo yawned and trotted home to the farm for the night.',
+    chat: [
+      '*Mongo has something in his mouth. You decide not to ask what floor it came from.*',
+      '*Mongo leans against your leg, panting happily. His breath smells like goblin.*',
+      '*Mongo sniffs the air, growls at a shadow, then looks at you for praise.*',
+    ],
+    charge: ['*RAWR!*', '*SCREECH!*', '*CHOMP*', '*thunderous dinosaur noises*'],
+    sniff: ['*sniff sniff... SNIFF*', '*snuffle snuffle*'],
+    found: ['*SCREECH!* (He means: HERE, CARL.)', '*paws at the rock and wags*'],
+    idle: ['*chirp*', '*sniffs a skull*', '*growls at the dark*', '*sneezes*'],
   },
 };
 
@@ -626,6 +654,8 @@ const ACHIEVEMENTS = {
   heart_all:    { name: 'Series Finale', desc: 'You saw every heart event. The writers room is out of ideas. Borant has ordered six more seasons anyway.', box: 'box_legendary', followers: 100000 },
   birthday:     { name: 'Many Happy Returns', desc: "You gave a friend a gift on their birthday. Borant does not celebrate birthdays. Borant celebrates quarterly earnings.", box: 'box_silver', followers: 2500 },
   party_up:     { name: 'Party of Three', desc: 'You invited Katia into the Stairwell. The audience finally has someone to root for who wears pants.', box: 'box_silver', followers: 2000 },
+  mongo_crawl:  { name: 'Release the Dinosaur', desc: 'You took Mongo into the Stairwell. The monsters were not consulted.', box: 'box_silver', followers: 2000 },
+  good_nose:    { name: 'Good Nose', desc: 'Mongo sniffed out the stairs for you. He would like a treat. He would like ALL the treats.', box: 'box_bronze', followers: 1000 },
 };
 
 const MAIN_QUESTS = [

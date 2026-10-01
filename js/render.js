@@ -80,7 +80,7 @@ function renderWorld(ctx, W, H, dt) {
   // entities
   const P = G.player;
   for (const n of npcsHere()) {
-    if (n === G.mongo && m.id !== 'farm') continue;
+    if (n === G.mongo && n.map !== m.id) continue;
     drawables.push({ y: n.y, fn: () => drawCharacter(ctx, n, n.spr) });
   }
   drawables.push({ y: P.y + 0.1, fn: () => drawPlayer(ctx, dt) });
@@ -144,9 +144,19 @@ function drawObject(ctx, o, m, dt) {
   let ox = 0;
   if (o.shake > 0) { o.shake -= dt; ox = Math.sin(o.shake * 60) * 1.2; }
   ctx.drawImage(spr.c, Math.round(o.x * TILE + spr.ox + ox), o.y * TILE + spr.oy);
+  if (o.sniffed) drawPawMark(ctx, o.x * TILE + 8, o.y * TILE - 4 + Math.sin(performance.now() / 180) * 1.5);
   if (o.type === 'fountain' && chance(0.5)) {
     G.particles.push({ x: o.x * TILE + 24 + rand(-2, 2), y: o.y * TILE + 4, vx: rand(-18, 18), vy: rand(-40, -20), life: 0.6, max: 0.6, color: choice(['#8cc0f4', '#ffffff']), size: 1, grav: 160 });
   }
+}
+
+// Mongo's mark over the rock he sniffed out: a little gold paw print.
+function drawPawMark(ctx, x, y) {
+  const dot = (dx, dy, r) => { ctx.beginPath(); ctx.arc(x + dx, y + dy, r, 0, Math.PI * 2); ctx.fill(); };
+  ctx.fillStyle = '#3a2410';
+  dot(0, 1.5, 2.8); dot(-3, -2, 1.6); dot(0, -3.2, 1.6); dot(3, -2, 1.6);
+  ctx.fillStyle = '#ffd23a';
+  dot(0, 1.5, 2); dot(-3, -2, 1); dot(0, -3.2, 1); dot(3, -2, 1);
 }
 
 function drawShadow(ctx, x, y, rx) {
@@ -332,6 +342,7 @@ function renderLighting(ctx, W, H) {
   if (G.donut && m.dark) light(G.donut.x, G.donut.y - 6, 26, 0.6);
   const pm = partyMember();
   if (pm && m.dark) light(pm.x, pm.y - 8, 30, 0.6);
+  if (mongoAlong() && m.dark) light(G.mongo.x, G.mongo.y - 6, 24, 0.6);
   const seen = new Set();
   for (const o of m.objs.values()) {
     if (seen.has(o)) continue; seen.add(o);
@@ -341,6 +352,7 @@ function renderLighting(ctx, W, H) {
     else if (o.type === 'stairs') light(o.x * TILE + 8, o.y * TILE + 8, 26, 0.7);
     else if (o.type === 'ladder') light(o.x * TILE + 8, o.y * TILE + 4, 30, 0.8);
     else if (o.type === 'chest') light(o.x * TILE + 8, o.y * TILE + 8, 22, 0.6);
+    else if (o.type === 'boulder' && o.sniffed) light(o.x * TILE + 8, o.y * TILE + 4, 26, 0.8);
     else if (o.type === 'boulder' && ['mana', 'ruby', 'diamond', 'gold'].includes(o.ore)) light(o.x * TILE + 8, o.y * TILE + 8, 14, 0.5);
   }
   if (!m.dark) for (const b of m.buildings) light((b.x + b.fw / 2) * TILE, (b.y + b.fh) * TILE - 12, 44, 0.8);
