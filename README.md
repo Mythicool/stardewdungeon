@@ -79,13 +79,19 @@ a birthday count four times as much, and hated ones twice as badly.
 At 4 hearts you can invite Katia into your party for the day. She follows you everywhere,
 punches whatever gets close in the Stairwell, and sometimes throws up her shield arm to block
 half of a hit meant for you. She heads home at 10 PM.
+At 3 hearts you can pet Mongo on the farm and bring him along too. He has his own slot, so he
+can crawl alongside Katia. He charges monsters that get close to Carl, and after a while on a
+quiet floor he sniffs out the rock hiding the stairs and marks it with a gold paw print.
+Friendship pays off: at 5 hearts Pook and Mordecai give you 15% off, Mongo starts digging up
+presents for you in the mornings, and Zev's promotion adds 20% to every follower gain. The
+Social tab lists each friend's perk.
 At 2 hearts you can invite Katia, Zev, Mordecai or Pook to **dinner**. They wait at your cabin
 table from 6 PM; talk to them to serve a dish from your bag. They react to what you serve
 (loved, liked, hated, or a line written for that dish), Donut weighs in, and you get a little
 table talk that deepens with hearts. Dishes you cooked yourself earn double friendship. Each
 friend comes once a week, and anyone you stand up remembers it.
 
-**The System AI.** Snarky morning announcements, 45 achievements that pay out in loot boxes
+**The System AI.** Snarky morning announcements, 47 achievements that pay out in loot boxes
 (Bronze, Silver, Gold, Fan, Legendary), follower milestones, a TV with Borant programming, and
 a main objective track from "Welcome to the Homestead" through "Syndicate Darling"
 (1,000,000 followers).
@@ -119,7 +125,7 @@ js/
   actions.js        tools, farming, interaction, gifting, rewards
   banter.js         friends' gossip about recent events, speech-bubble banter
   commentary.js     Donut's live commentary in the Stairwell
-  party.js          Katia as a party member: follow, fight, shield
+  party.js          Katia and Mongo as party members: follow, fight, shield, sniff
   dinner.js         dinner nights: invites, the guest at the cabin table, the meal scene
   render.js         world rendering, lighting, weather, title screen
   game.js           main loop, time, days, transitions, save/load

@@ -171,6 +171,11 @@ class GameMenu {
       for (let k = 0; k < 10; k++) drawText(ctx, '♥', r.x + 26 * s + k * 8 * s, y + 11 * s, { size: 7, color: k < h ? '#e0305a' : '#c8b090' });
       const evs = HEART_EVENTS[id] ? `  ✦ ${heartEventCount(id)}/${HEART_EVENTS[id].length}` : '';
       drawText(ctx, (f.talked ? '✔ talked  ' : '· talk  ') + (f.gifted ? '✔ gift' : '· gift') + evs, r.x + r.w - 4 * s, y + 5 * s, { size: 5.5, align: 'right', color: '#6a4a2a' });
+      const perk = FRIEND_PERKS[id];
+      if (met && perk) {
+        const on = hasPerk(id);
+        drawText(ctx, (perk.hearts ? `${perk.hearts}♥ perk: ` : 'Perk: ') + perk.text, r.x + 26 * s, y + 18.5 * s, { size: 4.8, bold: on, color: on ? '#2a7a3a' : '#a89070' });
+      }
       const loves = NPC_DEFS[id].love.filter(it => G.knownLoves[id + ':' + it]);
       if (loves.length) {
         drawText(ctx, 'Loves:', r.x + r.w - 110 * s, y + 13 * s, { size: 5, color: '#a03050' });
@@ -270,6 +275,12 @@ class ShopModal {
   constructor(id) { this.id = id; this.shop = SHOPS[id]; this.scroll = 0; this.flash = 0; }
   close() { Audio2.play('close'); UI.pop(this); }
   entryInfo(e) {
+    const info = this.baseEntryInfo(e);
+    const off = shopDiscount(this.id);
+    if (info && off && info.price) info.price = Math.round(info.price * (1 - off));
+    return info;
+  }
+  baseEntryInfo(e) {
     if (e.item) return { icon: e.item, name: ITEMS[e.item].name, price: e.price, ok: true };
     if (e.recipe) {
       const known = G.recipes.includes(e.recipe);
@@ -335,6 +346,8 @@ class ShopModal {
     ctx.fillStyle = 'rgba(0,0,0,0.45)'; ctx.fillRect(0, 0, UI.W, UI.H);
     drawPanel(ctx, R.x, R.y, R.w, R.h, 'wood');
     drawText(ctx, this.shop.name, R.x + 10 * s, R.y + 7 * s, { size: 8, bold: true, color: '#8a2a10' });
+    const off = shopDiscount(this.id);
+    if (off) drawText(ctx, `Friend discount: ${Math.round(off * 100)}% off`, R.x + R.w / 2, R.y + 8.5 * s, { size: 6, bold: true, align: 'center', color: '#2a8a3a' });
     drawText(ctx, `Gold: ${fmtNum(G.gold)}g`, R.x + R.w - 10 * s, R.y + 8 * s, { size: 7, bold: true, align: 'right' });
     const stock = this.shop.stock();
     const lw = Math.floor(R.w * 0.56);

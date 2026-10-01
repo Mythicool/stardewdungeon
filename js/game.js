@@ -26,7 +26,7 @@ function freshState() {
     recipes: RECIPES.filter(r => r.known).map(r => r.id),
     quest: null, boardOffer: null, mainQuest: 0,
     expressFloors: [1],
-    party: null,
+    party: null, pet: null,
     flags: {},
     zoom: 4, cam: { x: 0, y: 0, w: 1, h: 1 }, shake: 0, locT: 0,
     mouseMode: false, ending: false, questCheckT: 0,
@@ -290,6 +290,7 @@ function setMap(m, tx, ty, dir) {
   G.donut.x = P.x - DX[dir] * 12; G.donut.y = P.y - DY[dir] * 12 + 2;
   G.donut.map = m.id;
   partyFollowMap(m);
+  petFollowMap(m);
   G.locT = 3;
   Music.play(musicFor(m));
 }
@@ -455,7 +456,9 @@ function processNight(passedOut) {
   for (const id of Object.keys(G.friends)) { G.friends[id].talked = false; G.friends[id].gifted = false; }
   G.flags.toiletToday = false;
   G.flags.crawledWith = false;
+  G.flags.crawledWithMongo = false;
   leaveParty();
+  sendMongoHome();
   G.flags.exhaustedWarned = false;
   if (G.quest) { G.quest.expires--; if (G.quest.expires <= 0) { G.quest = null; G.flags.questExpired = true; } }
   if (!G.quest) G.boardOffer = makeBoardQuest();
@@ -488,6 +491,11 @@ function startNewDay() {
   const daysLeft = DAYS_PER_SEASON - G.day;
   const collapse = daysLeft === 0 ? 'The season collapses TONIGHT. Harvest what you can!' : `The season collapses in ${daysLeft} day${daysLeft > 1 ? 's' : ''}.`;
   UI.announce(`${DAY_NAMES[(G.day - 1) % 7].toUpperCase()}, ${SEASON_NAMES[G.season].toUpperCase()} ${G.day}`, `${WEATHER_TEXT[G.weather]} ${collapse} ${choice(SYSTEM_MORNING)}`, 'level', 'system');
+  const present = mongoPresent();
+  if (present) {
+    giveItem(present, 1, true);
+    UI.toast(`Mongo dug up a present for you: ${ITEMS[present].name}!`, present, '#a0ffa0');
+  }
   if (G.followers >= 10000 && chance(0.12)) {
     giveItem('box_fan', 1, true);
     UI.toast('A sponsor left a Fan Box on your doorstep!', 'box_fan', '#ff8fd0');

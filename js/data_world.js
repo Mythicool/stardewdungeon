@@ -653,9 +653,15 @@ const DONUT_COMMENTARY = {
   gem: ['Ooh, sparkly! That {item} would look divine on me.', 'Is that a {item}? Give it to me. For safekeeping.'],
   multikill: ["Triple kill! That's going in the trailer!", "Look at you go! I'm almost impressed!", 'Combo! The viewers are SCREAMING!'],
   selfown: ['Carl! My FUR! You singed my FUR!', 'Did you just blow yourself up? On PURPOSE?'],
+  sniff: [
+    "Mongo found the stairs! Who's a good boy? Not you, Carl. Mongo.",
+    'That rock, Carl. Mongo says that rock. Kick it.',
+    'My baby is a GENIUS. I trained him, obviously.',
+  ],
 };
 
 // Katia as a party member (see party.js). Invite her at PARTY_HEARTS hearts.
+// Mongo has his own pet slot and comes along at MONGO_CRAWL_HEARTS hearts.
 const PARTY_LINES = {
   katia: {
     join: [
@@ -679,6 +685,42 @@ const PARTY_LINES = {
     block: ['Got it!', "I've got you!", 'Blocked!', 'Nope!'],
     idle: ['Which way, Carl?', 'I could get used to this.', 'Mongo would love it down here.', 'Stay close. I mean it.'],
   },
+  mongo: {
+    join: [
+      '*Mongo does a full-body wiggle and sprints for the gate. Then back to you. Then for the gate again.*',
+      '*Mongo SCREECHES. You are fairly sure that was a yes.*',
+      '*Mongo drops the stick he was chewing. This is more important than the stick.*',
+    ],
+    tooLate: '*Mongo yawns enormously and flops over. The Stairwell can wait until morning.*',
+    leave: [
+      '*Mongo gives you one long, wounded look, then trots back to the farm.*',
+      '*Mongo headbutts your knee goodbye and lopes off home.*',
+    ],
+    late: 'Mongo yawned and trotted home to the farm for the night.',
+    chat: [
+      '*Mongo has something in his mouth. You decide not to ask what floor it came from.*',
+      '*Mongo leans against your leg, panting happily. His breath smells like goblin.*',
+      '*Mongo sniffs the air, growls at a shadow, then looks at you for praise.*',
+    ],
+    charge: ['*RAWR!*', '*SCREECH!*', '*CHOMP*', '*thunderous dinosaur noises*'],
+    sniff: ['*sniff sniff... SNIFF*', '*snuffle snuffle*'],
+    found: ['*SCREECH!* (He means: HERE, CARL.)', '*paws at the rock and wags*'],
+    idle: ['*chirp*', '*sniffs a skull*', '*growls at the dark*', '*sneezes*'],
+  },
+};
+
+// Friendship perks: what each friend does for Carl once he reaches `hearts`.
+// The effect lives where it applies (shop prices, addFollowers, the morning).
+const FRIEND_PERKS = {
+  donut: { hearts: 0, text: 'Magic Missile hits harder and fires faster as her hearts grow' },
+  mongo: {
+    hearts: 5, text: 'Digs up a present for you most mornings',
+    presents: ['wild_garlic', 'blackberry', 'spice_berry', 'crystal_fruit', 'copper', 'iron', 'quartz', 'rat_tail', 'tusk'],
+  },
+  katia: { hearts: 4, text: 'Will join your party for a day in the Stairwell' },
+  mordecai: { hearts: 5, text: '15% off everything at the Guild Supply', discount: 0.15 },
+  zev: { hearts: 5, text: '+20% followers from everything', followers: 0.2 },
+  pook: { hearts: 5, text: "15% off everything at Pook's Provisions", discount: 0.15 },
 };
 
 const DONUT_BATTLE_QUIPS = [
@@ -737,6 +779,8 @@ const ACHIEVEMENTS = {
   dinner:       { name: 'Dinner Is Served', desc: "You had a friend over for dinner. The Syndicate rated it 'surprisingly wholesome' and asked where the explosions were.", box: 'box_silver', followers: 1500 },
   dinner_all:   { name: 'Dinner Party Circuit', desc: 'Katia, Zev, Mordecai and Pook have all eaten at your table. Borant is pitching a cooking show. You will not be paid.', box: 'box_gold', followers: 10000 },
   dinner_ghost: { name: 'Left on Read', desc: 'You invited a friend to dinner and never showed up. The audience gasped. Then they rewatched it four times.', followers: 300 },
+  mongo_crawl:  { name: 'Release the Dinosaur', desc: 'You took Mongo into the Stairwell. The monsters were not consulted.', box: 'box_silver', followers: 2000 },
+  good_nose:    { name: 'Good Nose', desc: 'Mongo sniffed out the stairs for you. He would like a treat. He would like ALL the treats.', box: 'box_bronze', followers: 1000 },
 };
 
 const MAIN_QUESTS = [

@@ -318,7 +318,7 @@ function openLootBox(slot) {
 function npcsHere() {
   const list = G.npcs.filter(n => n.map === G.map.id);
   if (G.donut) list.push(G.donut);
-  if (G.map.id === 'farm') list.push(G.mongo);
+  if (G.map.id === 'farm' || mongoAlong()) list.push(G.mongo);
   if (G.map.localNpcs) list.push(...G.map.localNpcs);
   return list;
 }
@@ -493,6 +493,8 @@ function interactNPC(npc) {
   if (gift) opts.push({ label: `Give ${ITEMS[it.id].name}`, fn: () => giveGift(npc, slot) });
   if (canInvite(npc.id)) opts.push({ label: 'Invite to the Stairwell', fn: () => inviteToParty(npc) });
   if (G.party === npc.id) opts.push({ label: 'Send home for today', fn: () => dismissParty(npc) });
+  if (npc.id === 'mongo' && canBringMongo()) opts.push({ label: 'Bring to the Stairwell', fn: () => bringMongo() });
+  if (npc.id === 'mongo' && mongoAlong()) opts.push({ label: 'Send home for today', fn: () => dismissMongo() });
   if (canInviteToDinner(npc.id)) opts.push({ label: 'Invite to dinner tonight', fn: () => inviteToDinner(npc) });
   if (!opts.length) return talkTo(npc);
   opts.splice(gift ? 1 : 0, 0, { label: npc.id === 'donut' || npc.id === 'mongo' ? 'Just pet' : 'Just talk', fn: () => talkTo(npc) });
@@ -515,7 +517,7 @@ function talkTo(npc, onDone) {
   // prefer heart-gated lines the first time they unlock
   const special = def.lines.filter(l => l[0] > 0 && l[0] <= hearts && !G.seenLines[npc.id + ':' + l[1].slice(0, 20)]);
   const gossip = !bday && newsReaction(npc.id);
-  const partyChat = G.party === npc.id && f.talked && PARTY_LINES[npc.id];
+  const partyChat = (G.party === npc.id || G.pet === npc.id) && f.talked && PARTY_LINES[npc.id];
   const grudge = dinnerGrudge(npc.id);
   const line = grudge || bday || gossip || (partyChat ? choice(partyChat.chat) : special.length ? special[special.length - 1][1] : pool[(G.day * 7 + G.lineIdx[npc.id] + npc.id.length) % pool.length]);
   G.seenLines[npc.id + ':' + line.slice(0, 20)] = true;
@@ -755,6 +757,7 @@ function unlock(id) {
 
 const FOLLOWER_MILESTONES = [1000, 10000, 100000, 1000000, 10000000];
 function addFollowers(n, silent) {
+  if (n > 0 && hasPerk('zev')) n = Math.round(n * (1 + FRIEND_PERKS.zev.followers));
   const before = G.followers;
   G.followers += n;
   if (!silent && n > 0) floater(G.player.x, G.player.y - 26, `+${fmtNum(n)} fans`, '#ff8fd0');
