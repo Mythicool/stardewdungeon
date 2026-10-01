@@ -118,6 +118,7 @@ function update(dt) {
   updateMongo(dt);
   updateBanter(dt);
   updateCommentary(dt);
+  updatePoll(dt);
   updateDinner();
   updateMonsters(dt);
   updateProjectiles(dt);
@@ -306,10 +307,12 @@ function enterDungeon(level) {
     G.locT = 4;
     maybeSpawnRival(m, level);
     commentOnFloor(m, level > G.stats.deepest);
+    startPoll(m);
     if (level > G.stats.deepest) {
       G.stats.deepest = level;
       if (level % 5 === 0) recordNews('deep', { n: level });
     }
+    sponsorEvent('depth', level);
     if (level % 5 === 0 && !G.expressFloors.includes(level)) {
       G.expressFloors.push(level);
       G.expressFloors.sort((a, b) => a - b);
@@ -334,6 +337,7 @@ function descend() {
   Audio2.play('stairs');
   rivalOnCarlDescend();
   addFollowers(10 + G.map.level * 5, true);
+  payPoll();
   enterDungeon(G.map.level + 1);
 }
 
@@ -498,6 +502,7 @@ function startNewDay() {
     giveItem(present, 1, true);
     UI.toast(`Mongo dug up a present for you: ${ITEMS[present].name}!`, present, '#a0ffa0');
   }
+  if (G.stats.deepest >= 1) UI.toast('Zev has a new sponsor deal for you. Find him in town.', null, '#ff9ad0');
   if (G.followers >= 10000 && chance(0.12)) {
     giveItem('box_fan', 1, true);
     UI.toast('A sponsor left a Fan Box on your doorstep!', 'box_fan', '#ff8fd0');

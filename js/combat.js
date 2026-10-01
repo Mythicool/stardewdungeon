@@ -146,7 +146,8 @@ function updateKrakaren(mo, dt, d) {
   if (Math.abs(P.x - mo.x) < mo.hw + 4 && P.y - 4 > mo.y - mo.hh * 2 && P.y - 4 < mo.y + 6) hurtPlayer(mo.dmg, mo.x, mo.y);
 }
 
-function hurtMonster(mo, dmg, fx, fy, crit) {
+// src says what landed the blow ('kick', 'donut', 'bomb', 'katia', 'mongo').
+function hurtMonster(mo, dmg, fx, fy, crit, src) {
   if (mo.dead) return;
   mo.hp -= dmg;
   mo.aggro = true;
@@ -158,11 +159,11 @@ function hurtMonster(mo, dmg, fx, fy, crit) {
   Audio2.play('hit');
   burst(mo.x, mo.y - 6, 5, ['#ffffff', '#ff6060'], 60);
   if (mo.d.rival) { if (mo.hp <= 0) rivalYield(mo); else rivalHurt(mo); }
-  else if (mo.hp <= 0) killMonster(mo);
+  else if (mo.hp <= 0) killMonster(mo, src);
   else if (mo.d.boss) commentOnBossHit(mo);
 }
 
-function killMonster(mo) {
+function killMonster(mo, src) {
   mo.dead = true;
   const m = G.map;
   Audio2.play('kill');
@@ -173,6 +174,8 @@ function killMonster(mo) {
   G.stats.kills[mo.type] = (G.stats.kills[mo.type] || 0) + 1;
   G.stats.totalKills++;
   addFollowers(mo.d.boss ? 0 : 5 + mo.level * 2, true);
+  if (!mo.d.boss) pollOnKill(mo);
+  sponsorEvent('kill', src);
   unlock('first_kill');
   if ((G.stats.kills.rat || 0) >= 10) unlock('rat_10');
   if (G.stats.totalKills >= 100) unlock('kills_100');
@@ -186,6 +189,7 @@ function killMonster(mo) {
     UI.toast('The level is clear! A stairwell appears.', null, '#ffe070');
     donutComment('cleared');
   } else commentOnKill();
+  if (m.level && !m.safe && m.monsters.every(x => x.dead || x.d.rival)) sponsorEvent('floorclear', m);
 }
 
 function onBossKilled(mo) {
@@ -235,8 +239,9 @@ function revealStairs(tx, ty) {
 function hurtPlayer(dmg, fx, fy) {
   const P = G.player;
   if (P.hurtT > 0 || G.modals.length || G.transition) return;
-  dmg = partyShield(dmg, fx, fy);
+  dmg = pollDamageTaken(partyShield(dmg, fx, fy));
   P.hp -= dmg;
+  if (G.map.level) G.map.hitHere = true; // spoils a flawless floor
   P.hurtT = 1.0;
   const a = Math.atan2(P.y - fy, P.x - fx);
   P.kx = Math.cos(a) * 180; P.ky = Math.sin(a) * 180;
@@ -260,8 +265,8 @@ function playerKick() {
       if (mo.dead) continue;
       if (boxesOverlap(hb, monsterBox(mo))) {
         const crit = chance(0.08);
-        const dmg = (base + P.skills.combat.lv + randi(0, 3)) * (crit ? 2 : 1);
-        hurtMonster(mo, dmg, P.x, P.y, crit);
+        const dmg = pollDamageDealt((base + P.skills.combat.lv + randi(0, 3)) * (crit ? 2 : 1));
+        hurtMonster(mo, dmg, P.x, P.y, crit, 'kick');
         hit = true;
       }
     }
@@ -280,7 +285,7 @@ function updateProjectiles(dt) {
         const dx = tx - p.x, dy = ty - p.y, d = Math.hypot(dx, dy) || 1;
         p.vx = lerp(p.vx, dx / d * 190, Math.min(1, dt * 7));
         p.vy = lerp(p.vy, dy / d * 190, Math.min(1, dt * 7));
-        if (d < 8 + (p.target.d.boss ? p.target.hw * 0.6 : 0)) { hurtMonster(p.target, p.dmg, p.x, p.y, false); p.life = 0; burst(p.x, p.y, 8, ['#e080ff', '#ffffff'], 60); }
+        if (d < 8 + (p.target.d.boss ? p.target.hw * 0.6 : 0)) { hurtMonster(p.target, p.dmg, p.x, p.y, false, 'donut'); p.life = 0; burst(p.x, p.y, 8, ['#e080ff', '#ffffff'], 60); }
       } else p.life = Math.min(p.life, 0.2);
       if (chance(0.7)) G.particles.push({ x: p.x, y: p.y, vx: rand(-10, 10), vy: rand(-10, 10), life: 0.35, max: 0.35, color: choice(['#e080ff', '#b060ff', '#ffffff']), size: 1 });
     } else {
@@ -344,7 +349,7 @@ function explode(b) {
   if (m.monsters) for (const mo of m.monsters) {
     if (mo.dead) continue;
     const d = dist(mo.x, mo.y - 4, b.x, b.y);
-    if (d < R * TILE + mo.hw) hurtMonster(mo, Math.round(def.dmg * (1 - 0.4 * d / (R * TILE + mo.hw))), b.x, b.y, false);
+    if (d < R * TILE + mo.hw) hurtMonster(mo, Math.round(def.dmg * (1 - 0.4 * d / (R * TILE + mo.hw))), b.x, b.y, false, 'bomb');
   }
   const pd = dist(P.x, P.y - 4, b.x, b.y);
   if (pd < R * TILE) {
@@ -382,6 +387,7 @@ function updateDrops(dt) {
           UI.toast(`+${d.n - left} ${ITEMS[d.id].name}`, d.id);
           Audio2.play('pickup');
           if (['ruby', 'diamond', 'mana'].includes(d.id)) donutComment('gem', { item: ITEMS[d.id].name });
+          if (SPONSOR_GEMS.includes(d.id)) sponsorEvent('gem', d.n - left);
         }
         if (left > 0) { d.n = left; d.full = true; d.t = -2; if (!G.flags.fullWarn) { UI.toast('Inventory full!', null, '#ff8080'); } }
         else d.gone = true;
