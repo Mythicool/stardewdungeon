@@ -69,6 +69,12 @@ bomb-lobbing hobgoblins, shades). Break rocks to find the hidden stairs, or clea
 loot, multi-kills and self-inflicted explosions (she gets sweeter about it at 6+ hearts). Carl kicks. Upgrade the kick with toe rings (he refuses to wear shoes). Craft
 Hob-Lobbers and Carl's Doomsday Scenario to blow up rocks, monsters, and occasionally yourself.
 
+**Rival crawler.** From level 3, Brock Vantage (sponsored by Gnu-Wave Energy Slurry) sometimes
+follows Carl down the ladder. He talks trash, grabs any chest he can reach, and heads straight
+for the rock hiding the stairs, because his sponsor sold him a map. Beat him down the stairs for
+a follower bonus, or kick him (Donut, Katia and Mongo help) until he yields and hands over
+everything he grabbed plus a loot box. Friends hear about it either way.
+
 **Friends.** Talk to and gift Donut, Mongo, Katia, Mordecai, Zev and Pook. Each has loves,
 likes and hates, heart levels, and dialogue that unlocks as the hearts go up.
 At 3 and 6 hearts, the next chat with each friend plays a **heart event**: a short scene that
@@ -100,7 +106,7 @@ up gems, fight alongside a friend, race to a depth before noon, or clear a whole
 getting hit. Hear the pitch from Zev in town and take it or pass. A deal you take shows up in the
 objectives panel and pays a loot box and followers the moment it's done.
 
-**The System AI.** Snarky morning announcements, 50 achievements that pay out in loot boxes
+**The System AI.** Snarky morning announcements, 53 achievements that pay out in loot boxes
 (Bronze, Silver, Gold, Fan, Legendary), follower milestones, a TV with Borant programming, and
 a main objective track from "Welcome to the Homestead" through "Syndicate Darling"
 (1,000,000 followers).
@@ -135,6 +141,7 @@ js/
   banter.js         friends' gossip about recent events, speech-bubble banter
   commentary.js     Donut's live commentary in the Stairwell
   party.js          Katia and Mongo as party members: follow, fight, shield, sniff
+  rival.js          Brock Vantage, the rival crawler who races Carl to chests and stairs
   dinner.js         dinner nights: invites, the guest at the cabin table, the meal scene
   sponsors.js       Zev's daily sponsor deals: the pitch, progress hooks, payouts
   polls.js          audience polls: the viewer vote on each floor's twist, payouts

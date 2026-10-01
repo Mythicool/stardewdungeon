@@ -178,6 +178,7 @@ const MONSTERS = {
   hobgoblin: { name: 'Hobgoblin', spr: 'hobgoblin', hp: 52, dmg: 12, speed: 34, ranged: true, xp: 14, aggro: 170, drops: [['goblin_powder', 0.7], ['hob_ear', 0.25]] },
   shade:     { name: 'Dungeon Shade', spr: 'shade', hp: 40, dmg: 14, speed: 30, ghost: true, xp: 16, aggro: 200, drops: [['ectoplasm', 0.4]] },
   feralcat:  { name: 'Feral Cat', spr: 'feralcat', hp: 12, dmg: 6, speed: 68, xp: 2, aggro: 400, drops: [] },
+  rival:     { name: 'Brock Vantage', spr: 'rival', hp: 110, dmg: 8, speed: 60, rival: true, xp: 25, aggro: 0, drops: [] },
   hoarder:   { name: 'The Hoarder', spr: 'hoarder', hp: 480, dmg: 15, speed: 26, boss: true, scale: 2, xp: 200, aggro: 999, drops: [['cat_collar', 1]] },
   krakaren:  { name: 'Krakaren Clone', spr: null, hp: 1200, dmg: 20, speed: 0, boss: true, xp: 500, aggro: 999, drops: [['tentacle', 1]] },
 };

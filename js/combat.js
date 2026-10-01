@@ -45,6 +45,7 @@ function updateMonsters(dt) {
       return moveEntity(mo, vx, vy, m, true);
     };
     if (mo.type === 'krakaren') { updateKrakaren(mo, dt, d); continue; }
+    if (mo.type === 'rival') { updateRival(mo, dt, d); continue; }
     if (mo.type === 'hoarder') updateHoarder(mo, dt, d);
 
     if (mo.type === 'tuskling' && mo.aggro) {
@@ -157,7 +158,8 @@ function hurtMonster(mo, dmg, fx, fy, crit, src) {
   floater(mo.x, mo.y - (mo.d.boss ? 36 : 18), String(dmg), crit ? '#ffe040' : '#ffffff', crit);
   Audio2.play('hit');
   burst(mo.x, mo.y - 6, 5, ['#ffffff', '#ff6060'], 60);
-  if (mo.hp <= 0) killMonster(mo, src);
+  if (mo.d.rival) { if (mo.hp <= 0) rivalYield(mo); else rivalHurt(mo); }
+  else if (mo.hp <= 0) killMonster(mo, src);
   else if (mo.d.boss) commentOnBossHit(mo);
 }
 
@@ -182,12 +184,12 @@ function killMonster(mo, src) {
     if (G.quest.progress >= G.quest.n) UI.toast('Request complete! Report to the board.', null, '#ffe070');
   }
   if (mo.d.boss) onBossKilled(mo);
-  else if (!m.boss && !m.safe && m.monsters.every(x => x.dead) && !m.stairsFound) {
+  else if (!m.boss && !m.safe && m.monsters.every(x => x.dead || x.d.rival) && !m.stairsFound) {
     revealStairs(Math.floor(mo.x / TILE), Math.floor((mo.y - 3) / TILE));
     UI.toast('The level is clear! A stairwell appears.', null, '#ffe070');
     donutComment('cleared');
   } else commentOnKill();
-  if (m.level && !m.safe && m.monsters.every(x => x.dead)) sponsorEvent('floorclear', m);
+  if (m.level && !m.safe && m.monsters.every(x => x.dead || x.d.rival)) sponsorEvent('floorclear', m);
 }
 
 function onBossKilled(mo) {

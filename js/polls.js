@@ -64,7 +64,7 @@ function closePoll(p) {
 
 function applyTwist(id) {
   const m = G.map;
-  const alive = (m.monsters || []).filter(mo => !mo.dead && !mo.d.boss);
+  const alive = (m.monsters || []).filter(mo => !mo.dead && !mo.d.boss && !mo.d.rival); // Brock is a crawler, not a monster
   if (id === 'hyper') for (const mo of alive) mo.speed *= 1.5;
   if (id === 'double') {
     for (const mo of alive) {

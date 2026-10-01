@@ -374,6 +374,8 @@ const NEWS_REACTIONS = {
     selfown: "Carl. You blew YOURSELF up. The chat called it 'peak content.' I called it 'embarrassing for our brand.'",
     sponsor: "You caught The Sponsor?! Carl, do you know how many ad reads that fish owes us?",
     badgift: "I heard you gave {who} a {item}. Carl, I'm begging you. Let ME pick the gifts.",
+    rival: "Did you see Brock's FACE when he yielded? I'm making it my profile picture. Forever.",
+    rival_won: "Brock beat us down the stairs, Carl. He made a whole video about it. I watched it four times. Out of spite.",
   },
   mongo: {
     died: '*Mongo sniffs you all over, very carefully, as if checking that every part of you came back.*',
@@ -395,6 +397,8 @@ const NEWS_REACTIONS = {
     selfown: "I saw the replay of you blowing yourself up. I'm not laughing. I'm... okay, I laughed a little.",
     sponsor: "You caught The Sponsor! I didn't think it was real. Zev says it has a better contract than he does.",
     badgift: "So, um. {who} told me about the {item}. Maybe next time ask me first?",
+    rival: "You beat up that Brock guy? Good. He tried to sell me energy slurry in the Plaza. Twice.",
+    rival_won: "I heard that Brock guy beat you to the stairs. Next time take me. I'll hold the door. On his face.",
   },
   mordecai: {
     died: "Heard you died. Welcome to the club. The dues are terrible. Don't make a habit of it.",
@@ -406,6 +410,8 @@ const NEWS_REACTIONS = {
     selfown: "You blew yourself up with your own Hob-Lobber. I told you. Rocks and monsters. Not your feet.",
     sponsor: "You caught The Sponsor. In all my years I've seen two crawlers do that. One of them was drunk.",
     badgift: "{who} is still muttering about some {item}. Even I know better than that, and I live in a cave.",
+    rival: "Heard you put the Vantage kid on the ground. Sponsored crawlers are all flash. Don't get cocky. Flash kills people too.",
+    rival_won: "The sponsor kid beat you down? He had a map, Carl. Borant sells those. Break more rocks.",
   },
   zev: {
     died: "Carl! Your death clip is our second most-watched moment EVER! Please don't do it again. ...Unless?",
@@ -418,6 +424,8 @@ const NEWS_REACTIONS = {
     selfown: "The self-explosion! Nine billion views! I'm not saying do it again, but I'm not NOT saying it.",
     sponsor: "You caught The Sponsor. Please, PLEASE don't eat it on camera. We have contracts.",
     badgift: "Carl, I heard about the {item} for {who}. As your PR rep: yikes. As your friend: also yikes.",
+    rival: "Carl! The Brock beatdown is a RIVALRY ARC. The Syndicate LOVES a rivalry arc. Please never become friends.",
+    rival_won: "Brock's 'GG no re' clip is everywhere. As your PR rep, I'm calling it a 'strategic loss.' Win the next one.",
   },
   pook: {
     died: "Pook heard crawler died! Pook was very sad. Pook also checked if crawler had store credit. Crawler did not.",
@@ -658,6 +666,15 @@ const DONUT_COMMENTARY = {
     'That rock, Carl. Mongo says that rock. Kick it.',
     'My baby is a GENIUS. I trained him, obviously.',
   ],
+  rival: [
+    "Carl, it's HIM. The orange jacket. Don't let him get to the stairs first.",
+    "Ugh, Brock. His sponsor is an energy drink, Carl. An ENERGY DRINK.",
+    "Brock is here. Kick him or beat him downstairs. Ideally both.",
+  ],
+  rival_chest: ["He took OUR chest, Carl! That was going to be my tiara!", 'Carl! Brock is stealing our loot! On camera!'],
+  rival_chest_carl: ["Ha! Too slow, Brock! That chest is OURS.", 'Did you see his face, Carl? Screenshot it. Frame it.'],
+  rival_win: ["He beat us down the stairs. Carl, I am going to be insufferable about this for DAYS.", "Lost to BROCK. The chat is merciless, Carl. Merciless."],
+  rival_beaten: ["We beat Brock! Somebody clip that! Put it on a loop!", "Look at him run. Tell your sponsor we said hi, Brock!"],
   sponsor: [
     'Did we just get SPONSORED? I want a cut. A big cut.',
     'Brand deal complete! Tell Zev my rate just doubled.',
@@ -799,6 +816,43 @@ const DONUT_BATTLE_QUIPS = [
   'Magic Missile!', 'Take THAT!', 'Carl! Did you see that?!', 'Nobody touches my Carl!',
   'Another one for the highlight reel!', 'Mongo would have liked that one.', 'Pew pew!', 'For the fans!',
 ];
+// Brock Vantage, the rival crawler (see rival.js). {w}/{l} are Carl's race
+// wins/losses against him, {n} how many times Carl has beaten him up.
+const RIVAL_LINES = {
+  arrive: [
+    "Oh, cool, the no-pants guy. Hey chat, watch me beat a farmer to the stairs!",
+    "Brock Vantage, Gnu-Wave Energy Slurry. Your chests are mine, barefoot. Nothing personal. It's content.",
+  ],
+  arrive_again: [
+    "You again? Chat, it's the farmer. Somebody start a timer.",
+    "Same floor, same no pants. Race you, Carl. Loser reads the sponsor ad.",
+    "Record's {w} to {l}, Carl. I'm about to fix that.",
+  ],
+  arrive_beaten: [
+    "Okay, so last time was a fluke. I've been doing leg day. Race me.",
+    "Round two, Carl. Or three. Whatever. I don't count my losses on stream.",
+    "My sponsor says I'm not allowed to lose to a farmer again. Don't make this weird.",
+  ],
+  taunt: [
+    "Smash that follow button, chat!", 'Nice boxers. Did Borant lose your pants?', 'This floor is sponsored by me, winning.',
+    "Is that cat narrating? I have a drone for that.", 'Drink Gnu-Wave! It tastes like lightning and regret!',
+  ],
+  shove: ['Out of the way, farmer!', 'Excuse me. Crawler coming through.', 'Move it, barefoot!'],
+  dig: ["Sponsor map says it's this rock. Thanks, sponsor!", 'Stairs are right under here. Bye, Carl!'],
+  found: ['Stairs! Chat, I am SO good at this.', 'And that, chat, is how a professional does it.'],
+  chest: ['Mine! Chat, unboxing after the break!', 'Ooh, free loot. Thanks for holding it, Carl.'],
+  carl_chest: ["Hey! I called that chest! In my head!", 'That was MY chest! Chat, are you seeing this?'],
+  hurt: ['Ow! Not the face, I stream with this face!', "Hey! Chat, he's attacking me! Report him!", 'Rude!', 'Okay, okay, I get it!'],
+  hurt_low: ["Fine! FINE! Truce?", "I'm calling my sponsor!", "Stop, my health bar is on camera!"],
+  win: ['Smell ya later, farmer!', 'GG, no re!', 'First! Chat, clip that!'],
+  lose: ["Whatever, my drone lagged.", 'This is so rigged.', "I let you win. For the algorithm."],
+  yield: [
+    "Okay! Okay! You win! Take the stuff and stop kicking!",
+    "I yield! Chat, that never happened. Take it, Carl, just stop!",
+    "That's {n} times now. My sponsor is going to drop me. Here, take it all!",
+  ],
+};
+
 const DONUT_IDLE_QUIPS = [
   'Carl, you missed a spot.', "I'm supervising.", 'This dirt is beneath me. Literally.', 'Is it lunch yet?',
   '*purrs*', 'Wave to the camera, Carl!', 'Mongo! Stop eating that!', 'My paws are getting dirty.',
@@ -855,6 +909,9 @@ const ACHIEVEMENTS = {
   sponsored:    { name: 'Brought To You By', desc: 'You completed a sponsor deal. Somewhere, a brand manager wept with joy. Then billed Borant.', box: 'box_silver', followers: 2000 },
   sponsor_10:   { name: 'Brand Ambassador', desc: 'Ten sponsor deals done. Your face is on a cereal box, an energy drink and, inexplicably, a foot cream.', box: 'box_gold', followers: 10000 },
   mongo_crawl:  { name: 'Release the Dinosaur', desc: 'You took Mongo into the Stairwell. The monsters were not consulted.', box: 'box_silver', followers: 2000 },
+  rival_race:   { name: 'Photo Finish', desc: 'You beat Brock Vantage down the stairs. His sponsor has issued a statement blaming the stairs.', box: 'box_bronze', followers: 1500 },
+  rival_beaten: { name: 'Unsubscribed', desc: "You beat up a rival crawler until he handed over his loot. The Syndicate calls it 'competitive streaming.'", box: 'box_silver', followers: 3000 },
+  rival_nemesis:{ name: 'Nemesis', desc: 'You have beaten Brock Vantage five times. He has started a podcast about it.', box: 'box_gold', followers: 15000 },
   good_nose:    { name: 'Good Nose', desc: 'Mongo sniffed out the stairs for you. He would like a treat. He would like ALL the treats.', box: 'box_bronze', followers: 1000 },
 };
 
