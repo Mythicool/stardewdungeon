@@ -496,11 +496,12 @@ function talkTo(npc) {
   const def = NPC_DEFS[npc.id];
   const f = friendOf(npc.id);
   const hearts = heartsOf(npc.id);
+  const bday = !f.talked && isBirthday(npc.id) && BIRTHDAYS[npc.id].talk;
   const pool = def.lines.filter(l => l[0] <= hearts).map(l => l[1]);
   G.lineIdx[npc.id] = (G.lineIdx[npc.id] || 0) + 1;
   // prefer heart-gated lines the first time they unlock
   const special = def.lines.filter(l => l[0] > 0 && l[0] <= hearts && !G.seenLines[npc.id + ':' + l[1].slice(0, 20)]);
-  const line = special.length ? special[special.length - 1][1] : pool[(G.day * 7 + G.lineIdx[npc.id] + npc.id.length) % pool.length];
+  const line = bday || (special.length ? special[special.length - 1][1] : pool[(G.day * 7 + G.lineIdx[npc.id] + npc.id.length) % pool.length]);
   G.seenLines[npc.id + ':' + line.slice(0, 20)] = true;
   if (!f.talked) {
     f.talked = true;
@@ -523,7 +524,9 @@ function giveGift(npc, slot) {
   if (def.love.includes(id)) kind = 'love';
   else if (def.like.includes(id)) kind = 'like';
   else if (def.hate.includes(id)) kind = 'hate';
-  const pts = { love: 80, like: 45, neutral: 20, hate: -40 }[kind];
+  const bday = isBirthday(npc.id);
+  let pts = { love: 80, like: 45, neutral: 20, hate: -40 }[kind];
+  if (bday) pts *= kind === 'hate' ? 2 : 4;
   removeFromSlot(slot, 1);
   f.gifted = true;
   if (!f.talked) f.talked = true;
@@ -537,7 +540,23 @@ function giveGift(npc, slot) {
     Audio2.play('coin');
   } else if (kind === 'hate') Audio2.play('error');
   else Audio2.play('pickup');
-  UI.say(npc.id, def.react[kind]);
+  if (bday && kind !== 'hate') {
+    unlock('birthday');
+    addFollowers(kind === 'love' ? 1000 : 300, true);
+    burst(npc.x, npc.y - 16, 20, ['#ff8fd0', '#8fd0ff', '#ffd23a', '#a0ffa0'], 80);
+  }
+  UI.say(npc.id, bday ? BIRTHDAYS[npc.id][kind === 'love' ? 'love' : kind === 'hate' ? 'hate' : 'gift'] : def.react[kind]);
+}
+
+// Birthdays --------------------------------------------------------------------
+function isBirthday(id) {
+  const b = BIRTHDAYS[id];
+  return !!b && b.season === G.season && b.day === G.day;
+}
+
+function birthdayText(id) {
+  const b = BIRTHDAYS[id];
+  return b ? `${SEASON_NAMES[b.season]} ${b.day}` : '';
 }
 
 function harvestCrop(o) {

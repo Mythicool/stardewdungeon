@@ -67,8 +67,10 @@ Hob-Lobbers and Carl's Doomsday Scenario to blow up rocks, monsters, and occasio
 
 **Friends.** Talk to and gift Donut, Mongo, Katia, Mordecai, Zev and Pook. Each has loves,
 likes and hates, heart levels, and dialogue that unlocks as the hearts go up.
+Every friend has a birthday (shown in the Social tab, with a reminder that morning). Gifts on
+a birthday count four times as much, and hated ones twice as badly.
 
-**The System AI.** Snarky morning announcements, 38 achievements that pay out in loot boxes
+**The System AI.** Snarky morning announcements, 39 achievements that pay out in loot boxes
 (Bronze, Silver, Gold, Fan, Legendary), follower milestones, a TV with Borant programming, and
 a main objective track from "Welcome to the Homestead" through "Syndicate Darling"
 (1,000,000 followers).

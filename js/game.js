@@ -475,6 +475,9 @@ function startNewDay() {
     giveItem('box_fan', 1, true);
     UI.toast('A sponsor left a Fan Box on your doorstep!', 'box_fan', '#ff8fd0');
   }
+  for (const id of Object.keys(BIRTHDAYS)) {
+    if (isBirthday(id)) UI.toast(`It's ${NPC_DEFS[id].name}'s birthday today! Bring a gift.`, null, '#ff8fd0');
+  }
   if (msgs.length) UI.system(msgs);
 }
 
