@@ -304,6 +304,7 @@ function enterDungeon(level) {
     const m = generateLevel(level);
     setMap(m, m.spawn.x, m.spawn.y, DOWN);
     G.locT = 4;
+    maybeSpawnRival(m, level);
     commentOnFloor(m, level > G.stats.deepest);
     if (level > G.stats.deepest) {
       G.stats.deepest = level;
@@ -331,6 +332,7 @@ function enterDungeon(level) {
 
 function descend() {
   Audio2.play('stairs');
+  rivalOnCarlDescend();
   addFollowers(10 + G.map.level * 5, true);
   enterDungeon(G.map.level + 1);
 }
