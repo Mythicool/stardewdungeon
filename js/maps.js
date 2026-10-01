@@ -12,6 +12,7 @@ const OBJ = {
   flowers: { solid: false, flat: true }, stairs: { solid: false, flat: true }, ladder: { solid: false, flat: true },
   chest: { solid: true }, rug: { solid: false, flat: true, w: 3, h: 2 }, cauldron: { solid: true, light: 34 },
   hut: { solid: true, w: 2, h: 2 }, sign: { solid: true }, forage: { solid: false }, toilet: { solid: true },
+  mailbox: { solid: true },
 };
 
 function newMap(id, w, h, o = {}) {
@@ -106,6 +107,7 @@ function buildFarm(fresh) {
   addWarp(m, FARM_W - 1, 11, 'town', 1, 15, RIGHT);
   addObj(m, { type: 'bin', x: 11, y: 7 });
   addObj(m, { type: 'hut', x: 3, y: 7 });
+  addObj(m, { type: 'mailbox', x: 9, y: 8 });
   addObj(m, { type: 'sign', x: 10, y: 9, text: "CARL & DONUT'S HOMESTEAD\nEst. Day 1. No pants required." });
   addObj(m, { type: 'bush', x: 5, y: 7, v: 1 });
   addObj(m, { type: 'bush', x: 13, y: 6, v: 0 });
@@ -339,6 +341,7 @@ function objSprite(o, m) {
     case 'hut': return hutSprite();
     case 'sign': return signSprite();
     case 'toilet': return toiletSprite();
+    case 'mailbox': return mailboxSprite(mailWaiting() > 0);
     case 'forage': return { c: drawIcon(ITEMS[o.item].icon), ox: 0, oy: -2 };
   }
   return null;

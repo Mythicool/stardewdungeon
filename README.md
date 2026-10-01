@@ -90,8 +90,12 @@ table from 6 PM; talk to them to serve a dish from your bag. They react to what 
 (loved, liked, hated, or a line written for that dish), Donut weighs in, and you get a little
 table talk that deepens with hearts. Dishes you cooked yourself earn double friendship. Each
 friend comes once a week, and anyone you stand up remembers it.
+Friends also write. Letters land overnight in the **mailbox** by your cabin door (the red flag
+is up when there's mail). They thank you for loved gifts, birthday presents and good dinners,
+react to your Stairwell exploits, and send the odd care package. Get close enough and Katia,
+Mordecai, Zev, Pook and Donut each mail you a recipe of their own.
 
-**The System AI.** Snarky morning announcements, 47 achievements that pay out in loot boxes
+**The System AI.** Snarky morning announcements, 49 achievements that pay out in loot boxes
 (Bronze, Silver, Gold, Fan, Legendary), follower milestones, a TV with Borant programming, and
 a main objective track from "Welcome to the Homestead" through "Syndicate Darling"
 (1,000,000 followers).
@@ -127,6 +131,8 @@ js/
   commentary.js     Donut's live commentary in the Stairwell
   party.js          Katia and Mongo as party members: follow, fight, shield, sniff
   dinner.js         dinner nights: invites, the guest at the cabin table, the meal scene
+  data_mail.js      friends' letters: thank-yous, recipes, news reactions, care packages
+  mail.js           friend mail: overnight delivery, the cabin mailbox, reading letters
   render.js         world rendering, lighting, weather, title screen
   game.js           main loop, time, days, transitions, save/load
 ```

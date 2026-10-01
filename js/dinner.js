@@ -124,6 +124,7 @@ function serveDinner(npc, slot) {
       addFollowers(fans, true);
       UI.announce('EPISODE AIRED: Dinner with ' + def.name, `${ITEMS[id].name} was on the menu${boom ? ', and on the ceiling' : ''}. +${fmtNum(fans)} followers.`, 'level');
       unlock('dinner');
+      if (kind === 'love' || cooked) mailOwe(npc.id, 'dinner', ITEMS[id].name);
       if (DINNER_GUESTS.every(g => dinnerLast()[g])) unlock('dinner_all');
     },
   });

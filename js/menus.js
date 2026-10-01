@@ -123,7 +123,7 @@ class GameMenu {
       ctx.fillRect(rr.x, rr.y, rr.w, rr.h);
       if (!known) {
         ctx.globalAlpha = 0.35; drawItemIcon(ctx, rc.out, r.x + 2 * s, y + 1 * s, 16 * s, 0); ctx.globalAlpha = 1;
-        const how = rc.unlock[0] === 'buy' ? 'Recipe sold in town' : `Unlocks at ${SKILL_NAMES[rc.unlock[0]]} level ${rc.unlock[1]}`;
+        const how = rc.unlock[0] === 'buy' ? 'Recipe sold in town' : rc.unlock[0] === 'mail' ? `${NPC_DEFS[rc.unlock[1]].name} might mail you this one` : `Unlocks at ${SKILL_NAMES[rc.unlock[0]]} level ${rc.unlock[1]}`;
         drawText(ctx, '??? — ' + how, r.x + 22 * s, y + 5 * s, { size: 6, color: '#8a6a4a' });
         return;
       }

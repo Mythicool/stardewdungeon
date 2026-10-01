@@ -379,6 +379,7 @@ function getInteractHint() {
       case 'stairs': return 'Step on to descend';
       case 'fountain': return 'F: Toss a coin';
       case 'toilet': return 'F: Use toilet';
+      case 'mailbox': return mailWaiting() ? `F: Read mail (${mailWaiting()})` : 'F: Check mailbox';
     }
   }
   if (t.b) return 'F: Inspect';
@@ -436,6 +437,7 @@ function interact(useMouse) {
         if (!G.flags.toiletToday) { G.flags.toiletToday = true; P.energy = Math.min(P.maxEnergy, P.energy + 10); }
         UI.say(null, "You use the toilet. Honestly, it's the nicest thing in the whole dungeon. (+10 Energy)");
         return;
+      case 'mailbox': return readMail();
       case 'hut': UI.say(null, "Mongo's hut. It smells like lizard and victory."); return;
     }
   }
@@ -597,6 +599,7 @@ function giveGift(npc, slot) {
   if (!f.talked) f.talked = true;
   if (!G.met[npc.id]) G.met[npc.id] = true;
   addFriend(npc.id, pts);
+  if (kind === 'love' || (bday && kind !== 'hate')) mailOwe(npc.id, bday ? 'bday' : 'gift', ITEMS[id].name);
   if (kind === 'love') {
     G.knownLoves[npc.id + ':' + id] = true;
     unlock('gift_love');
