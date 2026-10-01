@@ -214,7 +214,7 @@ function breakObject(m, o, byBomb) {
       if (chance(0.006)) { spawnDrop('box_bronze', 1, cx, cy); UI.toast('Something shiny was in that rock!', null, '#ffe070'); }
       if (!byBomb) Audio2.play('break');
       G.stats.rocks++;
-      if (o.stairs) { revealStairs(o.x, o.y); UI.toast('You found the stairwell down!', null, '#ffe070'); Audio2.play('stairs'); }
+      if (o.stairs) { revealStairs(o.x, o.y); UI.toast('You found the stairwell down!', null, '#ffe070'); Audio2.play('stairs'); donutComment('stairs'); }
       break;
     }
     case 'crate': {
@@ -409,6 +409,7 @@ function interact(useMouse) {
         Audio2.play('lootbox');
         burst(o.x * TILE + 8, o.y * TILE + 6, 20, ['#ffd23a', '#ffffff'], 90);
         giveItem('box_' + o.tier, 1);
+        donutComment('chest');
         UI.toast('Use the box from your hotbar to open it!', null, '#ffe070');
         return;
       }

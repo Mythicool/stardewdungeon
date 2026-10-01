@@ -163,6 +163,50 @@ const NPC_DEFS = {
   },
 };
 
+// Donut's live commentary in the Stairwell (see commentary.js). {n} is a level,
+// {item} an item name. `lowhp_close` replaces `lowhp` once Donut has 6+ hearts.
+const DONUT_COMMENTARY = {
+  newdepth: [
+    'Level {n}! New personal best, Carl. Wave to the drones!',
+    "Level {n}. I can't believe they let us this deep without a stylist.",
+    'Ooh, level {n}. It smells like adventure. And feet. Mostly feet.',
+    'Level {n}! The viewers will LOVE this. Look heroic.',
+  ],
+  floor: [
+    'Back down we go!', "This level again? Fine. I'll pretend it's new.",
+    "Stay close, Carl. I'm not carrying you.", 'Find the stairs. My paws are cold.',
+  ],
+  safe: [
+    'A safe room! I need a nap and a snack. In that order.',
+    'Safe room! Buy me something from the Bopca. For morale.',
+  ],
+  boss_hoarder: ["Carl, those are NOT cats. I'm a cat. I would know."],
+  boss_krakaren: ["It's a giant angry squid, Carl. Kick it in the face. All of the faces."],
+  bosshalf: ["It's half dead, Carl! Keep kicking!", 'Look at it wobble! The fans are screaming!'],
+  bosslow: ["It's almost dead! Don't you DARE die now!", 'Finish it! Finish it! FINISH IT!'],
+  bosskill_hoarder: ['We killed the Hoarder! Somebody get me a microphone!'],
+  bosskill_krakaren: ["CALAMARI! We're LEGENDS! Say something cool for the highlight reel!"],
+  lowhp: [
+    'Carl, you\'re bleeding! Drink a potion! Eat a sandwich! Do SOMETHING!',
+    'Your health bar is a very ugly color right now, Carl!',
+    "If you die, I'm keeping the farm. DRINK SOMETHING.",
+  ],
+  lowhp_close: [
+    "Carl, please be okay. I can't do this without you. Eat something. Now.",
+    "Don't you dare leave me down here. Heal up. That's an order from a princess.",
+  ],
+  bighit: [
+    "Ouch! I felt that one, and I wasn't even the one who got hit!",
+    'Hey! Nobody hits my Carl but me!', "Dodge, Carl! It's like dancing, but with less dying!",
+  ],
+  cleared: ['Floor cleared! Another flawless performance by me. And you.', "That's everyone! Take a bow, Carl. No, a deeper bow."],
+  stairs: ['Stairs! Good job, Carl. I was about to find them.', 'The way down! Lead on, pantsless one.'],
+  chest: ['Loot! Open it, open it, OPEN IT!', "A chest! If there's a tiara in there, it's mine."],
+  gem: ['Ooh, sparkly! That {item} would look divine on me.', 'Is that a {item}? Give it to me. For safekeeping.'],
+  multikill: ["Triple kill! That's going in the trailer!", "Look at you go! I'm almost impressed!", 'Combo! The viewers are SCREAMING!'],
+  selfown: ['Carl! My FUR! You singed my FUR!', 'Did you just blow yourself up? On PURPOSE?'],
+};
+
 const DONUT_BATTLE_QUIPS = [
   'Magic Missile!', 'Take THAT!', 'Carl! Did you see that?!', 'Nobody touches my Carl!',
   'Another one for the highlight reel!', 'Mongo would have liked that one.', 'Pew pew!', 'For the fans!',

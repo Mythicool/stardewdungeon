@@ -114,6 +114,7 @@ function update(dt) {
   if (G.map.localNpcs) for (const n of G.map.localNpcs) updateNPC(n, dt);
   updateDonut(dt);
   updateMongo(dt);
+  updateCommentary(dt);
   updateMonsters(dt);
   updateProjectiles(dt);
   updateBombs(dt);
@@ -296,6 +297,7 @@ function enterDungeon(level) {
     const m = generateLevel(level);
     setMap(m, m.spawn.x, m.spawn.y, DOWN);
     G.locT = 4;
+    commentOnFloor(m, level > G.stats.deepest);
     if (level > G.stats.deepest) G.stats.deepest = level;
     if (level % 5 === 0 && !G.expressFloors.includes(level)) {
       G.expressFloors.push(level);
