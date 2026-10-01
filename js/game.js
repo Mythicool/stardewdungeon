@@ -26,6 +26,7 @@ function freshState() {
     recipes: RECIPES.filter(r => r.known).map(r => r.id),
     quest: null, boardOffer: null, mainQuest: 0,
     expressFloors: [1],
+    party: null,
     flags: {},
     zoom: 4, cam: { x: 0, y: 0, w: 1, h: 1 }, shake: 0, locT: 0,
     mouseMode: false, ending: false, questCheckT: 0,
@@ -286,6 +287,7 @@ function setMap(m, tx, ty, dir) {
   P.lastTileKey = tx + ',' + ty;
   G.donut.x = P.x - DX[dir] * 12; G.donut.y = P.y - DY[dir] * 12 + 2;
   G.donut.map = m.id;
+  partyFollowMap(m);
   G.locT = 3;
   Music.play(musicFor(m));
 }
@@ -449,6 +451,8 @@ function processNight(passedOut) {
   // daily resets
   for (const id of Object.keys(G.friends)) { G.friends[id].talked = false; G.friends[id].gifted = false; }
   G.flags.toiletToday = false;
+  G.flags.crawledWith = false;
+  leaveParty();
   G.flags.exhaustedWarned = false;
   if (G.quest) { G.quest.expires--; if (G.quest.expires <= 0) { G.quest = null; G.flags.questExpired = true; } }
   if (!G.quest) G.boardOffer = makeBoardQuest();

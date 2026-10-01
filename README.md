@@ -76,8 +76,11 @@ new depth, blow yourself up or hand someone a gift they hate, they'll bring it u
 talk to them. When two friends are near each other (and you), they banter in speech bubbles.
 Every friend has a birthday (shown in the Social tab, with a reminder that morning). Gifts on
 a birthday count four times as much, and hated ones twice as badly.
+At 4 hearts you can invite Katia into your party for the day. She follows you everywhere,
+punches whatever gets close in the Stairwell, and sometimes throws up her shield arm to block
+half of a hit meant for you. She heads home at 10 PM.
 
-**The System AI.** Snarky morning announcements, 41 achievements that pay out in loot boxes
+**The System AI.** Snarky morning announcements, 42 achievements that pay out in loot boxes
 (Bronze, Silver, Gold, Fan, Legendary), follower milestones, a TV with Borant programming, and
 a main objective track from "Welcome to the Homestead" through "Syndicate Darling"
 (1,000,000 followers).
@@ -111,6 +114,7 @@ js/
   actions.js        tools, farming, interaction, gifting, rewards
   banter.js         friends' gossip about recent events, speech-bubble banter
   commentary.js     Donut's live commentary in the Stairwell
+  party.js          Katia as a party member: follow, fight, shield
   render.js         world rendering, lighting, weather, title screen
   game.js           main loop, time, days, transitions, save/load
 ```

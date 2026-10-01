@@ -330,6 +330,8 @@ function renderLighting(ctx, W, H) {
   const flick = 1 + Math.sin(performance.now() / 90) * 0.02;
   light(P.x, P.y - 8, (m.dark ? 88 : 46) * flick);
   if (G.donut && m.dark) light(G.donut.x, G.donut.y - 6, 26, 0.6);
+  const pm = partyMember();
+  if (pm && m.dark) light(pm.x, pm.y - 8, 30, 0.6);
   const seen = new Set();
   for (const o of m.objs.values()) {
     if (seen.has(o)) continue; seen.add(o);

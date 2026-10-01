@@ -480,16 +480,19 @@ function interactNPC(npc) {
   }
   const it = selectedItem();
   const f = friendOf(npc.id);
-  if (it && itemGiftable(it.id) && !f.gifted) {
-    const slot = G.player.sel;
-    UI.ask(npc.id, npc.id === 'donut' ? `Is that for ME, Carl? (${ITEMS[it.id].name})` : `(Give ${ITEMS[it.id].name} to ${def.name}?)`, [
-      { label: `Give ${ITEMS[it.id].name}`, fn: () => giveGift(npc, slot) },
-      { label: npc.id === 'donut' || npc.id === 'mongo' ? 'Just pet' : 'Just talk', fn: () => talkTo(npc) },
-      { label: 'Never mind', cancel: true },
-    ]);
-    return;
-  }
-  talkTo(npc);
+  const gift = it && itemGiftable(it.id) && !f.gifted;
+  const slot = G.player.sel;
+  const opts = [];
+  if (gift) opts.push({ label: `Give ${ITEMS[it.id].name}`, fn: () => giveGift(npc, slot) });
+  if (canInvite(npc.id)) opts.push({ label: 'Invite to the Stairwell', fn: () => inviteToParty(npc) });
+  if (G.party === npc.id) opts.push({ label: 'Send home for today', fn: () => dismissParty(npc) });
+  if (!opts.length) return talkTo(npc);
+  opts.splice(gift ? 1 : 0, 0, { label: npc.id === 'donut' || npc.id === 'mongo' ? 'Just pet' : 'Just talk', fn: () => talkTo(npc) });
+  opts.push({ label: 'Never mind', cancel: true });
+  const prompt = gift
+    ? (npc.id === 'donut' ? `Is that for ME, Carl? (${ITEMS[it.id].name})` : `(Give ${ITEMS[it.id].name} to ${def.name}?)`)
+    : `(What do you want to do with ${def.name}?)`;
+  UI.ask(npc.id, prompt, opts);
 }
 
 function talkTo(npc, onDone) {
@@ -504,7 +507,8 @@ function talkTo(npc, onDone) {
   // prefer heart-gated lines the first time they unlock
   const special = def.lines.filter(l => l[0] > 0 && l[0] <= hearts && !G.seenLines[npc.id + ':' + l[1].slice(0, 20)]);
   const gossip = !bday && newsReaction(npc.id);
-  const line = bday || gossip || (special.length ? special[special.length - 1][1] : pool[(G.day * 7 + G.lineIdx[npc.id] + npc.id.length) % pool.length]);
+  const partyChat = G.party === npc.id && f.talked && PARTY_LINES[npc.id];
+  const line = bday || gossip || (partyChat ? choice(partyChat.chat) : special.length ? special[special.length - 1][1] : pool[(G.day * 7 + G.lineIdx[npc.id] + npc.id.length) % pool.length]);
   G.seenLines[npc.id + ':' + line.slice(0, 20)] = true;
   if (!f.talked) {
     f.talked = true;
