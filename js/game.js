@@ -22,6 +22,7 @@ function freshState() {
     shipping: [],
     stats: { planted: 0, watered: 0, harvested: 0, shippedCount: 0, earned: 0, deepest: 0, kills: {}, totalKills: 0, bosses: {}, rocks: 0, fish: 0, bombs: 0, died: 0 },
     achievements: {}, friends: {}, met: {}, knownLoves: {}, seenLines: {}, lineIdx: {},
+    heartEvents: {}, heartEventDay: 0,
     recipes: RECIPES.filter(r => r.known).map(r => r.id),
     quest: null, boardOffer: null, mainQuest: 0,
     expressFloors: [1],
@@ -527,6 +528,7 @@ function saveGame() {
     player: { inv: P.inv, invSize: P.invSize, sel: P.sel, tools: P.tools, water: P.water, maxEnergy: P.maxEnergy, maxHp: P.maxHp, skills: P.skills },
     farm: serializeMap(G.maps.farm),
     stats: G.stats, achievements: G.achievements, friends: G.friends, met: G.met, knownLoves: G.knownLoves, seenLines: G.seenLines,
+    heartEvents: G.heartEvents,
     recipes: G.recipes, quest: G.quest, boardOffer: G.boardOffer, mainQuest: G.mainQuest, expressFloors: G.expressFloors, flags: G.flags,
   };
   try {
@@ -547,6 +549,7 @@ function continueGame() {
     day: data.day, season: data.season, year: data.year, totalDays: data.totalDays || 1,
     weather: data.weather, tomorrowWeather: data.tomorrowWeather, gold: data.gold, followers: data.followers,
     achievements: data.achievements || {}, friends: data.friends || {}, met: data.met || {}, knownLoves: data.knownLoves || {}, seenLines: data.seenLines || {},
+    heartEvents: data.heartEvents || {},
     recipes: data.recipes || G.recipes, quest: data.quest, boardOffer: data.boardOffer, mainQuest: data.mainQuest || 0,
     expressFloors: data.expressFloors || [1], flags: data.flags || {},
   });

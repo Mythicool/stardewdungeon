@@ -163,6 +163,200 @@ const NPC_DEFS = {
   },
 };
 
+// Heart events: short scenes that play the next time you talk to a friend after
+// reaching the heart level. Carl picks a response; each choice changes friendship
+// by `pts` and may come with a gift. `null` as the speaker is narration.
+const HEART_EVENTS = {
+  donut: [
+    {
+      id: 'donut_fanmail', hearts: 3, title: 'Fan Mail',
+      scene: [
+        ['donut', "Carl. CARL. Zev forwarded my fan mail. Four thousand messages. I read every single one. Twice."],
+        ['donut', "Most of them say I'm perfect. Which, correct. But one of them..."],
+        ['donut', "One says I'm 'just a cat riding a pantsless man's coattails.' Carl, you don't even OWN a coat with tails!"],
+      ],
+      ask: ['donut', "Tell me they're wrong, Carl. Tell me right now, and say it like you mean it."],
+      choices: [
+        { label: 'You carry this whole team.', pts: 120, followers: 500, reply: [['donut', "I KNEW it. I'm framing this moment. Mentally. In gold. With a little spotlight."]] },
+        { label: "It's a team effort.", pts: 40, reply: [['donut', "A team effort where I am the captain. Yes. Fine. I accept your phrasing."]] },
+        { label: 'Technically, I do the kicking.', pts: -60, reply: [['donut', "Wow. WOW. I am going to go sit in the sun and think about who my real friends are. It's Mongo."]] },
+      ],
+    },
+    {
+      id: 'donut_pillow', hearts: 6, title: 'The Good Pillow',
+      scene: [
+        [null, "*It's late. The cabin is dark. Something small and fluffy is standing on your chest.*"],
+        ['donut', "Carl, are you awake? Don't answer. I can hear you breathing. You breathe very loudly for a man with no pants."],
+        ['donut', "Before all this, Bea entered me in shows. I won. Every time. She still never let me on the good pillow."],
+        ['donut', "I don't think about before very much. I'm too busy being famous. But sometimes I do."],
+      ],
+      ask: ['donut', "You're not going to leave, right? Like, if you find a better cat?"],
+      choices: [
+        { label: "There's no better cat.", pts: 150, gift: ['sunglasses', 1], reply: [
+          ['donut', "...Obviously. I just needed to hear you say it out loud, for the recording."],
+          ['donut', "Here. My spare sunglasses. You need them more than I do. Your face is very... exposed."],
+        ] },
+        { label: "I'm not going anywhere, Princess.", pts: 120, reply: [['donut', "Good. Scoot over. I'm taking the good pillow. You can have the other good pillow."]] },
+        { label: 'Does the better cat cast spells?', pts: 10, reply: [['donut', "I'm going to pretend you said something nice. Goodnight, Carl. Sleep with one eye open."]] },
+      ],
+    },
+  ],
+  mongo: [
+    {
+      id: 'mongo_rat', hearts: 3, title: 'A Gift From Mongo',
+      scene: [
+        [null, "*Mongo trots up with something enormous dangling from his jaws.*"],
+        [null, "*He drops it at your bare feet. It is a rat. It is, mostly, a rat.*"],
+        [null, "*Mongo sits. Mongo waits. Mongo's tail thumps the ground like a war drum.*"],
+      ],
+      ask: ['mongo', "*He is looking at you. He is looking at you SO hard.*"],
+      choices: [
+        { label: 'Good boy! Best rat ever!', pts: 120, gift: ['rat_tail', 3], reply: [[null, "*Mongo SCREECHES with joy, then politely detaches three tails and nudges them toward you. A gift, from one hunter to another.*"]] },
+        { label: 'Pet him. Quietly bury the rat.', pts: 50, reply: [[null, "*Mongo leans into the scratches. He watches you bury the rat, then digs it back up the moment you turn around.*"]] },
+        { label: 'Mongo, no. Drop it.', pts: -40, reply: [[null, "*Mongo drops it. Mongo picks it back up. Mongo eats it. Message received, apparently.*"]] },
+      ],
+    },
+    {
+      id: 'mongo_storm', hearts: 6, title: 'Thunder',
+      scene: [
+        [null, "*Thunder rolls over the Homestead. Mongo has wedged himself under your bed. Most of him.*"],
+        ['donut', "He's been like that since the first boom. I told him dinosaurs are supposed to be brave. It did not help."],
+      ],
+      ask: ['mongo', "*A small, sad squeak comes from under the bed.*"],
+      choices: [
+        { label: 'Crawl under there with him.', pts: 150, reply: [[null, "*You lie on the floor beside Mongo until the storm passes. At some point he rests his head on your chest. It weighs forty pounds. You don't move.*"]] },
+        { label: 'Hum him a song.', pts: 80, reply: [[null, "*You hum. Badly. Mongo's tail starts to thump anyway.*"]] },
+        { label: "He's a dinosaur. He'll be fine.", pts: -30, reply: [[null, "*Mongo squeaks again.*"], ['donut', "Carl. I am looking at you. I will be looking at you for a very long time."]] },
+      ],
+    },
+  ],
+  katia: [
+    {
+      id: 'katia_shapes', hearts: 3, title: 'Practicing Shapes',
+      scene: [
+        ['katia', "Carl, can I show you something? Promise you won't laugh."],
+        [null, "*Katia's arm stretches, thickens, and folds into a very large, very lumpy shield.*"],
+        ['katia', "Mordecai calls it a 'useful tanking build.' I still don't know how I feel about it."],
+      ],
+      ask: ['katia', 'Is it weird? You can tell me if it\'s weird.'],
+      choices: [
+        { label: "It's incredible. You're incredible.", pts: 120, reply: [['katia', "Really? ...Okay. Okay! Next time something bites, I'm standing in front. You stand behind me and kick."]] },
+        { label: 'Can it hold a sandwich?', pts: 60, reply: [['katia', "...Actually? Yeah. Hold on. Oh, that's gross. That's so useful."]] },
+        { label: "It's a little weird.", pts: -50, reply: [['katia', "Oh. Yeah. No, I get it. I'm just going to go stand behind something for a while."]] },
+      ],
+    },
+    {
+      id: 'katia_before', hearts: 6, title: 'Before',
+      scene: [
+        ['katia', "Do you ever miss it? Before? I worked at a bank. I hated it. I'd give anything to complain about it one more time."],
+        ['katia', "Every time I change shape, I come back a little different. Taller. Stronger. Less... me, maybe."],
+      ],
+      ask: ['katia', "Carl, if I ever stop being me, will you tell me?"],
+      choices: [
+        { label: "I'll always tell you.", pts: 150, gift: ['stew', 1], reply: [
+          ['katia', "Thank you. Really. That's all I needed."],
+          ['katia', "I made too much stew. That's a lie, I made exactly enough for you. Take it."],
+        ] },
+        { label: "You'll always be you.", pts: 100, reply: [['katia', "You can't know that. ...But it's nice that you believe it."]] },
+        { label: "Let's not get sappy.", pts: 10, reply: [['katia', "Right. Crawlers don't do sappy. ...You totally do, though. I've seen you talk to the radishes."]] },
+      ],
+    },
+  ],
+  mordecai: [
+    {
+      id: 'mordecai_ledger', hearts: 3, title: 'The Ledger',
+      scene: [
+        ['mordecai', "Sit down, crawler. No, not that one. That chair has opinions."],
+        ['mordecai', "Every guide keeps a ledger. Every crawler I ever guided. Their names, what floor they reached, how far they got."],
+        [null, "*He closes the book before you can count the pages. There are a lot of pages.*"],
+      ],
+      ask: ['mordecai', "You want to know how it ends for most of them? Go on. Ask."],
+      choices: [
+        { label: 'Write my name in pencil.', pts: 150, gift: ['hangover', 2], reply: [
+          [null, "*Mordecai stares at you. Then he laughs, a short, surprised bark.*"],
+          ['mordecai', "Pencil. Fine. You've earned pencil. Take these, you'll need them after what I'm about to pour."],
+        ] },
+        { label: 'Tell me.', pts: 40, reply: [['mordecai', "Mostly the same way. I stopped writing the endings a while back. Too much ink."]] },
+        { label: 'Do you get a commission?', pts: -40, reply: [['mordecai', "Get out of my guild. ...Come back tomorrow. But get out."]] },
+      ],
+    },
+    {
+      id: 'mordecai_brew', hearts: 6, title: 'Brewing Lesson',
+      scene: [
+        ['mordecai', "Hold this. Stir it. Clockwise. CLOCKWISE, Carl."],
+        [null, '*The cauldron belches a cloud of green smoke. Your eyebrows are now noticeably shorter.*'],
+        ['mordecai', "You know why I bother teaching you? Because one day I won't be here, and you'll need to make your own mistakes."],
+      ],
+      ask: ['mordecai', "So. You going to listen this time, or just nod?"],
+      choices: [
+        { label: 'Teach me everything.', pts: 150, gift: ['hp_potion', 3], reply: [['mordecai', "Good answer. Take these. Brewed them myself. Don't drink them all at once, I'm not cleaning that up."]] },
+        { label: "You'll always be here.", pts: 80, reply: [['mordecai', "Kid, nobody's always anywhere. But I'll stay as long as they let me."]] },
+        { label: 'Can I keep the eyebrows off?', pts: 30, reply: [['mordecai', "It's a look, all right. Not a good one. Stir the pot."]] },
+      ],
+    },
+  ],
+  zev: [
+    {
+      id: 'zev_pitch', hearts: 3, title: 'The Pitch',
+      scene: [
+        ['zev', "Carl! I'm workshopping a spin-off. 'Carl and Donut: Farm Hard.' Gritty. Emotional. Mostly explosions."],
+        ['zev', "The execs want a catchphrase. Something punchy. Something you'd say right before kicking a goblin into a pond."],
+      ],
+      ask: ['zev', 'Give me something! Anything! The pitch meeting is in four minutes!'],
+      choices: [
+        { label: '"Goblins are fertilizer."', pts: 120, followers: 3000, reply: [['zev', "Carl. CARL. That's going on a T-shirt. That's going on a THOUSAND T-shirts."]] },
+        { label: '"I\'m just here to farm."', pts: 40, reply: [['zev', "Humble. Relatable. The 18-to-900 demographic will hate it, but I respect it."]] },
+        { label: '"No."', pts: -30, reply: [['zev', "...Actually, the gruff refusal tests okay. I'm still disappointed in you personally."]] },
+      ],
+    },
+    {
+      id: 'zev_offcamera', hearts: 6, title: 'Off Camera',
+      scene: [
+        ['zev', "Can we talk somewhere the drones can't hear? Behind the trailer. Quick."],
+        ['zev', "I'm not supposed to say this. Borant reviews my contract every season. If the numbers drop, I get... reassigned."],
+        ['zev', "I don't want to be reassigned, Carl. I like this assignment. I like you guys."],
+      ],
+      ask: ['zev', "Is that dumb? It's dumb. Tell me it's dumb."],
+      choices: [
+        { label: "We'll keep the numbers up. Together.", pts: 150, gift: ['box_silver', 1], reply: [['zev', "Together. Okay. Here, a sponsor gift. I'm 'losing' it in your direction. Oops."]] },
+        { label: 'Can Borant hear us right now?', pts: 60, reply: [[null, '*Zev looks up at the sky.*'], ['zev', "...Probably. Hi, Borant! Love the brand!"]] },
+        { label: 'Sounds like a you problem.', pts: -60, reply: [['zev', "Right. Yeah. Of course. Content first. Forget I said anything."]] },
+      ],
+    },
+  ],
+  pook: [
+    {
+      id: 'pook_inventory', hearts: 3, title: 'Inventory Day',
+      scene: [
+        ['pook', "Pook is counting stock! One sandwich. Two sandwich. Three... Pook has lost count. Again."],
+        ['pook', "Pook has been counting for four hours. Pook's eyes are doing a spiral."],
+      ],
+      ask: ['pook', 'Would crawler help Pook count?'],
+      choices: [
+        { label: "Sure, I'll help.", pts: 120, gift: ['sandwich', 3], reply: [
+          [null, '*Together you count 212 sandwiches, 40 seed packets, and one sandwich that might be a seed packet.*'],
+          ['pook', "Crawler is very good at counting! Pook will give discount! ...Pook will NOT give discount. But Pook will give these."],
+        ] },
+        { label: "Just write down 'a lot.'", pts: 40, reply: [['pook', "'A lot.' Pook likes this. Pook's accountant will not."]] },
+        { label: "I'm busy.", pts: -30, reply: [['pook', 'Pook understands. Pook will count alone. In the dark. Probably forever.']] },
+      ],
+    },
+    {
+      id: 'pook_cousin', hearts: 6, title: "Pook's Cousin",
+      scene: [
+        ['pook', 'Pook got a letter from cousin on level five! He says crawlers down there are mean. And none of them ever say hi from Pook.'],
+        ['pook', 'Pook wonders...'],
+      ],
+      ask: ['pook', 'Would crawler tell cousin that Pook is doing well? That Pook has a friend?'],
+      choices: [
+        { label: "I'll say you're the best Bopca around.", pts: 150, gift: ['tunamelt', 2], reply: [['pook', 'Pook will remember this forever. Here, from the special shelf. Pook was saving them for a friend.']] },
+        { label: "I'll tell him you said hi.", pts: 60, reply: [['pook', 'Pook thanks you! Cousin will pretend not to care. Cousin will care.']] },
+        { label: 'He still charges me full price.', pts: 10, reply: [['pook', 'Yes. That is family. Pook also charges full price.']] },
+      ],
+    },
+  ],
+};
+
 // Friend banter. NEWS_REACTIONS: what each friend says the next time you talk to
 // them after something notable happened (see recordNews in banter.js). {n}, {g},
 // {who} and {item} are filled from the news. BANTER_SCENES: short exchanges two
@@ -310,6 +504,8 @@ const ACHIEVEMENTS = {
   box_open:     { name: 'Unboxing Video', desc: 'You opened a loot box. The dopamine is sponsored.', followers: 200 },
   upgrade:      { name: 'Enchanted Equipment', desc: "You upgraded a tool. Mordecai pretended not to be proud.", followers: 800 },
   season:       { name: 'Collapse Survivor', desc: 'You survived a seasonal collapse. The Homestead rebooted. You did not. Good job.', box: 'box_gold', followers: 10000 },
+  heart_event:  { name: 'Very Special Episode', desc: 'You shared a heartfelt moment with a friend. The Syndicate wept. Then it asked for a sequel.', box: 'box_bronze', followers: 1500 },
+  heart_all:    { name: 'Series Finale', desc: 'You saw every heart event. The writers room is out of ideas. Borant has ordered six more seasons anyway.', box: 'box_legendary', followers: 100000 },
 };
 
 const MAIN_QUESTS = [
