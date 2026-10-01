@@ -101,7 +101,7 @@ function updatePartyMember(k, dt) {
   }
   if (target && dd < 18 && k.cd <= 0) {
     k.cd = 1.2;
-    hurtMonster(target, 6 + Math.floor(heartsOf(k.id) * 0.8) + Math.floor(P.skills.combat.lv / 2), k.x, k.y, false);
+    hurtMonster(target, 6 + Math.floor(heartsOf(k.id) * 0.8) + Math.floor(P.skills.combat.lv / 2), k.x, k.y, false, k.id);
     if (chance(0.15) && !k.bubble) say(k, choice(lines.fight), 1.6);
   }
   if (!target && G.map.level && chance(dt / 50) && !k.bubble) say(k, choice(lines.idle), 2.2);
@@ -219,7 +219,7 @@ function updateMongoCrawl(g, dt) {
     g.charge.t -= dt;
     if (mo.dead || g.charge.t <= 0) { g.charge = null; g.cd = 0.6; }
     else if (dist(g.x, g.y, mo.x, mo.y) < 12) {
-      hurtMonster(mo, 7 + heartsOf('mongo') + Math.floor(P.skills.combat.lv / 2), g.x, g.y, false);
+      hurtMonster(mo, 7 + heartsOf('mongo') + Math.floor(P.skills.combat.lv / 2), g.x, g.y, false, 'mongo');
       burst(g.x, g.y - 2, 6, ['#c8b090', '#8a7050'], 50);
       g.charge = null;
       g.cd = Math.max(1.6, 3 - heartsOf('mongo') * 0.1);

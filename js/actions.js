@@ -214,6 +214,7 @@ function breakObject(m, o, byBomb) {
       if (chance(0.006)) { spawnDrop('box_bronze', 1, cx, cy); UI.toast('Something shiny was in that rock!', null, '#ffe070'); }
       if (!byBomb) Audio2.play('break');
       G.stats.rocks++;
+      pollOnRock(cx, cy);
       if (o.stairs) { revealStairs(o.x, o.y); UI.toast('You found the stairwell down!', null, '#ffe070'); Audio2.play('stairs'); donutComment('stairs'); }
       break;
     }
@@ -411,6 +412,7 @@ function interact(useMouse) {
         burst(o.x * TILE + 8, o.y * TILE + 6, 20, ['#ffd23a', '#ffffff'], 90);
         giveItem('box_' + o.tier, 1);
         donutComment('chest');
+        if (m.level) sponsorEvent('chest');
         UI.toast('Use the box from your hotbar to open it!', null, '#ffe070');
         return;
       }
@@ -496,6 +498,7 @@ function interactNPC(npc) {
   if (npc.id === 'mongo' && canBringMongo()) opts.push({ label: 'Bring to the Stairwell', fn: () => bringMongo() });
   if (npc.id === 'mongo' && mongoAlong()) opts.push({ label: 'Send home for today', fn: () => dismissMongo() });
   if (canInviteToDinner(npc.id)) opts.push({ label: 'Invite to dinner tonight', fn: () => inviteToDinner(npc) });
+  if (npc.id === 'zev' && sponsorAvailable()) opts.push({ label: "Hear today's sponsor deal", fn: () => offerSponsorDeal() });
   const favor = favorOption(npc);
   if (favor) opts.push(favor);
   if (!opts.length) return talkTo(npc);

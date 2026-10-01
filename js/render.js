@@ -338,8 +338,8 @@ function renderLighting(ctx, W, H) {
   };
   const P = G.player;
   const flick = 1 + Math.sin(performance.now() / 90) * 0.02;
-  light(P.x, P.y - 8, (m.dark ? 88 : 46) * flick);
-  if (G.donut && m.dark) light(G.donut.x, G.donut.y - 6, 26, 0.6);
+  light(P.x, P.y - 8, (m.dark ? 88 : 46) * flick * pollLight());
+  if (G.donut && m.dark && pollLight() === 1) light(G.donut.x, G.donut.y - 6, 26, 0.6);
   const pm = partyMember();
   if (pm && m.dark) light(pm.x, pm.y - 8, 30, 0.6);
   if (mongoAlong() && m.dark) light(G.mongo.x, G.mongo.y - 6, 24, 0.6);

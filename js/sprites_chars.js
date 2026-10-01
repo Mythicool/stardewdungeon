@@ -13,6 +13,7 @@ const CHAR_DEFS = {
   goblin:    { kind: 'human', short: true, skin: '#6aa84f', hair: '#6aa84f', hairStyle: 'goblin', top: '#7a5a3a', top2: '#7a5a3a', bottom: '#5a4a2a', legs: '#6aa84f', feet: '#3a2a1a', eye: '#e02020', extra: 'club' },
   hobgoblin: { kind: 'human', skin: '#c9733a', hair: '#2a1a10', hairStyle: 'goblin', top: '#4a2a2a', top2: '#6a3a3a', bottom: '#2a2a2a', legs: '#2a2a2a', feet: '#1a1a1a', eye: '#ffd000', extra: 'bomb' },
   hoarder:   { kind: 'human', skin: '#d8b0a0', hair: '#c8c8cc', hairStyle: 'long', top: '#c05a90', top2: '#e8a0c8', bottom: '#c05a90', legs: '#d8b0a0', feet: '#f0f0f0', eye: '#e02020', extra: 'bags' },
+  rival:     { kind: 'human', skin: '#e8b890', hair: '#f0d040', hairStyle: 'short', top: '#f08a20', top2: '#20d0e0', bottom: '#1a1a24', legs: '#1a1a24', feet: '#f4f4f4', eye: '#2a1a14', extra: 'tablet' },
   donut:     { kind: 'cat', fur: '#e8a45c', fur2: '#fae0b8', eye: '#3a8a3a', tiara: true },
   feralcat:  { kind: 'cat', fur: '#6e6e76', fur2: '#9a9aa2', eye: '#e0e020' },
   mongo:     { kind: 'dino', body: '#5aa04a', dark: '#3c7a30', belly: '#d6e6a0' },
