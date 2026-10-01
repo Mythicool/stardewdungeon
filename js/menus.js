@@ -169,7 +169,8 @@ class GameMenu {
       }
       const h = Math.floor(f.pts / 250);
       for (let k = 0; k < 10; k++) drawText(ctx, '♥', r.x + 26 * s + k * 8 * s, y + 11 * s, { size: 7, color: k < h ? '#e0305a' : '#c8b090' });
-      drawText(ctx, (f.talked ? '✔ talked  ' : '· talk  ') + (f.gifted ? '✔ gift' : '· gift'), r.x + r.w - 4 * s, y + 5 * s, { size: 5.5, align: 'right', color: '#6a4a2a' });
+      const evs = HEART_EVENTS[id] ? `  ✦ ${heartEventCount(id)}/${HEART_EVENTS[id].length}` : '';
+      drawText(ctx, (f.talked ? '✔ talked  ' : '· talk  ') + (f.gifted ? '✔ gift' : '· gift') + evs, r.x + r.w - 4 * s, y + 5 * s, { size: 5.5, align: 'right', color: '#6a4a2a' });
       const loves = NPC_DEFS[id].love.filter(it => G.knownLoves[id + ':' + it]);
       if (loves.length) {
         drawText(ctx, 'Loves:', r.x + r.w - 110 * s, y + 13 * s, { size: 5, color: '#a03050' });
@@ -476,7 +477,7 @@ class FishingModal {
     gainXP('fishing', 8 + Math.round(this.fish.diff * 30));
     G.stats.fish++;
     unlock('fish_first');
-    if (id === 'sponsorfish') unlock('fish_legend');
+    if (id === 'sponsorfish') { unlock('fish_legend'); recordNews('sponsor'); }
     addFollowers(20 + Math.round(this.fish.diff * 200), true);
     this.end(`Caught a ${ITEMS[id].name}!`);
     if (id === 'catfish') setTimeout(() => say(G.donut, 'Carl. That is a MOCKERY.', 2.5), 300);

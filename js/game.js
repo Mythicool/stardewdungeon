@@ -22,6 +22,7 @@ function freshState() {
     shipping: [],
     stats: { planted: 0, watered: 0, harvested: 0, shippedCount: 0, earned: 0, deepest: 0, kills: {}, totalKills: 0, bosses: {}, rocks: 0, fish: 0, bombs: 0, died: 0 },
     achievements: {}, friends: {}, met: {}, knownLoves: {}, seenLines: {}, lineIdx: {},
+    heartEvents: {}, heartEventDay: 0,
     recipes: RECIPES.filter(r => r.known).map(r => r.id),
     quest: null, boardOffer: null, mainQuest: 0,
     expressFloors: [1],
@@ -114,6 +115,7 @@ function update(dt) {
   if (G.map.localNpcs) for (const n of G.map.localNpcs) updateNPC(n, dt);
   updateDonut(dt);
   updateMongo(dt);
+  updateBanter(dt);
   updateMonsters(dt);
   updateProjectiles(dt);
   updateBombs(dt);
@@ -296,7 +298,10 @@ function enterDungeon(level) {
     const m = generateLevel(level);
     setMap(m, m.spawn.x, m.spawn.y, DOWN);
     G.locT = 4;
-    if (level > G.stats.deepest) G.stats.deepest = level;
+    if (level > G.stats.deepest) {
+      G.stats.deepest = level;
+      if (level % 5 === 0) recordNews('deep', { n: level });
+    }
     if (level % 5 === 0 && !G.expressFloors.includes(level)) {
       G.expressFloors.push(level);
       G.expressFloors.sort((a, b) => a - b);
@@ -336,6 +341,7 @@ function playerDie() {
   G.dying = true;
   Audio2.play('die');
   G.stats.died++;
+  recordNews('died');
   const fee = Math.min(2000, Math.floor(G.gold * 0.1));
   G.gold -= fee;
   transitionTo(() => {
@@ -354,6 +360,7 @@ function playerDie() {
 function passOut() {
   if (G.ending) return;
   unlock('pass_out');
+  recordNews('passout');
   endDay(true);
 }
 
@@ -390,6 +397,7 @@ function processNight(passedOut) {
   G.stats.earned += total;
   G.shipping = [];
   checkGoldAchievements();
+  if (total >= 1000) recordNews('bigship', { g: total });
   let quip = choice(DAY_QUIPS);
   if (passedOut) {
     const fee = Math.min(1000, Math.floor(G.gold * 0.1));
@@ -523,6 +531,7 @@ function saveGame() {
     player: { inv: P.inv, invSize: P.invSize, sel: P.sel, tools: P.tools, water: P.water, maxEnergy: P.maxEnergy, maxHp: P.maxHp, skills: P.skills },
     farm: serializeMap(G.maps.farm),
     stats: G.stats, achievements: G.achievements, friends: G.friends, met: G.met, knownLoves: G.knownLoves, seenLines: G.seenLines,
+    heartEvents: G.heartEvents,
     recipes: G.recipes, quest: G.quest, boardOffer: G.boardOffer, mainQuest: G.mainQuest, expressFloors: G.expressFloors, flags: G.flags,
   };
   try {
@@ -543,6 +552,7 @@ function continueGame() {
     day: data.day, season: data.season, year: data.year, totalDays: data.totalDays || 1,
     weather: data.weather, tomorrowWeather: data.tomorrowWeather, gold: data.gold, followers: data.followers,
     achievements: data.achievements || {}, friends: data.friends || {}, met: data.met || {}, knownLoves: data.knownLoves || {}, seenLines: data.seenLines || {},
+    heartEvents: data.heartEvents || {},
     recipes: data.recipes || G.recipes, quest: data.quest, boardOffer: data.boardOffer, mainQuest: data.mainQuest || 0,
     expressFloors: data.expressFloors || [1], flags: data.flags || {},
   });

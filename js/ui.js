@@ -187,7 +187,10 @@ class DialogModal {
         this.choose();
       } else this.next();
     } else if (Input.wasPressed(...KEY_CANCEL)) {
-      if (L.choices) { const c = L.choices.find(c => c.cancel) || L.choices[L.choices.length - 1]; this.close(); if (c.fn) c.fn(); }
+      if (L.choices) {
+        if (this.opts.noCancel) { this.chars = len; return; } // the player has to pick one
+        const c = L.choices.find(c => c.cancel) || L.choices[L.choices.length - 1]; this.close(); if (c.fn) c.fn();
+      }
       else if (!done) this.chars = len;
       else this.next();
     }
